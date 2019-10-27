@@ -25,7 +25,8 @@ Mixture of Models don't allow us to find best model for each point.
 ![Mixture of Models Leaning image](https://github.com/andriygav/MixtureLib/raw/master/examples/pictures/pi_predicftion_models.png)
 
 ### Comparasion
-Convergence of local models for different SuperModels are illustrated here. Both models converge to the real point. 
+Convergence of local models for different SuperModels are illustrated here. Both models converge to the real point.
+
 Mixture of Experts             |  Mixture of Models
 :-------------------------:|:-------------------------:
 ![Mixture of Experts Leaning parameters](https://raw.githubusercontent.com/andriygav/MixtureLib/master/examples/pictures/parameters_expers.png)  |  ![Mixture of Models Leaning parameters](https://raw.githubusercontent.com/andriygav/MixtureLib/master/examples/pictures/parameters_models.png)
