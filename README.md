@@ -30,6 +30,6 @@ Convergence of local models for different SuperModels are illustrated here. Both
 
 Mixture of Experts             |  Mixture of Models
 :-------------------------:|:-------------------------:
-![Mixture of Experts Leaning parameters](https://raw.githubusercontent.com/andriygav/MixtureLib/master/examples/pictures/parameters_expers.png)  |  ![Mixture of Models Leaning parameters](https://raw.githubusercontent.com/andriygav/MixtureLib/master/examples/pictures/parameters_models.png)
+![Mixture of Experts Leaning parameters](https://raw.githubusercontent.com/andriygav/MixtureLib/master/examples/pictures/parameters_experts.png)  |  ![Mixture of Models Leaning parameters](https://raw.githubusercontent.com/andriygav/MixtureLib/master/examples/pictures/parameters_models.png)
 
 
