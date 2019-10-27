@@ -19,3 +19,11 @@
 ### Mixture Of Experts
 Mixture of Expert allow us to get model which are correspond to current point.
 ![Mixture of Experts Leaning image](https://github.com/andriygav/MixtureLib/raw/master/examples/pictures/pi_predicftion_experts.png)
+
+### Mixture Of Models
+Mixture of Models don't allow us to find best model for each point.
+![Mixture of Models Leaning image](https://github.com/andriygav/MixtureLib/raw/master/examples/pictures/pi_predicftion_models.png)
+
+### Comparasion
+![Mixture of Experts Leaning parameters](https://raw.githubusercontent.com/andriygav/MixtureLib/master/examples/pictures/parameters_expers.png)
+![Mixture of Models Leaning parameters](https://raw.githubusercontent.com/andriygav/MixtureLib/master/examples/pictures/parameters_models.png)
