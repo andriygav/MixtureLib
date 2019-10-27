@@ -26,7 +26,9 @@ class MixtureEM(Mixture):
         self.n = input_dim
         self.device = device
         
-        self.HyperParameters = HyperParameters
+        self.HyperParameters = dict()
+        for key in HyperParameters:
+            self.HyperParameters[key] = torch.tensor(HyperParameters[key])
         
         if HyperModel is None:
             return None

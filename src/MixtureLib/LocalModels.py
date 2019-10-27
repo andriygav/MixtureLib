@@ -54,13 +54,12 @@ class EachModel:
 
 
 class EachModelLinear(EachModel):
-    def __init__(self, input_dim = 20, device = 'cpu', A = None, w = None, regul = True):
+    def __init__(self, input_dim = 20, device = 'cpu', A = None, w = None):
         super(EachModelLinear, self).__init__()
 
         self.input_dim = input_dim
         self.device = device
         
-        self.regul = regul
         self.A = A
             
         self.W = (1e-5)*torch.randn(input_dim, 1, device = self.device)
@@ -93,7 +92,11 @@ class EachModelLinear(EachModel):
             temp1 = Y**2
             temp2 = -2*Y*(X@self.W)
             temp3 = torch.diagonal(X@(self.B+self.W@self.W.transpose(0,1))@X.transpose(0,1)).view([-1, 1])
-            return ((temp1 + temp2 + temp3)*Z).mean().detach()
+            new_beta = ((temp1 + temp2 + temp3)*Z).mean()
+            if new_beta > 0:
+                return new_beta.detach()
+            else:
+                return (0*new_beta).detach()
         
     def LogLikeLihoodExpectation(self, X, Y, HyperParameters):
         """
@@ -126,13 +129,17 @@ class EachModelLinear(EachModel):
             A = self.A
             if len(self.A.shape) == 1:
                 A = torch.diag(self.A)
+            try:
+                A_inv = torch.inverse(A)
+            except:
+                A_inv = (2**32)*torch.eye(A.shape[0])
             
-            self.B = torch.inverse(torch.inverse(A) + beta*((temp*Z.unsqueeze(1))@temp.transpose(2, 1)).sum(dim = 0)).detach()
+            self.B = torch.inverse(A_inv + beta*((temp*Z.unsqueeze(1))@temp.transpose(2, 1)).sum(dim = 0)).detach()
             second = beta*(X*Y*Z).sum(dim = 0).view([-1, 1])       
             if self.w_0 is None:
                 self.W.data = ((self.B@second)).view_as(self.W).detach()
             else:
-                self.W.data = (self.B@(second + torch.inverse(A)@self.w_0)).view_as(self.W).detach()
+                self.W.data = (self.B@(second + A_inv@self.w_0)).view_as(self.W).detach()
         
         return
 
@@ -159,9 +166,6 @@ class EachModelLinear(EachModel):
                 
         
         if self.w_0 is not None:
-            if self.regul == True:
-                self.w_0.data[2:,:] = self.W.data[2:,:].clone()
-            else:
-                self.w_0.data = self.W.data.clone()
+            self.w_0.data = self.W.data.clone()
 
         return
