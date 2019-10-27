@@ -1,2 +1,2 @@
 # SRC
-All files that are needed to install the library deep-generative-models are in this directory. 
+All files that are needed to install the library MixtureLib are in this directory. 
