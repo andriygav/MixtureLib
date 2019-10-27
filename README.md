@@ -17,4 +17,4 @@
 
 ## Examples
 ### Mixture Of Experts
-![Image of Yaktocat](https://github.com/andriygav/MixtureLib/raw/master/examples/pictures/pi_predicftion_experts.pdf)
+![Image of Yaktocat](https://github.com/andriygav/MixtureLib/raw/master/examples/pictures/pi_predicftion_experts.png)
