@@ -16,7 +16,7 @@
 0.0.1
 
 ## Example
-Example file is available [here](https://github.com/andriygav/MixtureLib/blob/master/examples/example.ipynb). Before launch this file, please install the library MixtureLib.
+Example file is available [here](https://github.com/andriygav/MixtureLib/blob/master/examples/example.ipynb). Before launch this file, please install MixtureLib library.
 ### Mixture Of Experts
 Mixture of Expert allow us to get model which are correspond to current point.
 ![Mixture of Experts Leaning image](https://github.com/andriygav/MixtureLib/raw/master/examples/pictures/pi_predicftion_experts.png)
