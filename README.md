@@ -15,7 +15,7 @@
 ## Version
 0.0.1
 
-## Examples
+## Example
 ### Mixture Of Experts
 Mixture of Expert allow us to get model which are correspond to current point.
 ![Mixture of Experts Leaning image](https://github.com/andriygav/MixtureLib/raw/master/examples/pictures/pi_predicftion_experts.png)
