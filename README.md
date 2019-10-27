@@ -17,4 +17,5 @@
 
 ## Examples
 ### Mixture Of Experts
-![Image of Yaktocat](https://github.com/andriygav/MixtureLib/raw/master/examples/pictures/pi_predicftion_experts.png)
+Mixture of Expert allow us to get model which are correspond to current point.
+![Mixture of Experts Leaning image](https://github.com/andriygav/MixtureLib/raw/master/examples/pictures/pi_predicftion_experts.png)
