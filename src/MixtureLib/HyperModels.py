@@ -42,10 +42,14 @@ class HyperModelDirichlet(HyperModel):
         pass
 
     def LogPiExpectation(self, X, Y, HyperParameters):
-        return torch.ones_like(X)*(torch.digamma(self.m) - torch.digamma(self.output_dim*self.mu + self.N))
+        temp_1 = torch.ones([X.shape[0], self.output_dim])
+        temp_2 = (torch.digamma(self.m) - torch.digamma(self.output_dim*self.mu + self.N))
+        return temp_1*temp_2
 
     def PredictPi(self, X, HyperParameters):
-        return torch.ones_like(X)*torch.nn.functional.softmax(self.LogPiExpectation(X, None, HyperParameters), dim = -1)
+        temp_1 = torch.ones([X.shape[0], self.output_dim])
+        temp_2 = (torch.digamma(self.m) - torch.digamma(self.output_dim*self.mu + self.N))
+        return temp_1*temp_2
 
 
 class HyperExpertNN(nn.Module, HyperModel):
