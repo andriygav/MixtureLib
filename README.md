@@ -35,11 +35,15 @@ python3.6 -m grpc_tools.protoc \
 python3.6 -m pip install src/example_protos/.
 python3.6 -m pip install src/example/.
 ```
-7. Run service.
+
+## Running
+1. Run service.
 ```
 example_service config/example.cfg
 ```
-
+2. There are two ways to use the service:
+  * by client (need to be written)
+  * by grpcui (need to be installed)
 
 ## Version
 0.0.1
