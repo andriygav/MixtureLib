@@ -22,15 +22,19 @@ cd grpcExmpl
 ```
 python3.6 -m pip install -r requirements.txt
 ```
-5. This step is required only if the example.proto file is changed.
+5. Generate new python grpc protocol files. This step is required only if the example.proto file is changed.
 ```
-cd src/example_protos
 python3.6 -m grpc_tools.protoc \
     -I ./src/example_protos/proto/ \
     --python_out=./src/example_protos/ \
     --grpc_python_out=./src/example_protos/ \
     ./src/example_protos/proto/example_protos/*.proto
 ```
+6. Install service.
+```
+python3.6 -m pip install src/example/.
+```
+
 
 ## Version
 0.0.1
