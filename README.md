@@ -37,13 +37,20 @@ python3.6 -m pip install src/example/.
 ```
 
 ## Running
-1. Run service.
+1. Run service. All service settings in config/example.cfg file.
 ```
 example_service config/example.cfg
 ```
 2. There are two ways to use the service:
   * by client (need to be written)
   * by grpcui (need to be installed)
-
+3.1. By client.
+```
+example_client [-h] [--type {sum,prod}] [--server SERVER] a b
+```
+3.2. By grpcui. (default service port is 9878). After executing the following command, go to the browser and write “gRPC Web UI” in the URL bar.
+```
+grpcui -plaintext [::]:9878
+```
 ## Version
 0.0.1
