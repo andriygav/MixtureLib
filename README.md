@@ -30,9 +30,14 @@ python3.6 -m grpc_tools.protoc \
     --grpc_python_out=./src/example_protos/ \
     ./src/example_protos/proto/example_protos/*.proto
 ```
-6. Install service.
+6. Install service and protos.
 ```
+python3.6 -m pip install src/example_protos/.
 python3.6 -m pip install src/example/.
+```
+7. Run service.
+```
+example_service config/example.cfg
 ```
 
 
