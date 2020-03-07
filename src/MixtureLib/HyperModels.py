@@ -66,7 +66,7 @@ class HyperExpertNN(nn.Module, HyperModel):
         self.linear2 = nn.Linear(hidden_dim, hidden_dim)
         self.linear3 = nn.Linear(hidden_dim, output_dim)
         
-        self.optimizer = torch.optim.Adam(self.parameters(), lr = 0.0001)
+        self.optimizer = torch.optim.Adam(self.parameters())
         
         self.to(device)
         

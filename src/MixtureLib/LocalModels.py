@@ -54,11 +54,13 @@ class EachModel:
 
 
 class EachModelLinear(EachModel):
-    def __init__(self, input_dim = 20, device = 'cpu', A = None, w = None):
+    def __init__(self, input_dim = 20, device = 'cpu', A = None, w = None, OptimizedHyper=set(['w_0', 'A', 'beta'])):
         super(EachModelLinear, self).__init__()
 
         self.input_dim = input_dim
         self.device = device
+
+        self.OptimizedHyper = OptimizedHyper
         
         self.A = A
             
@@ -88,15 +90,16 @@ class EachModelLinear(EachModel):
         HyperParameters is a dictionary
         Parameter is a Key in dictionary
         """
-        if Parameter == 'beta':
-            temp1 = Y**2
-            temp2 = -2*Y*(X@self.W)
-            temp3 = torch.diagonal(X@(self.B+self.W@self.W.transpose(0,1))@X.transpose(0,1)).view([-1, 1])
-            new_beta = ((temp1 + temp2 + temp3)*Z).mean()
-            if new_beta > 0:
-                return new_beta.detach()
-            else:
-                return (0*new_beta).detach()
+        if 'beta' in self.OptimizedHyper:
+            if Parameter == 'beta':
+                temp1 = Y**2
+                temp2 = -2*Y*(X@self.W)
+                temp3 = torch.diagonal(X@(self.B+self.W@self.W.transpose(0,1))@X.transpose(0,1)).view([-1, 1])
+                new_beta = ((temp1 + temp2 + temp3)*Z).mean()
+                if new_beta > 0:
+                    return new_beta.detach()
+                else:
+                    return (0*new_beta).detach()
         
     def LogLikeLihoodExpectation(self, X, Y, HyperParameters):
         """
@@ -151,21 +154,22 @@ class EachModelLinear(EachModel):
         HyperParameters is a dictionary
         """
         beta = 1./(HyperParameters['beta'] + 0.000001)
-        
-        if self.A is not None:
-            if self.w_0 is not None:
-                if len(self.A.shape) == 1:
-                    self.A= torch.diagonal(self.B+self.W@self.W.transpose(0,1) - self.w_0@self.W.transpose(0,1) - self.W@self.w_0.transpose(0,1) + self.w_0@self.w_0.transpose(0,1)).detach()
+
+        if 'A' in self.OptimizedHyper:
+            if self.A is not None:
+                if self.w_0 is not None:
+                    if len(self.A.shape) == 1:
+                        self.A= torch.diagonal(self.B+self.W@self.W.transpose(0,1) - self.w_0@self.W.transpose(0,1) - self.W@self.w_0.transpose(0,1) + self.w_0@self.w_0.transpose(0,1)).detach()
+                    else:
+                        self.A= (self.B+self.W@self.W.transpose(0,1) - self.w_0@self.W.transpose(0,1) - self.W@self.w_0.transpose(0,1) + self.w_0@self.w_0.transpose(0,1)).detach()
                 else:
-                    self.A= (self.B+self.W@self.W.transpose(0,1) - self.w_0@self.W.transpose(0,1) - self.W@self.w_0.transpose(0,1) + self.w_0@self.w_0.transpose(0,1)).detach()
-            else:
-                if len(self.A.shape) == 1:
-                    self.A = torch.diagonal(self.B+self.W@self.W.transpose(0,1)).detach()
-                else:
-                    self.A = (self.B+self.W@self.W.transpose(0,1)).detach()
+                    if len(self.A.shape) == 1:
+                        self.A = torch.diagonal(self.B+self.W@self.W.transpose(0,1)).detach()
+                    else:
+                        self.A = (self.B+self.W@self.W.transpose(0,1)).detach()
                 
-        
-        if self.w_0 is not None:
-            self.w_0.data = self.W.data.clone()
+        if 'w_0' in self.OptimizedHyper:
+            if self.w_0 is not None:
+                self.w_0.data = self.W.data.clone()
 
         return

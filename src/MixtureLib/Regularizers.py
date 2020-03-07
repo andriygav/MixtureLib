@@ -103,7 +103,7 @@ class RegularizeModel(Regularizers):
 
 
 class RegularizeFunc(Regularizers):
-    def __init__(self, ListOfModels = None, R = lambda x: x.sum(), device = 'cpu'):
+    def __init__(self, ListOfModels = None, R = lambda x: x.sum(), epoch=100, device = 'cpu'):
         super(RegularizeFunc, self).__init__()
 
         if ListOfModels is None:
@@ -115,6 +115,8 @@ class RegularizeFunc(Regularizers):
         for k, LocalModel in enumerate(self.ListOfModels):
             if LocalModel.w_0 is not None:
                 self.ListOfModelsW0.append((k, LocalModel.w_0.clone()))
+
+        self.epoch = epoch
                 
         self.R = R
 
@@ -136,12 +138,13 @@ class RegularizeFunc(Regularizers):
         HyperParameters is a dictionary
         """
         
-        W0_ = torch.tensor(torch.cat([w0[1] for w0 in self.ListOfModelsW0], dim = 1), requires_grad=True)
+        W0_ = torch.tensor(torch.cat([w0[1] for w0 in self.ListOfModelsW0], dim = -1), requires_grad=True)
         W0 = W0_.transpose(0,1)
-        
+
         optimizer = torch.optim.Adam([W0_])
         
-        for i in range(100):
+        
+        for i in range(self.epoch):
             loss = 0
             for local_model, w0  in zip(self.ListOfModels, W0):
                 if local_model.A is not None:
@@ -157,7 +160,7 @@ class RegularizeFunc(Regularizers):
                             A_inv = (2**32)*torch.eye(local_model.A.shape[0])
 
 
-                    loss += -0.5*(w0@A_inv@w0)
+                    loss += -0.5*(w0@A_inv@w0)+0.5*w0@A_inv@local_model.W
 
             loss += self.R(W0)
 
