@@ -1,3 +1,5 @@
+![CI](https://github.com/andriygav/MixtureLib/workflows/CI/badge.svg?branch=master)
+
 # MixtureLib
 
 ## Requirements
