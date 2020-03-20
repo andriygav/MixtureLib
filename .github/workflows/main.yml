@@ -10,7 +10,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+    container:
+      image: python:3.6
+      volumes:
+        - dist:dist
+        - public:public
+        
     strategy:
       matrix:
         python-version: [3.6]
@@ -22,6 +27,24 @@ jobs:
         run: |
           sudo apt-get install python3-sphinx
           pip install -U sphinx
-      - name: Build sphinx
+      - name: Build docs
         run: |
           sphinx-build -b html ./doc/source/ public
+          
+      - uses: actions/download-artifact@v1
+        with:
+          name: distributions
+          path: dist
+          
+      - name: github pages deploy
+        uses: peaceiris/actions-gh-pages@v2.3.1
+        env:
+          PERSONAL_TOKEN: ${{ secrets.PAT }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: public
+
+      # since gh-pages has a history, this step might no longer be necessary.
+      - uses: actions/upload-artifact@v1
+        with:
+          name: documentation
+          path: public
