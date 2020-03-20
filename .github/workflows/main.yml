@@ -20,9 +20,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Install dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install python3-sphinx
           pip install -U sphinx
       - name: Build sphinx
         run: |
-          - sphinx-build -b html ./doc/source/ public
+          sphinx-build -b html ./doc/source/ public
