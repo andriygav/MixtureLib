@@ -21,6 +21,7 @@ project = 'MixtureLib'
 copyright = '2020, Andrey Grabovoy'
 author = 'Andrey Grabovoy'
 
+master_doc = 'index'
 
 # -- General configuration ---------------------------------------------------
 

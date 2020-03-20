@@ -2,11 +2,10 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, feature/docs ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, feature/docs ]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,11 +15,22 @@ jobs:
         python-version: [3.6]
         
     steps:
-      - name: Checkout repository
+      - name: Checkout 🛎️
         uses: actions/checkout@v2
+        
       - name: Install dependencies
         run: |
+          sudo apt-get install python3-sphinx
           pip install -U sphinx
-      - name: Build sphinx
+          
+      - name: Build docs
         run: |
-          echo 1
+          sphinx-build -b html ./doc/source/ public
+          
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: public # The folder the action should deploy.
+          
