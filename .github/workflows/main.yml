@@ -6,22 +6,16 @@ on:
   pull_request:
     branches: [ master, feature/docs ]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: python:3.6
-      volumes:
-        - dist:dist
-        - public:public
-        
+    
     strategy:
       matrix:
         python-version: [3.6]
         
     steps:
-      - name: Checkout repository
+      - name: Checkout 🛎️
         uses: actions/checkout@v2
         
       - name: Install dependencies
@@ -36,5 +30,5 @@ jobs:
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: public # The folder the action should deploy.
+          FOLDER: ./public # The folder the action should deploy.
           
