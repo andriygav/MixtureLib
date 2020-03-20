@@ -8,7 +8,7 @@
 ```
 git clone https://github.com/andriygav/MixtureLib.git
 cd MixtureLib
-python3.6 -m pip install ./src/.
+python3.6 -m pip install ./src/
 ```
 
 ## Uninstallation
