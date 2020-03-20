@@ -16,8 +16,9 @@ jobs:
         python-version: [3.6]
         
     steps:
-    - name: Install dependencies
-      run: |
-        pip install -U sphinx
-        echo $PATH
-        pip install -r src/requirements.txt
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          pip install -U sphinx
+          pip install -r ./src/requirements.txt
