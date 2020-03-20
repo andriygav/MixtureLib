@@ -23,6 +23,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        
       - name: Install dependencies
         run: |
           pip install -U sphinx
@@ -30,20 +31,10 @@ jobs:
         run: |
           sphinx-build -b html ./doc/source/ public
           
-      - uses: actions/download-artifact@v1
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
-          name: distributions
-          path: dist
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: public # The folder the action should deploy.
           
-      - name: github pages deploy
-        uses: peaceiris/actions-gh-pages@v2.3.1
-        env:
-          PERSONAL_TOKEN: ${{ secrets.PAT }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: public
-
-      # since gh-pages has a history, this step might no longer be necessary.
-      - uses: actions/upload-artifact@v1
-        with:
-          name: documentation
-          path: public
