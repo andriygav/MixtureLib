@@ -19,5 +19,5 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -U sphinx
-        ls
-        pip install -r ../../src/requirements.txt
+        echo $PATH
+        pip install -r src/requirements.txt
