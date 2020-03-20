@@ -23,4 +23,4 @@ jobs:
           pip install -U sphinx
       - name: Build sphinx
         run: |
-          sphinx-build -b html ./doc/source/ public
+          echo 1
