@@ -6,7 +6,7 @@ def read(file_path):
         return f.read()
 
 
-__version__ = 0.0.1
+__version__ = '0.0.1'
 readme = read('README.md')
 requirements = read('requirements.txt')
 
