@@ -21,6 +21,8 @@ jobs:
       - name: Install Dependencies
         run: |
           python3.6 -m pip install -U pytest
+          python3.6 -m pip install -U setuptools
+          python3.6 -m pip install -U src/
           
       - name: Testing
         run: |
