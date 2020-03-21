@@ -1,0 +1,22 @@
+name: test
+on: [push, pull_request]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        
+        strategy:
+        matrix:
+            python-version: [3.6]
+            
+        steps:
+        - name: Checkout 🛎️
+            uses: actions/checkout@v2
+
+        - name: Install Dependencies
+            run: |
+                pip install -U pytest
+          
+        - name: Testing
+            run: |
+                pytest tests/*
