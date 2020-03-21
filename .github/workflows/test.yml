@@ -16,7 +16,8 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install -U pytest
+          pip install -U src/
           
       - name: Testing
         run: |
-          pytest tests/*
+          python -m pytest tests/*
