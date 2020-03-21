@@ -1,5 +1,5 @@
-![test](https://github.com/andriygav/MixtureLib/workflows/test/badge.svg?branch=master)
-![docs](https://github.com/andriygav/MixtureLib/workflows/docs/badge.svg?branch=master)
+![test](https://github.com/andriygav/MixtureLib/workflows/test/badge.svg)
+![test](https://github.com/andriygav/MixtureLib/workflows/docs/badge.svg)
 
 # MixtureLib
 
