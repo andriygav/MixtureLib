@@ -1,0 +1,29 @@
+name: test
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        python-version: [3.6]
+        
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.6
+
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+        
+      - name: Install Dependencies
+        run: |
+          python3.6 -m pip install -U pytest
+          python3.6 -m pip install -U setuptools
+          python3.6 -m pip install -U src/
+          
+      - name: Testing
+        run: |
+          pytest tests/*
