@@ -8,7 +8,7 @@ def read(file_path):
         return f.read()
 
 
-readme = read('README.md')
+readme = read('README.rst')
 requirements = read('requirements.txt')
 
 

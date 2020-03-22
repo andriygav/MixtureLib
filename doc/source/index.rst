@@ -8,8 +8,9 @@ Welcome to Mixture Lib!
 
 .. toctree::
    :maxdepth: 1
-   :caption: Get Started:
+   :caption: Main Info:
    
+   info.rst   
    installation.rst
    example.rst
 
