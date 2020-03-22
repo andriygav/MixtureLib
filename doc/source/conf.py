@@ -12,6 +12,9 @@
 #
 import os
 import sys
+
+from MixtureLib import __version__
+
 sys.path.insert(0, os.path.abspath('../../src/'))
 
 
@@ -21,6 +24,7 @@ project = 'MixtureLib'
 copyright = '2020, Andrey Grabovoy'
 author = 'Andrey Grabovoy'
 
+version = __version__
 master_doc = 'index'
 
 # -- General configuration ---------------------------------------------------

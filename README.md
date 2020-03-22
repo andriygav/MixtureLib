@@ -19,9 +19,6 @@ python3.6 -m pip install ./src/
 python3.6 -m pip uninstall MixtureLib
 ```
 
-## Version
-0.0.1
-
 ## Example
 Example file is available [here](https://github.com/andriygav/MixtureLib/blob/master/examples/example.ipynb). Before launch this file, please install MixtureLib lib.
 ### Mixture Of Experts
