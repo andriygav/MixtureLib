@@ -9,11 +9,11 @@ Mixture Lib
     :alt: Build status
 
 .. |docs| image:: 	https://github.com/andriygav/MixtureLib/workflows/docs/badge.svg
-    :target: https://github.com/andriygav/MixtureLib/tree/master
+    :target: https://andriygav.github.io/MixtureLib/
     :alt: Build status
     
 .. |pypi| image:: https://img.shields.io/pypi/v/MixtureLib
-    :target: https://github.com/andriygav/MixtureLib/tree/master
+    :target: https://pypi.org/project/MixtureLib/
     :alt: PyPI
 
 Basic information
