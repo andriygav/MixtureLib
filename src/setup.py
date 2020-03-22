@@ -8,7 +8,7 @@ def read(file_path):
         return f.read()
 
 
-readme = read('../README.rst')
+readme = read('README.rst')
 requirements = read('requirements.txt')
 
 
@@ -25,6 +25,6 @@ setup(
 
     # options
     packages=find_packages(),
-    python_requires='==3.6',
+    python_requires='==3.6.*',
     install_requires=requirements,
 )
