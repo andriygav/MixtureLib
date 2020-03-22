@@ -12,6 +12,9 @@
 #
 import os
 import sys
+
+from MixtureLib import __version__
+
 sys.path.insert(0, os.path.abspath('../../src/'))
 
 
@@ -21,6 +24,7 @@ project = 'MixtureLib'
 copyright = '2020, Andrey Grabovoy'
 author = 'Andrey Grabovoy'
 
+version = __version__
 master_doc = 'index'
 
 # -- General configuration ---------------------------------------------------
@@ -43,7 +47,7 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
 
-html_extra_path = ['../../examples/pictures/']
+html_extra_path = []
 
 
 # -- Options for HTML output -------------------------------------------------
