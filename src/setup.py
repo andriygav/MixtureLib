@@ -18,11 +18,13 @@ setup(
     version=__version__,
     license='MIT',
     author='Andrey Grabovoy',
+    author_email="grabovoy.av@phystech.edu",
     description='mixture lib, python package',
     long_description=readme,
     url='https://github.com/andriygav/MixtureLib',
 
     # options
     packages=find_packages(),
+    python_requires='==3.6.*',
     install_requires=requirements,
 )
