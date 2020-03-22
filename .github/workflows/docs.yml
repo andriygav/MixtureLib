@@ -25,6 +25,7 @@ jobs:
         
       - name: Install Dependencies
         run: |
+          python3.6 -m pip install -U src/
           python3.6 -m pip install -U sphinx
           python3.6 -m pip install sphinx-rtd-theme
           
