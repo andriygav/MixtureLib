@@ -2,7 +2,8 @@ name: test
 on: [push, pull_request]
 
 jobs:
-  build:
+  pytest:
+    name: pytest
     runs-on: ubuntu-latest
     
     strategy:
@@ -20,10 +21,38 @@ jobs:
         
       - name: Install Dependencies
         run: |
-          python3.6 -m pip install -U pytest
-          python3.6 -m pip install -U setuptools
-          python3.6 -m pip install -U src/
+          pip install -U pytest
+          pip install -U setuptools
+          pip install -U src/
           
       - name: Testing
         run: |
           pytest tests/*
+
+  docs:
+    name: docs
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        python-version: [3.6]
+        
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.6
+
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+        
+      - name: Install Dependencies
+        run: |
+          pip install -U src/
+          pip install -U sphinx
+          pip install -U sphinx-rtd-theme
+          
+      - name: Build Docs
+        run: |
+          sphinx-build -b html ./doc/source/ public
+          touch public/.nojekyll

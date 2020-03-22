@@ -3,13 +3,25 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to MixtureLib's documentation!
-======================================
+Welcome to Mixture Lib!
+=======================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 1
+   :caption: Get Started:
+   
+   installation.rst
+   example.rst
 
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Packages:
+
+   LocalModels.rst
+   Regularizers.rst
+   HyperModels.rst
+   Mixture.rst
 
 
 Indices and tables
