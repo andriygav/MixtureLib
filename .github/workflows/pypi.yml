@@ -32,6 +32,12 @@ jobs:
           cp README.rst package/
           cp LICENSE package/
 
+      - name: Make Package Dist
+        run: |
+          cd package/
+          python setup.py sdist bdist_wheel
+          cd ..
+
       - name: Publish Package
         if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
         uses: pypa/gh-action-pypi-publish@master
