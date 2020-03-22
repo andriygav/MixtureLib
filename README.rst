@@ -25,10 +25,10 @@ Requirements and Installation
 =============================
 A simple instruction of installation using pip is provided near the `source code <https://github.com/andriygav/MixtureLib/tree/master/src>`_.
 
-More information about installation can be found in `documentation <https://andriygav.github.io/MixtureLib/installation.html>`_.
+More information about installation can be found in documentation `installation <https://andriygav.github.io/MixtureLib/installation.html>`_ page.
 
 Example of use
 ==============
-A simple examples of module usage can be found in `documentation <file:///Users/andrey/MixtureLib/public/example.html>`_.
+A simple examples of module usage can be found in documentation `example <file:///Users/andrey/MixtureLib/public/example.html>`_ page.
 
 

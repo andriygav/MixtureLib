@@ -47,7 +47,7 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
 
-html_extra_path = ['../../examples/pictures/']
+html_extra_path = []
 
 
 # -- Options for HTML output -------------------------------------------------
