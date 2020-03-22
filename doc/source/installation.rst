@@ -6,7 +6,7 @@ Requirements
 ============
 
 - Python 3.6.2
-- pip 19.2.3
+- pip 20.0.2
 
 Installing on macOS
 ===================
