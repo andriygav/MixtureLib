@@ -1,5 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""
+The :mod:`MixtureLib.Regularizers` contains classes:
+
+- :class:`MixtureLib.Mixture.Mixture`
+- :class:`MixtureLib.Mixture.MixtureEmSample`
+- :class:`MixtureLib.Mixture.MixtureEM`
+"""
+from __future__ import print_function
+
+__docformat__ = 'restructuredtext'
+
 import math
 
 import torch
@@ -9,20 +20,115 @@ import torch.nn.functional as F
 from torch.utils.data import TensorDataset, DataLoader, Dataset
 
 class Mixture:
+    r"""Base class for all mixtures."""
     def __init__(self):
+        r"""Constructor method
+        """
         pass
 
     def fit(self, X = None, Y = None, epoch = 10, progress = None):
+        r"""A method that fit a hyper model and local models in one procedure.
+
+        :param X: The tensor of shape 
+            `num_elements` :math:`\times` `num_feature`.
+        :type X: FloatTensor
+        :param Y: The tensor of shape 
+            `num_elements` :math:`\times` `num_answers`.
+        :param epoch: The number of epoch of training.
+        :type epoch: int
+        :param progress: The yield function for printing progress, like a tqdm.
+            The function must take an iterator at the input and return 
+            the same data.
+        :type epoch: function
+        """
         raise NotImplementedError
 
     def predict(self, X):
+        r"""A method that predict value for given input data.
+
+        :param X: The tensor of shape 
+            `num_elements` :math:`\times` `num_feature`.
+        :type X: FloatTensor
+        :return: The prediction of shape
+            `num_elements` :math:`\times` `num_answers`.
+        :rtype: FloatTensor
+        """
         raise NotImplementedError
 
 
 class MixtureEmSample(Mixture):
+    r"""The implementation of EM-algorithm for solving the 
+    two stage optimisation problem. 
+    Unlike :class:`MixtureLib.Mixture.MixtureEM`, this class samples data 
+    when fit local models.
+
+    .. warning::
+        All Hyper Parameters should be additive to models, when you wanna 
+        optimize them.
+
+    .. warning::
+        It's necessary! The parameter `input_dim` will be depricated.
+
+        It's necessary! The parameter `K` will be depricated.
+
+    :param input_dim: The number of features.
+    :type input_dim: int
+    :param K: The number of local models.
+    :type K: int
+    :param HyperParameters: The dictionary of all hyper parametrs.
+        Where `key` is string and `value` is float or FloatTensor.
+    :param HyperModel: The hyper model which are weighted all local models.
+    :type HyperModel: :class:`MixtureLib.HyperModels.HyperModel`
+    :param ListOfModels: The list of models with E_step and M_step methods.
+    :type ListOfModels: list
+    :param ListOfRegularizeModel: The list of regulizers with E_step and 
+        M_step methods.
+    :type ListOfRegularizeModel: list
+    :param device: The device for pytorch. 
+        Can be 'cpu' or 'gpu'. Default 'cpu'.
+    :type device: string
+
+    Example:
+
+    >>> _ = torch.random.manual_seed(42) # Set random seed for repeatability
+    >>>
+    >>> w = torch.randn(2, 1) # Generate real parameter vector
+    >>> X = torch.randn(12, 2) # Generate features data
+    >>> Y = torch.cat(
+    ...         [
+    ...             X[:5]@first_w, 
+    ...             X[5:10]@second_w, 
+    ...             X[10:11]@first_w, 
+    ...             X[11:]@second_w
+    ...         ])
+    ...     + 0.1 * torch.randn(12, 1) # Generate target data with noise 0.1
+    >>>
+    >>> first_model = EachModelLinear(
+    ...     input_dim=2, 
+    ...     A=torch.tensor([1., 1.]),
+    ...     w=torch.tensor([[0.], [0.]])) # Init first local model
+    >>> second_model = EachModelLinear(
+    ...     input_dim=2,
+    ...     A=torch.tensor([1., 1.]),
+    ...     w=torch.tensor([[1.], [1.]])) # Init second local model
+    >>> hyper_model = HyperExpertNN(
+    ...     input_dim=2, 
+    ...     output_dim=2) # Init hyper model with Diriclet weighting
+    >>> hyper_parameters = {'beta': 1.} # Withor hyper parameters
+    >>>
+    >>> mixture = MixtureEmSample(
+    ...     input_dim=2, K=2, HyperModel=hyper_model, 
+    ...     HyperParameters=hyper_parameters, 
+    ...     ListOfModels=[first_model, second_model]) # Init hyper model
+    >>> mixture.fit(X[:10], Y[:10]) # Optimise model parameter
+    >>>
+    >>> mixture.predict(X[10:])[0].view(-1)
+    tensor([-0.0129, -0.4518])
+    >>> Y[10:].view(-1)
+    tensor([-0.2571, -0.4907])
+    """
     def __init__(self, input_dim = 10, K = 2, HyperParameters = {}, HyperModel = None, ListOfModels = None, ListOfRegularizeModel = None, device = 'cpu'):
-        """
-        It's necessary! The Hyper Parameter should be additive to models.
+        r"""Constructor method
         """
         super(MixtureEmSample, self).__init__()
         self.K = K
@@ -55,6 +161,16 @@ class MixtureEmSample(Mixture):
         return
         
     def E_step(self, X, Y):
+        r"""Doing E-step of EM-algorigthm. This method call E_step for all 
+        local models, for hyper model and for all regularizations step by step.
+
+        :param X: The tensor of shape 
+            `num_elements` :math:`\times` `num_feature`.
+        :type X: FloatTensor
+        :param Y: The tensor of shape 
+            `num_elements` :math:`\times` `num_answers`.
+        :type Y: FloatTensor
+        """
 # Optimize Z
         self.temp1 = temp1 = self.HyperModel.LogPiExpectation(X, Y, self.HyperParameters)
         self.temp2 = temp2 = torch.cat([self.ListOfModels[k].LogLikeLihoodExpectation(X, Y, self.HyperParameters) for k in range(self.K)], dim = 1)
@@ -88,6 +204,16 @@ class MixtureEmSample(Mixture):
         return
         
     def M_step(self, X, Y):
+        r"""Doing M-step of EM-algorigthm. This method call M_step for all 
+        local models, for hyper model and for all regularizations step by step.
+
+        :param X: The tensor of shape 
+            `num_elements` :math:`\times` `num_feature`.
+        :type X: FloatTensor
+        :param Y: The tensor of shape 
+            `num_elements` :math:`\times` `num_answers`.
+        :type Y: FloatTensor
+        """
 # Optimize EachModel
         for k in range(self.K):
             self.ListOfModels[k].M_step(X[self.lerning_indexes[k]], Y[self.lerning_indexes[k]], torch.ones_like(self.pZ[self.lerning_indexes[k], k]).view([-1, 1]), self.HyperParameters)
@@ -114,9 +240,21 @@ class MixtureEmSample(Mixture):
         return
                 
     def fit(self, X = None, Y = None, epoch = 10, progress = None):
-        """
-        X has a shape [N x n]
-        Y has a shape [n x p]
+        r"""A method that fit a hyper model and local models in one procedure.
+
+        Call E-step and M-step in each epoch.
+
+        :param X: The tensor of shape 
+            `num_elements` :math:`\times` `num_feature`.
+        :type X: FloatTensor
+        :param Y: The tensor of shape 
+            `num_elements` :math:`\times` `num_answers`.
+        :param epoch: The number of epoch of training.
+        :type epoch: int
+        :param progress: The yield function for printing progress, like a tqdm.
+            The function must take an iterator at the input and return 
+            the same data.
+        :type epoch: function
         """
         if X is None:
             return None
@@ -135,8 +273,23 @@ class MixtureEmSample(Mixture):
         return
     
     def predict(self, X):
-        """
-        X has a shape [N x n]
+        r"""A method that predict value and probability for each local models 
+        for given input data.
+
+        For each x from X predicts
+        :math:`answer = \sum_{k=1}^{K}\pi_k\bigr(x\bigr)g_k\bigr(x\bigr)`, 
+        where :math:`g_k` is a local model.
+
+        :param X: The tensor of shape 
+            `num_elements` :math:`\times` `num_feature`.
+        :type X: FloatTensor
+        :return:
+            The prediction of shape 
+            `num_elements` :math:`\times` `num_answers`.
+            
+            The probability of shape
+            `num_elements` :math:`\times` `num_models`.
+        :rtype: FloatTensor, FloatTensor
         """
         pi = self.HyperModel.PredictPi(X, self.HyperParameters).detach()
         answ = torch.cat([self.ListOfModels[k](X) for k in range(self.K)], dim = 1).detach()
@@ -144,6 +297,76 @@ class MixtureEmSample(Mixture):
         return (answ*pi).sum(dim = -1).view([-1, 1]), pi.data.numpy()
 
 class MixtureEM(Mixture):
+    r"""The implementation of EM-algorithm for solving the 
+    two stage optimisation problem. 
+    Unlike :class:`MixtureLib.Mixture.MixtureEM`, this class uses analytical 
+    solution when fit local models.
+
+    .. warning::
+        All Hyper Parameters should be additive to models, when you wanna 
+        optimize them.
+
+    .. warning::
+        It's necessary! The parameter `input_dim` will be depricated.
+
+        It's necessary! The parameter `K` will be depricated.
+
+    :param input_dim: The number of features.
+    :type input_dim: int
+    :param K: The number of local models.
+    :type K: int
+    :param HyperParameters: The dictionary of all hyper parametrs.
+        Where `key` is string and `value` is float or FloatTensor.
+    :param HyperModel: The hyper model which are weighted all local models.
+    :type HyperModel: :class:`MixtureLib.HyperModels.HyperModel`
+    :param ListOfModels: The list of models with E_step and M_step methods.
+    :type ListOfModels: list
+    :param ListOfRegularizeModel: The list of regulizers with E_step and 
+        M_step methods.
+    :type ListOfRegularizeModel: list
+    :param device: The device for pytorch. 
+        Can be 'cpu' or 'gpu'. Default 'cpu'.
+    :type device: string
+
+    Example:
+
+    >>> _ = torch.random.manual_seed(42) # Set random seed for repeatability
+    >>>
+    >>> w = torch.randn(2, 1) # Generate real parameter vector
+    >>> X = torch.randn(12, 2) # Generate features data
+    >>> Y = torch.cat(
+    ...         [
+    ...             X[:5]@first_w, 
+    ...             X[5:10]@second_w, 
+    ...             X[10:11]@first_w, 
+    ...             X[11:]@second_w
+    ...         ])
+    ...     + 0.1 * torch.randn(12, 1) # Generate target data with noise 0.1
+    >>>
+    >>> first_model = EachModelLinear(
+    ...     input_dim=2, 
+    ...     A=torch.tensor([1., 1.]),
+    ...     w=torch.tensor([[0.], [0.]])) # Init first local model
+    >>> second_model = EachModelLinear(
+    ...     input_dim=2,
+    ...     A=torch.tensor([1., 1.]),
+    ...     w=torch.tensor([[1.], [1.]])) # Init second local model
+    >>> hyper_model = HyperExpertNN(
+    ...     input_dim=2, 
+    ...     output_dim=2) # Init hyper model with Diriclet weighting
+    >>> hyper_parameters = {'beta': 1.} # Withor hyper parameters
+    >>>
+    >>> mixture = MixtureEmSample(
+    ...     input_dim=2, K=2, HyperModel=hyper_model, 
+    ...     HyperParameters=hyper_parameters, 
+    ...     ListOfModels=[first_model, second_model]) # Init hyper model
+    >>> mixture.fit(X[:10], Y[:10]) # Optimise model parameter
+    >>>
+    >>> mixture.predict(X[10:])[0].view(-1)
+    tensor([ 0.0878, -0.4212])
+    >>> Y[10:].view(-1)
+    tensor([-0.2571, -0.4907])
+    """
     def __init__(self, input_dim = 10, K = 2, HyperParameters = {}, HyperModel = None, ListOfModels = None, ListOfRegularizeModel = None, device = 'cpu'):
         """
         It's necessary! The Hyper Parameter should be additive to models.
@@ -179,6 +402,16 @@ class MixtureEM(Mixture):
         return
         
     def E_step(self, X, Y):
+        r"""Doing E-step of EM-algorigthm. This method call E_step for all 
+        local models, for hyper model and for all regularizations step by step.
+
+        :param X: The tensor of shape 
+            `num_elements` :math:`\times` `num_feature`.
+        :type X: FloatTensor
+        :param Y: The tensor of shape 
+            `num_elements` :math:`\times` `num_answers`.
+        :type Y: FloatTensor
+        """
 # Optimize Z
         temp1 = self.HyperModel.LogPiExpectation(X, Y, self.HyperParameters)
         temp2 = torch.cat([self.ListOfModels[k].LogLikeLihoodExpectation(X, Y, self.HyperParameters) for k in range(self.K)], dim = 1)
@@ -197,6 +430,16 @@ class MixtureEM(Mixture):
         return
         
     def M_step(self, X, Y):
+        r"""Doing M-step of EM-algorigthm. This method call M_step for all 
+        local models, for hyper model and for all regularizations step by step.
+
+        :param X: The tensor of shape 
+            `num_elements` :math:`\times` `num_feature`.
+        :type X: FloatTensor
+        :param Y: The tensor of shape 
+            `num_elements` :math:`\times` `num_answers`.
+        :type Y: FloatTensor
+        """
 # Optimize EachModel
         for k in range(self.K):
             self.ListOfModels[k].M_step(X, Y, self.pZ[:, k].view([-1, 1]), self.HyperParameters)
@@ -223,9 +466,21 @@ class MixtureEM(Mixture):
         return
                 
     def fit(self, X = None, Y = None, epoch = 10, progress = None):
-        """
-        X has a shape [N x n]
-        Y has a shape [n x p]
+        r"""A method that fit a hyper model and local models in one procedure.
+
+        Call E-step and M-step in each epoch.
+
+        :param X: The tensor of shape 
+            `num_elements` :math:`\times` `num_feature`.
+        :type X: FloatTensor
+        :param Y: The tensor of shape 
+            `num_elements` :math:`\times` `num_answers`.
+        :param epoch: The number of epoch of training.
+        :type epoch: int
+        :param progress: The yield function for printing progress, like a tqdm.
+            The function must take an iterator at the input and return 
+            the same data.
+        :type epoch: function
         """
         if X is None:
             return None
@@ -244,8 +499,22 @@ class MixtureEM(Mixture):
         return
     
     def predict(self, X):
-        """
-        X has a shape [N x n]
+        r"""A method that predict value for given input data.
+
+        For each x from X predicts
+        :math:`answer = \sum_{k=1}^{K}\pi_k\bigr(x\bigr)g_k\bigr(x\bigr)`, 
+        where :math:`g_k` is a local model.
+
+        :param X: The tensor of shape 
+            `num_elements` :math:`\times` `num_feature`.
+        :type X: FloatTensor
+        :return:
+            The prediction of shape 
+            `num_elements` :math:`\times` `num_answers`.
+            
+            The probability of shape
+            `num_elements` :math:`\times` `num_models`.
+        :rtype: FloatTensor, FloatTensor
         """
         pi = self.HyperModel.PredictPi(X, self.HyperParameters).detach()
         answ = torch.cat([self.ListOfModels[k](X) for k in range(self.K)], dim = 1).detach()
