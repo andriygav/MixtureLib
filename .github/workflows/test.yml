@@ -2,7 +2,8 @@ name: test
 on: [push, pull_request]
 
 jobs:
-  build:
+  pytest:
+    name: pytest
     runs-on: ubuntu-latest
     
     strategy:
@@ -27,3 +28,26 @@ jobs:
       - name: Testing
         run: |
           pytest tests/*
+
+  docs:
+    name: docs
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        python-version: [3.6]
+        
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+        
+      - name: Install Dependencies
+        run: |
+          sudo apt-get install python3-sphinx
+          pip install -U sphinx
+          pip install sphinx-rtd-theme
+          
+      - name: Build Docs
+        run: |
+          sphinx-build -b html ./doc/source/ public
+          touch public/.nojekyll
