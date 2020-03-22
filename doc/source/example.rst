@@ -13,7 +13,7 @@ in this virtualenv.
     torch==1.4.0
     numpy==1.18.1
     matplotlib==2.2.4
-    MixtureLib==0.1.1
+    MixtureLib==0.1.*
 
 Include packages.
 

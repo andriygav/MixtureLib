@@ -8,16 +8,14 @@ Requirements
 - Python 3.6.2
 - pip 20.0.2
 
-Installing on macOS
-===================
+Instaling by using PyPi
+=======================
 
 Install
 -------
 .. code-block:: bash
 
-	git clone https://github.com/andriygav/MixtureLib.git
-	cd MixtureLib
-	python3.6 -m pip install ./src/
+	python3.6 -m pip install MixtureLib
 
 Uninstall
 ---------
@@ -25,8 +23,8 @@ Uninstall
 
 	python3.6 -m pip uninstall MixtureLib
 
-Installing on Ubuntu
-====================
+Installing from GitHub source
+=============================
 
 Install
 -------
