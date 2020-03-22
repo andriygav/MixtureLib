@@ -15,14 +15,18 @@ jobs:
         python-version: [3.6]
         
     steps:
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.6
+
       - name: Checkout 🛎️
         uses: actions/checkout@v2
         
       - name: Install Dependencies
         run: |
-          sudo apt-get install python3-sphinx
-          pip install -U sphinx
-          pip install sphinx-rtd-theme
+          python3.6 -m pip install -U sphinx
+          python3.6 -m pip install sphinx-rtd-theme
           
       - name: Build Docs
         run: |
