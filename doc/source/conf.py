@@ -49,6 +49,14 @@ exclude_patterns = []
 
 html_extra_path = []
 
+html_context = {
+    "display_github": True, # Integrate GitHub
+    "github_user": "andriygav", # Username
+    "github_repo": "MixtureLib", # Repo name
+    "github_version": "master", # Version
+    "conf_py_path": "/doc/source/", # Path in the checkout to the docs root
+}
+
 
 # -- Options for HTML output -------------------------------------------------
 
