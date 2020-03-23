@@ -13,7 +13,7 @@
 import os
 import sys
 
-from MixtureLib import __version__
+from mixturelib import __version__
 
 sys.path.insert(0, os.path.abspath('../../src/'))
 

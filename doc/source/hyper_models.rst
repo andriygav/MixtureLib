@@ -2,7 +2,7 @@
 Hyper Models
 ************
 
-.. automodule:: MixtureLib.HyperModels
+.. automodule:: mixturelib.hyper_models
     :members:
 
 

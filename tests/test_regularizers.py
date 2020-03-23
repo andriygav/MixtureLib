@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 import torch
 
-from MixtureLib.Regularizers import Regularizers
-from MixtureLib.Regularizers import RegularizeModel
-from MixtureLib.Regularizers import RegularizeFunc
+from mixturelib.regularizers import Regularizers
+from mixturelib.regularizers import RegularizeModel
+from mixturelib.regularizers import RegularizeFunc
 
-from MixtureLib.LocalModels import EachModelLinear
+from mixturelib.local_models import EachModelLinear
 
 def test_RegularizeModel_init():
     list_of_models = []
