@@ -8,7 +8,7 @@ Requirements
 - Python 3.6.2
 - pip 20.0.2
 
-Instaling by using PyPi
+Installing by using PyPi
 =======================
 
 Install
