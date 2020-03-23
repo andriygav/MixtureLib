@@ -2,7 +2,7 @@
 Local Models
 ************
 
-.. automodule:: MixtureLib.LocalModels
+.. automodule:: mixturelib.local_models
     :members:
 
 

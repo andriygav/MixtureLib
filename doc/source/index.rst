@@ -24,10 +24,10 @@ Welcome to Mixture Lib!
    :maxdepth: 1
    :caption: Packages:
 
-   LocalModels.rst
-   Regularizers.rst
-   HyperModels.rst
-   Mixture.rst
+   local_models.rst
+   regularizers.rst
+   hyper_models.rst
+   mixture.rst
 
 
 Indices and tables

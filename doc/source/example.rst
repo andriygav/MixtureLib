@@ -13,7 +13,7 @@ in this virtualenv.
     torch==1.4.0
     numpy==1.18.1
     matplotlib==2.2.4
-    MixtureLib==0.1.*
+    mixturelib==0.2.*
 
 Include packages.
 
@@ -24,9 +24,9 @@ Include packages.
     import matplotlib.pyplot as plt
     from mpl_toolkits.mplot3d import Axes3D
 
-    from MixtureLib.Mixture import MixtureEmSample
-    from MixtureLib.LocalModels import EachModelLinear
-    from MixtureLib.HyperModels import HyperExpertNN, HyperModelDirichlet
+    from mixturelib.mixture import MixtureEmSample
+    from mixturelib.local_models import EachModelLinear
+    from mixturelib.hyper_models import HyperExpertNN, HyperModelDirichlet
 
 Preparing the dataset
 =====================
@@ -76,16 +76,17 @@ Consider an example of a mixture of model. In this case the contribution of
 each model does not depend on the sample from dataset.
 
 Init local models. We consider linear model
-:class:`MixtureLib.LocalModels.EachModelLinear` as local model.
+:class:`mixturelib.local_models.EachModelLinear` as local model.
 
 .. code:: python
     
+    torch.random.manual_seed(42)
     first_model = EachModelLinear(input_dim=2)
     secode_model = EachModelLinear(input_dim=2)
 
     list_of_models = [first_model, secode_model]
 
-Init hyper model --- :class:`MixtureLib.HyperModels.HyperModelDirichlet`. 
+Init hyper model --- :class:`mixturelib.hyper_models.HyperModelDirichlet`. 
 In this case contribution of each model does not depend on sample from dataset.
 It is suggested that the contribution of each model has a 
 Dirichlet distribution.
@@ -131,6 +132,7 @@ Visualization of the real and predicted planes on the chart.
     ax = fig.add_subplot(111, projection='3d')
 
     grid_2d = np.array(np.meshgrid(range(-5, 5), range(-5, 5)))
+    xx, yy = grid_2d
 
     first_z = (predicted_first_w.reshape([-1, 1, 1])*grid_2d).sum(axis=0)
     second_z = (predicted_second_w.reshape([-1, 1, 1])*grid_2d).sum(axis=0)
@@ -164,17 +166,18 @@ Now consider an example of a mixture of experts on the same dataset. In this
 case contribution of each model is depend on sample from dataset.
 
 Init local models. We consider linear model
-:class:`MixtureLib.LocalModels.EachModelLinear` as local model.
+:class:`mixturelib.local_models.EachModelLinear` as local model.
 
 .. code:: python
-    
+
+    torch.random.manual_seed(42)
     first_model = EachModelLinear(input_dim=2)
     secode_model = EachModelLinear(input_dim=2)
 
     list_of_models = [first_model, secode_model]
 
 Init hyper model --- gate function 
-:class:`MixtureLib.HyperModels.HyperExpertNN`. In this case contribution of
+:class:`mixturelib.hyper_models.HyperExpertNN`. In this case contribution of
 each model is depend on sample from dataset. Gate function is a simple neural 
 network with softmax on the last layer.
 
@@ -219,6 +222,7 @@ Visualization of the real and predicted planes on the chart.
     ax = fig.add_subplot(111, projection='3d')
 
     grid_2d = np.array(np.meshgrid(range(-5, 5), range(-5, 5)))
+    xx, yy = grid_2d
 
     first_z = (predicted_first_w.reshape([-1, 1, 1])*grid_2d).sum(axis=0)
     second_z = (predicted_second_w.reshape([-1, 1, 1])*grid_2d).sum(axis=0)

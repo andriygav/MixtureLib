@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-The :mod:`MixtureLib.HyperModels` contains classes:
+The :mod:`mixturelib.hyper_models` contains classes:
 
-- :class:`MixtureLib.HyperModels.HyperModel`
-- :class:`MixtureLib.HyperModels.HyperModelDirichlet`
-- :class:`MixtureLib.HyperModels.HyperExpertNN`
+- :class:`mixturelib.hyper_models.HyperModel`
+- :class:`mixturelib.hyper_models.HyperModelDirichlet`
+- :class:`mixturelib.hyper_models.HyperExpertNN`
 """
 from __future__ import print_function
 

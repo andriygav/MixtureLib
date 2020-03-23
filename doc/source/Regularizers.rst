@@ -2,7 +2,7 @@
 Regularizers
 ************
 
-.. automodule:: MixtureLib.Regularizers
+.. automodule:: mixturelib.regularizers
     :members:
 
 

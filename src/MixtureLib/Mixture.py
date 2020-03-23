@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-The :mod:`MixtureLib.Regularizers` contains classes:
+The :mod:`mixturelib.regularizers` contains classes:
 
-- :class:`MixtureLib.Mixture.Mixture`
-- :class:`MixtureLib.Mixture.MixtureEmSample`
-- :class:`MixtureLib.Mixture.MixtureEM`
+- :class:`mixturelib.mixture.Mixture`
+- :class:`mixturelib.mixture.MixtureEmSample`
+- :class:`mixturelib.mixture.MixtureEM`
 """
 from __future__ import print_function
 
@@ -59,7 +59,7 @@ class Mixture:
 class MixtureEmSample(Mixture):
     r"""The implementation of EM-algorithm for solving the 
     two stage optimisation problem. 
-    Unlike :class:`MixtureLib.Mixture.MixtureEM`, this class samples data 
+    Unlike :class:`mixturelib.mixture.MixtureEM`, this class samples data 
     when fit local models.
 
     .. warning::
@@ -78,7 +78,7 @@ class MixtureEmSample(Mixture):
     :param HyperParameters: The dictionary of all hyper parametrs.
         Where `key` is string and `value` is float or FloatTensor.
     :param HyperModel: The hyper model which are weighted all local models.
-    :type HyperModel: :class:`MixtureLib.HyperModels.HyperModel`
+    :type HyperModel: :class:`mixturelib.hyper_models.HyperModel`
     :param ListOfModels: The list of models with E_step and M_step methods.
     :type ListOfModels: list
     :param ListOfRegularizeModel: The list of regulizers with E_step and 
@@ -299,7 +299,7 @@ class MixtureEmSample(Mixture):
 class MixtureEM(Mixture):
     r"""The implementation of EM-algorithm for solving the 
     two stage optimisation problem. 
-    Unlike :class:`MixtureLib.Mixture.MixtureEM`, this class uses analytical 
+    Unlike :class:`mixturelib.mixture.MixtureEM`, this class uses analytical 
     solution when fit local models.
 
     .. warning::
@@ -318,7 +318,7 @@ class MixtureEM(Mixture):
     :param HyperParameters: The dictionary of all hyper parametrs.
         Where `key` is string and `value` is float or FloatTensor.
     :param HyperModel: The hyper model which are weighted all local models.
-    :type HyperModel: :class:`MixtureLib.HyperModels.HyperModel`
+    :type HyperModel: :class:`mixturelib.hyper_models.HyperModel`
     :param ListOfModels: The list of models with E_step and M_step methods.
     :type ListOfModels: list
     :param ListOfRegularizeModel: The list of regulizers with E_step and 
