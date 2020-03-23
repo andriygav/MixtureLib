@@ -9,19 +9,19 @@ Requirements
 - pip 20.0.2
 
 Installing by using PyPi
-=======================
+========================
 
 Install
 -------
 .. code-block:: bash
 
-	python3.6 -m pip install MixtureLib
+	python3.6 -m pip install mixturelib
 
 Uninstall
 ---------
 .. code-block:: bash
 
-	python3.6 -m pip uninstall MixtureLib
+	python3.6 -m pip uninstall mixturelib
 
 Installing from GitHub source
 =============================
