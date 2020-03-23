@@ -2,7 +2,7 @@
 Mixture
 *******
 
-.. automodule:: MixtureLib.Mixture
+.. automodule:: mixturelib.mixture
     :members:
 
 

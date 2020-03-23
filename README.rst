@@ -33,6 +33,6 @@ More information about installation can be found in documentation `installation 
 
 Example of use
 ==============
-A simple examples of module usage can be found in documentation `example <file:///Users/andrey/MixtureLib/public/example.html>`_ page.
+A simple examples of module usage can be found in documentation `example <https://andriygav.github.io/MixtureLib/example.html>`_ page.
 
 

@@ -1,7 +1,7 @@
 import io
 from setuptools import setup, find_packages
 
-from MixtureLib import __version__
+from mixturelib import __version__
 
 def read(file_path):
     with io.open(file_path, 'r', encoding='utf-8') as f:
@@ -14,7 +14,7 @@ requirements = read('requirements.txt')
 
 setup(
     # metadata
-    name='MixtureLib',
+    name='mixturelib',
     version=__version__,
     license='MIT',
     author='Andrey Grabovoy',

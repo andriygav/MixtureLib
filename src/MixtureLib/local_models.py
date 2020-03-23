@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-The :mod:`MixtureLib.LocalModels` contains classes:
+The :mod:`mixturelib.local_models` contains classes:
 
-- :class:`MixtureLib.LocalModels.EachModel`
-- :class:`MixtureLib.LocalModels.EachModelLinear`
+- :class:`mixturelib.local_models.EachModel`
+- :class:`mixturelib.local_models.EachModelLinear`
 """
 from __future__ import print_function
 

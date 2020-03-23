@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import torch
 
-from MixtureLib.LocalModels import EachModelLinear
+from mixturelib.local_models import EachModelLinear
 
 
 def test_EachModelLinear_init():

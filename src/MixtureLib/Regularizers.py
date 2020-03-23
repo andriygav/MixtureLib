@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-The :mod:`MixtureLib.Regularizers` contains classes:
+The :mod:`mixturelib.regularizers` contains classes:
 
-- :class:`MixtureLib.Regularizers.Regularizers`
-- :class:`MixtureLib.Regularizers.RegularizeModel`
-- :class:`MixtureLib.Regularizers.RegularizeFunc`
+- :class:`mixturelib.regularizers.Regularizers`
+- :class:`mixturelib.regularizers.RegularizeModel`
+- :class:`mixturelib.regularizers.RegularizeFunc`
 """
 from __future__ import print_function
 
@@ -67,7 +67,7 @@ class RegularizeModel(Regularizers):
 
     .. warning::
         All local models must be Linear model for the regression task.
-        Also can be used :class:`MixtureLib.LocalModels.EachModelLinear`.
+        Also can be used :class:`mixturelib.local_models.EachModelLinear`.
 
     This Regularizer make correction on the M-step for each Linear Model.
 
@@ -232,7 +232,7 @@ class RegularizeFunc(Regularizers):
 
     .. warning::
         All local models must be Linear model for the regression task.
-        Also can be used :class:`MixtureLib.LocalModels.EachModelLinear`.
+        Also can be used :class:`mixturelib.local_models.EachModelLinear`.
 
     .. warning::
         Link function represent a likelihood. This function will be 
