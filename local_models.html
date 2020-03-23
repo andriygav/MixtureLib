@@ -1,0 +1,585 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Local Models &mdash; MixtureLib  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Regularizers" href="regularizers.html" />
+    <link rel="prev" title="Example" href="example.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> MixtureLib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Main Info:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="info.html">Mixture Lib</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Get Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html">Example</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Packages:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Local Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="regularizers.html">Regularizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hyper_models.html">Hyper Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mixture.html">Mixture</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MixtureLib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Local Models</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/andriygav/MixtureLib/blob/master/doc/source/local_models.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-mixturelib.local_models">
+<span id="local-models"></span><h1>Local Models<a class="headerlink" href="#module-mixturelib.local_models" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-mixturelib.local_models" title="mixturelib.local_models"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mixturelib.local_models</span></code></a> contains classes:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#mixturelib.local_models.EachModel" title="mixturelib.local_models.EachModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">mixturelib.local_models.EachModel</span></code></a></p></li>
+<li><p><a class="reference internal" href="#mixturelib.local_models.EachModelLinear" title="mixturelib.local_models.EachModelLinear"><code class="xref py py-class docutils literal notranslate"><span class="pre">mixturelib.local_models.EachModelLinear</span></code></a></p></li>
+</ul>
+<dl class="class">
+<dt id="mixturelib.local_models.EachModel">
+<em class="property">class </em><code class="sig-prename descclassname">mixturelib.local_models.</code><code class="sig-name descname">EachModel</code><a class="reference internal" href="_modules/mixturelib/local_models.html#EachModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mixturelib.local_models.EachModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for all local models.</p>
+<dl class="method">
+<dt id="mixturelib.local_models.EachModel.E_step">
+<code class="sig-name descname">E_step</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em>, <em class="sig-param">Z</em>, <em class="sig-param">HyperParameters</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/local_models.html#EachModel.E_step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mixturelib.local_models.EachModel.E_step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doing E-step of EM-algorithm. Finds variational probability <cite>q</cite> 
+of model parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>FloatTensor</em>) – The tensor of shape 
+<cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_feature</cite>.</p></li>
+<li><p><strong>Y</strong> (<em>FloatTensor</em>) – The tensor of shape 
+<cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_answers</cite>.</p></li>
+<li><p><strong>Z</strong> (<em>FloatTensor</em>) – The tensor of shape <cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>1</cite>.</p></li>
+<li><p><strong>HyperParameters</strong> (<em>dict</em>) – The dictionary of all hyper parametrs.
+Where <cite>key</cite> is string and <cite>value</cite> is FloatTensor.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mixturelib.local_models.EachModel.LogLikeLihoodExpectation">
+<code class="sig-name descname">LogLikeLihoodExpectation</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em>, <em class="sig-param">HyperParameters</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/local_models.html#EachModel.LogLikeLihoodExpectation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mixturelib.local_models.EachModel.LogLikeLihoodExpectation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns expected log-likelihod of a given vector of answers for
+given data seperated. The expectation is taken according to the model 
+parameters <span class="math notranslate nohighlight">\(\mathsf{E}p\bigr(Y|X\bigr)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>FloatTensor</em>) – The tensor of shape 
+<cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_feature</cite>.</p></li>
+<li><p><strong>Y</strong> (<em>FloatTensor</em>) – The tensor of shape
+<cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_answers</cite>.</p></li>
+<li><p><strong>HyperParameters</strong> (<em>dict</em>) – The dictionary of all hyper parametrs.
+Where <cite>key</cite> is string and <cite>value</cite> is FloatTensor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The tensor of shape <cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>1</cite>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>FloatTensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mixturelib.local_models.EachModel.M_step">
+<code class="sig-name descname">M_step</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em>, <em class="sig-param">Z</em>, <em class="sig-param">HyperParameters</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/local_models.html#EachModel.M_step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mixturelib.local_models.EachModel.M_step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doing M-step of EM-algorithm. Finds model hyper parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>FloatTensor</em>) – The tensor of shape 
+<cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_feature</cite>.</p></li>
+<li><p><strong>Y</strong> (<em>FloatTensor</em>) – The tensor of shape 
+<cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_answers</cite>.</p></li>
+<li><p><strong>Z</strong> (<em>FloatTensor</em>) – The tensor of shape <cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>1</cite>.</p></li>
+<li><p><strong>HyperParameters</strong> (<em>dict</em>) – The dictionary of all hyper parametrs.
+Where <cite>key</cite> is string and <cite>value</cite> is FloatTensor.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mixturelib.local_models.EachModel.OptimizeHyperParameters">
+<code class="sig-name descname">OptimizeHyperParameters</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em>, <em class="sig-param">Z</em>, <em class="sig-param">HyperParameters</em>, <em class="sig-param">Parameter</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/local_models.html#EachModel.OptimizeHyperParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mixturelib.local_models.EachModel.OptimizeHyperParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the local part of new Parameter.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Returned local part must be aditive to Parameter, because new 
+value of Parameter is sum of local part from all local model.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The number <cite>num_answers</cite> can be just <cite>1</cite>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>FloatTensor</em>) – The tensor of shape 
+<cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_feature</cite>.</p></li>
+<li><p><strong>Y</strong> (<em>FloatTensor</em>) – The tensor of shape 
+<cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_answers</cite>.</p></li>
+<li><p><strong>Z</strong> (<em>FloatTensor</em>) – The tensor of shape <cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>1</cite>.</p></li>
+<li><p><strong>HyperParameters</strong> (<em>dict</em>) – The dictionary of all hyper parametrs.
+Where <cite>key</cite> is string and <cite>value</cite> is FloatTensor.</p></li>
+<li><p><strong>Parameter</strong> (<em>string</em>) – The key from <cite>HyperParameters</cite> dictionary.
+The name of the hyperparameter to be optimized.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A local part of new <cite>HyperParameters[Parameter]</cite> value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>FloatTensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mixturelib.local_models.EachModel.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">input</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/local_models.html#EachModel.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mixturelib.local_models.EachModel.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns model prediction for the given input data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input</strong> (<em>FloatTensor.</em>) – The tensor of shape
+<cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_feature</cite>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The tensor of shape
+<cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_answers</cite>.
+Model answers for the given input data</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>FloatTensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="mixturelib.local_models.EachModelLinear">
+<em class="property">class </em><code class="sig-prename descclassname">mixturelib.local_models.</code><code class="sig-name descname">EachModelLinear</code><span class="sig-paren">(</span><em class="sig-param">input_dim=20</em>, <em class="sig-param">device='cpu'</em>, <em class="sig-param">A=None</em>, <em class="sig-param">w=None</em>, <em class="sig-param">OptimizedHyper={'A'</em>, <em class="sig-param">'beta'</em>, <em class="sig-param">'w_0'}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/local_models.html#EachModelLinear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mixturelib.local_models.EachModelLinear" title="Permalink to this definition">¶</a></dt>
+<dd><p>A model for solving the linear regression problem
+<span class="math notranslate nohighlight">\(\textbf{y} = \textbf{x}^{\mathsf{T}}\textbf{w}\)</span>. The model uses an analytical
+solution for estimation <span class="math notranslate nohighlight">\(\textbf{w}\)</span>. Also model finds a distribution
+of model parameters <span class="math notranslate nohighlight">\(\textbf{w}\)</span>.</p>
+<p>Distribution is 
+<span class="math notranslate nohighlight">\(\textbf{w} \sim \mathcal{N}\bigr(\hat{\textbf{w}}, \textbf{A}\bigr)\)</span></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The priors <cite>A</cite> and <cite>w</cite> must be set or not together.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_dim</strong> (<em>int</em>) – The number of feature in each object. Must be positive.</p></li>
+<li><p><strong>device</strong> (<em>string</em>) – The device for pytorch. 
+Can be ‘cpu’ or ‘gpu’. Default ‘cpu’.</p></li>
+<li><p><strong>A</strong> (<em>FloatTensor</em>) – The tensor of shape input_dim <span class="math notranslate nohighlight">\(\times\)</span> input_dim. It is a 
+prior covariance matrix for model parameters.
+Also can be the tensor of shape input_dim. In this case, it is a 
+diagonal of prior covariance matrix for model parameters, and all 
+nondiagonal values are zerous.</p></li>
+<li><p><strong>w</strong> (<em>FloatTensor</em>) – The tensor of shape input_dim. It is a prior mean for model 
+parameters</p></li>
+<li><p><strong>OptimizedHyper</strong> (<em>set</em>) – The set of hyperparameters that will be optimized.
+Default all hyperparameters will be optimized.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span> <span class="c1"># Set random seed for repeatability</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># Generate real parameter vector</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># Generate features data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Z</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># Set that all data correspond to this model</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span> <span class="o">=</span> <span class="n">X</span><span class="nd">@w</span> <span class="o">+</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># Generate target data with noise 0.1</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">linear_model</span> <span class="o">=</span> <span class="n">EachModelLinear</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">input_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># Init linear model withot any priors</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hyper_parameters</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s1">&#39;beta&#39;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">1.</span><span class="p">)}</span> <span class="c1"># Init noise level beta</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">linear_model</span><span class="o">.</span><span class="n">E_step</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">X</span><span class="p">[:</span><span class="mi">8</span><span class="p">],</span> <span class="n">Y</span><span class="p">[:</span><span class="mi">8</span><span class="p">],</span> <span class="n">Z</span><span class="p">[:</span><span class="mi">8</span><span class="p">],</span> <span class="n">hyper_parameters</span><span class="p">)</span> <span class="c1"># Optimise model parameter</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">linear_model</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">8</span><span class="p">:])</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># Model prediction for the test part</span>
+<span class="go">tensor([-0.1975, -0.2427])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span><span class="p">[</span><span class="mi">8</span><span class="p">:]</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># Real target for test part</span>
+<span class="go">tensor([-0.2124, -0.1837])</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="mixturelib.local_models.EachModelLinear.B">
+<code class="sig-name descname">B</code><em class="property"> = None</em><a class="headerlink" href="#mixturelib.local_models.EachModelLinear.B" title="Permalink to this definition">¶</a></dt>
+<dd><p>Object <span class="math notranslate nohighlight">\(\textbf{B}\)</span> is a covariance matrix for variational 
+distribution</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mixturelib.local_models.EachModelLinear.E_step">
+<code class="sig-name descname">E_step</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em>, <em class="sig-param">Z</em>, <em class="sig-param">HyperParameters</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/local_models.html#EachModelLinear.E_step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mixturelib.local_models.EachModelLinear.E_step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doing E-step of EM-algorithm. Finds variational probability <cite>q</cite> 
+of model parameters.</p>
+<p>Calculate analytical solution for estimate <cite>q</cite> in the class of 
+normal distributions <span class="math notranslate nohighlight">\(q = \mathcal{N}\bigr(m, B\bigr)\)</span>, where
+<span class="math notranslate nohighlight">\(B = (A^{-1}+\beta\sum_{i=1}X_iX_i^{\mathsf{T}}\mathsf{E}z_{i})\)</span>
+and <span class="math notranslate nohighlight">\(m = B(A^{-1}w_0+\beta\sum_{i=1}X_iY_i\mathsf{E}z_{i})\)</span></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>HyperParameters must contain <cite>beta</cite> hyperparameter.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The number <cite>num_answers</cite> can be just <cite>1</cite>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>FloatTensor</em>) – The tensor of shape 
+<cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_feature</cite>.</p></li>
+<li><p><strong>Y</strong> (<em>FloatTensor</em>) – The tensor of shape 
+<cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_answers</cite>.</p></li>
+<li><p><strong>Z</strong> (<em>FloatTensor</em>) – The tensor of shape <cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>1</cite>.</p></li>
+<li><p><strong>HyperParameters</strong> (<em>dict</em>) – The dictionary of all hyper parametrs.
+Where <cite>key</cite> is string and <cite>value</cite> is FloatTensor.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mixturelib.local_models.EachModelLinear.LogLikeLihoodExpectation">
+<code class="sig-name descname">LogLikeLihoodExpectation</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em>, <em class="sig-param">HyperParameters</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/local_models.html#EachModelLinear.LogLikeLihoodExpectation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mixturelib.local_models.EachModelLinear.LogLikeLihoodExpectation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns expected log-likelihod of a given vector of answers for
+given data seperated. The expectation is taken according to the model 
+parameters <span class="math notranslate nohighlight">\(\mathsf{E}p\bigr(Y|X\bigr)\)</span>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>HyperParameters must contain <cite>beta</cite> hyperparameter.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The number <cite>num_answers</cite> can be just <cite>1</cite>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>FloatTensor</em>) – The tensor of shape 
+<cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_feature</cite>.</p></li>
+<li><p><strong>Y</strong> (<em>FloatTensor</em>) – The tensor of shape
+<cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_answers</cite>.</p></li>
+<li><p><strong>HyperParameters</strong> (<em>dict</em>) – The dictionary of all hyper parametrs.
+Where <cite>key</cite> is string and <cite>value</cite> is FloatTensor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The tensor of shape <cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>1</cite>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>FloatTensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mixturelib.local_models.EachModelLinear.M_step">
+<code class="sig-name descname">M_step</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em>, <em class="sig-param">Z</em>, <em class="sig-param">HyperParameters</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/local_models.html#EachModelLinear.M_step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mixturelib.local_models.EachModelLinear.M_step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doing M-step of EM-algorithm. Finds model hyper parameters.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>HyperParameters must contain <cite>beta</cite> hyperparameter.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The number <cite>num_answers</cite> can be just <cite>1</cite>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>FloatTensor</em>) – The tensor of shape 
+<cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_feature</cite>.</p></li>
+<li><p><strong>Y</strong> (<em>FloatTensor</em>) – The tensor of shape 
+<cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_answers</cite>.</p></li>
+<li><p><strong>Z</strong> (<em>FloatTensor</em>) – The tensor of shape <cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>1</cite>.</p></li>
+<li><p><strong>HyperParameters</strong> (<em>dict</em>) – The dictionary of all hyper parametrs.
+Where <cite>key</cite> is string and <cite>value</cite> is FloatTensor.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mixturelib.local_models.EachModelLinear.OptimizeHyperParameters">
+<code class="sig-name descname">OptimizeHyperParameters</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em>, <em class="sig-param">Z</em>, <em class="sig-param">HyperParameters</em>, <em class="sig-param">Parameter</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/local_models.html#EachModelLinear.OptimizeHyperParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mixturelib.local_models.EachModelLinear.OptimizeHyperParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the local part of new Parameter.</p>
+<p>In this case <cite>local_part</cite> is inverse beta:
+<span class="math notranslate nohighlight">\(\frac{1}{\beta} = \frac{1}{num\_elements}
+\sum_{i=1}^{num\_elements}[Y_i^2-2Y_iX_i^{\mathsf{T}}\hat{\textbf{w}} +
+X_i^{\mathsf{T}}\mathsf{E}[ww^{\mathsf{T}}]X_i]\)</span></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Return local part must be aditive to Parameter, because new 
+value of Parameter is sum of local part from all local model.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>HyperParameters must contain <cite>beta</cite> hyperparameter.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The number <cite>num_answers</cite> can be just <cite>1</cite>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>FloatTensor</em>) – The tensor of shape 
+<cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_feature</cite>.</p></li>
+<li><p><strong>Y</strong> (<em>FloatTensor</em>) – The tensor of shape 
+<cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_answers</cite>.</p></li>
+<li><p><strong>Z</strong> (<em>FloatTensor</em>) – The tensor of shape <cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>1</cite>.</p></li>
+<li><p><strong>HyperParameters</strong> (<em>dict</em>) – The dictionary of all hyper parametrs.
+Where <cite>key</cite> is string and <cite>value</cite> is FloatTensor.</p></li>
+<li><p><strong>Parameter</strong> (<em>string</em>) – The key from <cite>HyperParameters</cite> dictionary.
+The name of the hyperparameter to be optimized.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A local part of new <cite>HyperParameters[Parameter]</cite> value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>FloatTensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mixturelib.local_models.EachModelLinear.W">
+<code class="sig-name descname">W</code><em class="property"> = None</em><a class="headerlink" href="#mixturelib.local_models.EachModelLinear.W" title="Permalink to this definition">¶</a></dt>
+<dd><p>Object <span class="math notranslate nohighlight">\(\textbf{W}\)</span> is a model parameters</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mixturelib.local_models.EachModelLinear.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">input</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/local_models.html#EachModelLinear.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mixturelib.local_models.EachModelLinear.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns model prediction for the given input data.
+Linear prediction is <span class="math notranslate nohighlight">\(input&#64;w\)</span>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The number <cite>num_answers</cite> can be just <cite>1</cite>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input</strong> (<em>FloatTensor.</em>) – The tensor of shape
+<cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_feature</cite>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The tensor of shape
+<cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_answers</cite>.
+Model answers for the given input data</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>FloatTensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="regularizers.html" class="btn btn-neutral float-right" title="Regularizers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="example.html" class="btn btn-neutral float-left" title="Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Andrey Grabovoy
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

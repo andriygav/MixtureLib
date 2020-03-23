@@ -37,7 +37,7 @@
   <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Local Models" href="LocalModels.html" />
+    <link rel="next" title="Local Models" href="local_models.html" />
     <link rel="prev" title="Installation" href="installation.html" /> 
 </head>
 
@@ -103,10 +103,10 @@
 </ul>
 <p class="caption"><span class="caption-text">Packages:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="LocalModels.html">Local Models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Regularizers.html">Regularizers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="HyperModels.html">Hyper Models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Mixture.html">Mixture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="local_models.html">Local Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="regularizers.html">Regularizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hyper_models.html">Hyper Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mixture.html">Mixture</a></li>
 </ul>
 
             
@@ -182,7 +182,7 @@ in this virtualenv.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">==</span><span class="mf">1.4</span><span class="o">.</span><span class="mi">0</span>
 <span class="n">numpy</span><span class="o">==</span><span class="mf">1.18</span><span class="o">.</span><span class="mi">1</span>
 <span class="n">matplotlib</span><span class="o">==</span><span class="mf">2.2</span><span class="o">.</span><span class="mi">4</span>
-<span class="n">MixtureLib</span><span class="o">==</span><span class="mf">0.1</span><span class="o">.*</span>
+<span class="n">mixturelib</span><span class="o">==</span><span class="mf">0.2</span><span class="o">.*</span>
 </pre></div>
 </div>
 <p>Include packages.</p>
@@ -191,9 +191,9 @@ in this virtualenv.</p>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
 
-<span class="kn">from</span> <span class="nn">MixtureLib.Mixture</span> <span class="kn">import</span> <span class="n">MixtureEmSample</span>
-<span class="kn">from</span> <span class="nn">MixtureLib.LocalModels</span> <span class="kn">import</span> <span class="n">EachModelLinear</span>
-<span class="kn">from</span> <span class="nn">MixtureLib.HyperModels</span> <span class="kn">import</span> <span class="n">HyperExpertNN</span><span class="p">,</span> <span class="n">HyperModelDirichlet</span>
+<span class="kn">from</span> <span class="nn">mixturelib.mixture</span> <span class="kn">import</span> <span class="n">MixtureEmSample</span>
+<span class="kn">from</span> <span class="nn">mixturelib.local_models</span> <span class="kn">import</span> <span class="n">EachModelLinear</span>
+<span class="kn">from</span> <span class="nn">mixturelib.hyper_models</span> <span class="kn">import</span> <span class="n">HyperExpertNN</span><span class="p">,</span> <span class="n">HyperModelDirichlet</span>
 </pre></div>
 </div>
 </div>
@@ -232,14 +232,15 @@ red corresponds to another.</p>
 <p>Consider an example of a mixture of model. In this case the contribution of
 each model does not depend on the sample from dataset.</p>
 <p>Init local models. We consider linear model
-<a class="reference internal" href="LocalModels.html#MixtureLib.LocalModels.EachModelLinear" title="MixtureLib.LocalModels.EachModelLinear"><code class="xref py py-class docutils literal notranslate"><span class="pre">MixtureLib.LocalModels.EachModelLinear</span></code></a> as local model.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">first_model</span> <span class="o">=</span> <span class="n">EachModelLinear</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<a class="reference internal" href="local_models.html#mixturelib.local_models.EachModelLinear" title="mixturelib.local_models.EachModelLinear"><code class="xref py py-class docutils literal notranslate"><span class="pre">mixturelib.local_models.EachModelLinear</span></code></a> as local model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">first_model</span> <span class="o">=</span> <span class="n">EachModelLinear</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">secode_model</span> <span class="o">=</span> <span class="n">EachModelLinear</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="n">list_of_models</span> <span class="o">=</span> <span class="p">[</span><span class="n">first_model</span><span class="p">,</span> <span class="n">secode_model</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>Init hyper model — <a class="reference internal" href="HyperModels.html#MixtureLib.HyperModels.HyperModelDirichlet" title="MixtureLib.HyperModels.HyperModelDirichlet"><code class="xref py py-class docutils literal notranslate"><span class="pre">MixtureLib.HyperModels.HyperModelDirichlet</span></code></a>.
+<p>Init hyper model — <a class="reference internal" href="hyper_models.html#mixturelib.hyper_models.HyperModelDirichlet" title="mixturelib.hyper_models.HyperModelDirichlet"><code class="xref py py-class docutils literal notranslate"><span class="pre">mixturelib.hyper_models.HyperModelDirichlet</span></code></a>.
 In this case contribution of each model does not depend on sample from dataset.
 It is suggested that the contribution of each model has a
 Dirichlet distribution.
@@ -271,6 +272,7 @@ In our task, each model is a simple plane in 3D space.</p>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
 
 <span class="n">grid_2d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)))</span>
+<span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">grid_2d</span>
 
 <span class="n">first_z</span> <span class="o">=</span> <span class="p">(</span><span class="n">predicted_first_w</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="n">grid_2d</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">second_z</span> <span class="o">=</span> <span class="p">(</span><span class="n">predicted_second_w</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="n">grid_2d</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -300,15 +302,16 @@ The surfaces without grid are predicted planes.</p>
 <p>Now consider an example of a mixture of experts on the same dataset. In this
 case contribution of each model is depend on sample from dataset.</p>
 <p>Init local models. We consider linear model
-<a class="reference internal" href="LocalModels.html#MixtureLib.LocalModels.EachModelLinear" title="MixtureLib.LocalModels.EachModelLinear"><code class="xref py py-class docutils literal notranslate"><span class="pre">MixtureLib.LocalModels.EachModelLinear</span></code></a> as local model.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">first_model</span> <span class="o">=</span> <span class="n">EachModelLinear</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<a class="reference internal" href="local_models.html#mixturelib.local_models.EachModelLinear" title="mixturelib.local_models.EachModelLinear"><code class="xref py py-class docutils literal notranslate"><span class="pre">mixturelib.local_models.EachModelLinear</span></code></a> as local model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">first_model</span> <span class="o">=</span> <span class="n">EachModelLinear</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">secode_model</span> <span class="o">=</span> <span class="n">EachModelLinear</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="n">list_of_models</span> <span class="o">=</span> <span class="p">[</span><span class="n">first_model</span><span class="p">,</span> <span class="n">secode_model</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>Init hyper model — gate function
-<a class="reference internal" href="HyperModels.html#MixtureLib.HyperModels.HyperExpertNN" title="MixtureLib.HyperModels.HyperExpertNN"><code class="xref py py-class docutils literal notranslate"><span class="pre">MixtureLib.HyperModels.HyperExpertNN</span></code></a>. In this case contribution of
+<a class="reference internal" href="hyper_models.html#mixturelib.hyper_models.HyperExpertNN" title="mixturelib.hyper_models.HyperExpertNN"><code class="xref py py-class docutils literal notranslate"><span class="pre">mixturelib.hyper_models.HyperExpertNN</span></code></a>. In this case contribution of
 each model is depend on sample from dataset. Gate function is a simple neural
 network with softmax on the last layer.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">HpMd</span> <span class="o">=</span> <span class="n">HyperExpertNN</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
@@ -339,6 +342,7 @@ In our task, each model is a simple plane in 3D space.</p>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
 
 <span class="n">grid_2d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)))</span>
+<span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">grid_2d</span>
 
 <span class="n">first_z</span> <span class="o">=</span> <span class="p">(</span><span class="n">predicted_first_w</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="n">grid_2d</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">second_z</span> <span class="o">=</span> <span class="p">(</span><span class="n">predicted_second_w</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="n">grid_2d</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -373,7 +377,7 @@ The surfaces without grid are predicted planes.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="LocalModels.html" class="btn btn-neutral float-right" title="Local Models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="local_models.html" class="btn btn-neutral float-right" title="Local Models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

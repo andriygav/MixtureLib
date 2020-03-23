@@ -1,0 +1,639 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mixturelib.hyper_models &mdash; MixtureLib  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> MixtureLib
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Main Info:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../info.html">Mixture Lib</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Get Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../example.html">Example</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Packages:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../local_models.html">Local Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../regularizers.html">Regularizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hyper_models.html">Hyper Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mixture.html">Mixture</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MixtureLib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>mixturelib.hyper_models</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for mixturelib.hyper_models</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The :mod:`mixturelib.hyper_models` contains classes:</span>
+
+<span class="sd">- :class:`mixturelib.hyper_models.HyperModel`</span>
+<span class="sd">- :class:`mixturelib.hyper_models.HyperModelDirichlet`</span>
+<span class="sd">- :class:`mixturelib.hyper_models.HyperExpertNN`</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">TensorDataset</span><span class="p">,</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">Dataset</span>
+<div class="viewcode-block" id="HyperModel"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModel">[docs]</a><span class="k">class</span> <span class="nc">HyperModel</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Base class for all hyper models.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="HyperModel.E_step"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModel.E_step">[docs]</a>    <span class="k">def</span> <span class="nf">E_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Doing E-step of EM-algorithm. Finds variational probability `q` </span>
+<span class="sd">        of model parameters.</span>
+
+<span class="sd">        :param X: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_feature`.</span>
+<span class="sd">        :type X: FloatTensor</span>
+<span class="sd">        :param Y: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_answers`.</span>
+<span class="sd">        :type Y: FloatTensor</span>
+<span class="sd">        :param Z: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_models`.</span>
+<span class="sd">        :type Z: FloatTensor</span>
+<span class="sd">        :param HyperParameters: The dictionary of all hyper parametrs.</span>
+<span class="sd">            Where `key` is string and `value` is FloatTensor.</span>
+<span class="sd">        :type HyperParameters: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="HyperModel.M_step"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModel.M_step">[docs]</a>    <span class="k">def</span> <span class="nf">M_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Doing M-step of EM-algorithm. Finds model hyper parameters.</span>
+
+<span class="sd">        :param X: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_feature`.</span>
+<span class="sd">        :type X: FloatTensor</span>
+<span class="sd">        :param Y: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_answers`.</span>
+<span class="sd">        :type Y: FloatTensor</span>
+<span class="sd">        :param Z: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_models`.</span>
+<span class="sd">        :type Z: FloatTensor</span>
+<span class="sd">        :param HyperParameters: The dictionary of all hyper parametrs.</span>
+<span class="sd">            Where `key` is string and `value` is FloatTensor.</span>
+<span class="sd">        :type HyperParameters: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="HyperModel.LogPiExpectation"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModel.LogPiExpectation">[docs]</a>    <span class="k">def</span> <span class="nf">LogPiExpectation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns the expected value of each models probability.</span>
+<span class="sd">        </span>
+<span class="sd">        :param X: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_feature`.</span>
+<span class="sd">        :type X: FloatTensor</span>
+<span class="sd">        :param Y: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_answers`.</span>
+<span class="sd">        :type Y: FloatTensor</span>
+<span class="sd">        :param HyperParameters: The dictionary of all hyper parametrs.</span>
+<span class="sd">            Where `key` is string and `value` is FloatTensor.</span>
+<span class="sd">        :type HyperParameters: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="HyperModel.PredictPi"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModel.PredictPi">[docs]</a>    <span class="k">def</span> <span class="nf">PredictPi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns the probability of each models.</span>
+<span class="sd">        </span>
+<span class="sd">        :param X: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_feature`.</span>
+<span class="sd">        :type X: FloatTensor</span>
+<span class="sd">        :param Y: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_answers`.</span>
+<span class="sd">        :type Y: FloatTensor</span>
+<span class="sd">        :param HyperParameters: The dictionary of all hyper parametrs.</span>
+<span class="sd">            Where `key` is string and `value` is FloatTensor.</span>
+<span class="sd">        :type HyperParameters: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>   </div></div>
+
+
+<div class="viewcode-block" id="HyperModelDirichlet"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelDirichlet">[docs]</a><span class="k">class</span> <span class="nc">HyperModelDirichlet</span><span class="p">(</span><span class="n">HyperModel</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;A hyper model for mixture of model. The hyper model cannot predict </span>
+<span class="sd">    local model for each object, because model probability does not </span>
+<span class="sd">    depend on object.</span>
+
+<span class="sd">    In this hyper model, the probability of each local model is a vector </span>
+<span class="sd">    from dirichlet distribution.</span>
+
+<span class="sd">    :param output_dim: The number of local models.</span>
+<span class="sd">    :type output_dim: int</span>
+<span class="sd">    :param device: The device for pytorch. </span>
+<span class="sd">        Can be &#39;cpu&#39; or &#39;gpu&#39;. Default &#39;cpu&#39;.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    &gt;&gt;&gt; _ = torch.random.manual_seed(42) # Set random seed for repeatability</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; w = torch.randn(2, 1) # Generate real parameter vector</span>
+<span class="sd">    &gt;&gt;&gt; X = torch.randn(5, 2) # Generate features data</span>
+<span class="sd">    &gt;&gt;&gt; Z = torch.distributions.dirichlet.Dirichlet(</span>
+<span class="sd">    ...     torch.tensor([0.5, 0.5])).sample(</span>
+<span class="sd">    ...         (5,)) # Set corresponding between data and local models.</span>
+<span class="sd">    &gt;&gt;&gt; Y = X@w + 0.1*torch.randn(5, 1) # Generate target data with noise 0.1</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; hyper_model = HyperModelDirichlet(</span>
+<span class="sd">    ...     output_dim=2) # Init hyper model with Diriclet weighting</span>
+<span class="sd">    &gt;&gt;&gt; hyper_parameters = {} # Withor hyper parameters</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; hyper_model.LogPiExpectation(</span>
+<span class="sd">    ...     X, Y, hyper_parameters) # Log of probability before E step</span>
+<span class="sd">    tensor([[-1.0000, -1.0000],</span>
+<span class="sd">            [-1.0000, -1.0000],</span>
+<span class="sd">            [-1.0000, -1.0000],</span>
+<span class="sd">            [-1.0000, -1.0000],</span>
+<span class="sd">            [-1.0000, -1.0000]])</span>
+<span class="sd">    &gt;&gt;&gt; </span>
+<span class="sd">    &gt;&gt;&gt; hyper_model.E_step(X, Y, Z, hyper_parameters)</span>
+<span class="sd">    &gt;&gt;&gt; hyper_model.LogPiExpectation(</span>
+<span class="sd">    ...     X, Y, hyper_parameters)  # Log of probability after E step</span>
+<span class="sd">    tensor([[-0.7118, -0.8310],</span>
+<span class="sd">            [-0.7118, -0.8310],</span>
+<span class="sd">            [-0.7118, -0.8310],</span>
+<span class="sd">            [-0.7118, -0.8310],</span>
+<span class="sd">            [-0.7118, -0.8310]])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_dim</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">device</span> <span class="o">=</span> <span class="s1">&#39;cpu&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">HyperModelDirichlet</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_dim</span> <span class="o">=</span> <span class="n">output_dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_dim</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="mi">0</span>
+    
+<div class="viewcode-block" id="HyperModelDirichlet.E_step"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelDirichlet.E_step">[docs]</a>    <span class="k">def</span> <span class="nf">E_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Doing E-step of EM-algorithm. Finds variational probability `q` </span>
+<span class="sd">        of model parameters.</span>
+
+<span class="sd">        Calculate analytical solution for estimate `q` in the class of </span>
+<span class="sd">        normal distributions :math:`q = Dir(m)`, where</span>
+<span class="sd">        :math:`m = \mu + \gamma`, where </span>
+<span class="sd">        :math:`\gamma_k = \sum_{i=1}^{num\_elements}Z_{ik}`, and </span>
+<span class="sd">        :math:`\mu` is prior.</span>
+
+<span class="sd">        .. warning::</span>
+<span class="sd">            Now :math:`\mu_k` is `1` for all `k`, and can not be changed.</span>
+
+<span class="sd">        :param X: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_feature`.</span>
+<span class="sd">        :type X: FloatTensor</span>
+<span class="sd">        :param Y: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_answers`.</span>
+<span class="sd">        :type Y: FloatTensor</span>
+<span class="sd">        :param Z: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_models`.</span>
+<span class="sd">        :type Z: FloatTensor</span>
+<span class="sd">        :param HyperParameters: The dictionary of all hyper parametrs.</span>
+<span class="sd">            Where `key` is string and `value` is FloatTensor.</span>
+<span class="sd">        :type HyperParameters: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">gamma</span> <span class="o">=</span> <span class="n">Z</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">+</span> <span class="n">gamma</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="n">Z</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">pass</span></div>
+    
+<div class="viewcode-block" id="HyperModelDirichlet.M_step"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelDirichlet.M_step">[docs]</a>    <span class="k">def</span> <span class="nf">M_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;The method does nothing.</span>
+<span class="sd">        </span>
+<span class="sd">        :param X: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_feature`.</span>
+<span class="sd">        :type X: FloatTensor</span>
+<span class="sd">        :param Y: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_answers`.</span>
+<span class="sd">        :type Y: FloatTensor</span>
+<span class="sd">        :param Z: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_models`.</span>
+<span class="sd">        :type Z: FloatTensor</span>
+<span class="sd">        :param HyperParameters: The dictionary of all hyper parametrs.</span>
+<span class="sd">            Where `key` is string and `value` is FloatTensor.</span>
+<span class="sd">        :type HyperParameters: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="HyperModelDirichlet.LogPiExpectation"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelDirichlet.LogPiExpectation">[docs]</a>    <span class="k">def</span> <span class="nf">LogPiExpectation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns the expected value of each models log of probability.</span>
+
+<span class="sd">        Returns the expectation of :math:`\log \pi` value where </span>
+<span class="sd">        :math:`\pi` is a random value from Dirichlet distribution.</span>
+
+<span class="sd">        This function calculates by using :math:`\digamma` function</span>
+<span class="sd">        </span>
+<span class="sd">        :param X: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_feature`.</span>
+<span class="sd">        :type X: FloatTensor</span>
+<span class="sd">        :param Y: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_answers`.</span>
+<span class="sd">        :type Y: FloatTensor</span>
+<span class="sd">        :param HyperParameters: The dictionary of all hyper parametrs.</span>
+<span class="sd">            Where `key` is string and `value` is FloatTensor.</span>
+<span class="sd">        :type HyperParameters: dict</span>
+
+<span class="sd">        :return: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_models`. The espected value of </span>
+<span class="sd">            each models probability.</span>
+<span class="sd">        :rtype: FloatTensor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">temp_1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_dim</span><span class="p">])</span>
+        <span class="n">temp_2</span> <span class="o">=</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">digamma</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">)</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">digamma</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_dim</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">temp_1</span><span class="o">*</span><span class="n">temp_2</span></div>
+
+<div class="viewcode-block" id="HyperModelDirichlet.PredictPi"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelDirichlet.PredictPi">[docs]</a>    <span class="k">def</span> <span class="nf">PredictPi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns the probability (weight) of each models.</span>
+
+<span class="sd">        Return the same vector :math:`\pi` for all object. </span>
+<span class="sd">        </span>
+<span class="sd">        :param X: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_feature`.</span>
+<span class="sd">        :type X: FloatTensor</span>
+<span class="sd">        :param HyperParameters: The dictionary of all hyper parametrs.</span>
+<span class="sd">            Where `key` is string and `value` is FloatTensor.</span>
+<span class="sd">        :type HyperParameters: dict</span>
+
+<span class="sd">        :return: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_models`. </span>
+<span class="sd">            The probability (weight) of each models.</span>
+<span class="sd">        :rtype: FloatTensor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">temp_1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_dim</span><span class="p">])</span>
+        <span class="n">temp_2</span> <span class="o">=</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">digamma</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">)</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">digamma</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_dim</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">temp_1</span><span class="o">*</span><span class="n">temp_2</span></div></div>
+
+
+<div class="viewcode-block" id="HyperExpertNN"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperExpertNN">[docs]</a><span class="k">class</span> <span class="nc">HyperExpertNN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span> <span class="n">HyperModel</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;A hyper model for mixture of experts. The hyper model prediction on </span>
+<span class="sd">    local models probability are depend on the object.</span>
+
+<span class="sd">    In this hyper model, the probability of each local model is a </span>
+<span class="sd">    neural network prediction with softmax. Neural network is a three layer </span>
+<span class="sd">    fully conected neural network.</span>
+
+<span class="sd">    :param input_dim: The number of features.</span>
+<span class="sd">    :type input_dim: int</span>
+<span class="sd">    :param hidden_dim: The number of parameters in hidden layer.</span>
+<span class="sd">    :type hidden_dim: int</span>
+<span class="sd">    :param output_dim: The number of local models.</span>
+<span class="sd">    :type output_dim: int</span>
+<span class="sd">    :param epochs: The number epoch to train neural network in each step.</span>
+<span class="sd">    :type epochs: int</span>
+<span class="sd">    :param device: The device for pytorch. </span>
+<span class="sd">        Can be &#39;cpu&#39; or &#39;gpu&#39;. Default &#39;cpu&#39;.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    &gt;&gt;&gt; _ = torch.random.manual_seed(42) # Set random seed for repeatability</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; w = torch.randn(2, 1) # Generate real parameter vector</span>
+<span class="sd">    &gt;&gt;&gt; X = torch.randn(5, 2) # Generate features data</span>
+<span class="sd">    &gt;&gt;&gt; Z = torch.distributions.dirichlet.Dirichlet(</span>
+<span class="sd">    ...     torch.tensor([0.5, 0.5])).sample(</span>
+<span class="sd">    ...         (5,)) # Set corresponding between data and local models.</span>
+<span class="sd">    &gt;&gt;&gt; Y = X@w + 0.1*torch.randn(5, 1) # Generate target data with noise 0.1</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; hyper_model = HyperExpertNN(</span>
+<span class="sd">    ...     input_dim=2, </span>
+<span class="sd">    ...     output_dim=2) # Init hyper model with Diriclet weighting</span>
+<span class="sd">    &gt;&gt;&gt; hyper_parameters = {} # Withor hyper parameters</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; hyper_model.LogPiExpectation(</span>
+<span class="sd">    ...     X, Y, hyper_parameters) # Log of probability before E step</span>
+<span class="sd">    tensor([[-0.4981, -0.9356],</span>
+<span class="sd">            [-0.5176, -0.9063],</span>
+<span class="sd">            [-0.4925, -0.9443],</span>
+<span class="sd">            [-0.4957, -0.9395],</span>
+<span class="sd">            [-0.4969, -0.9376]])</span>
+<span class="sd">    &gt;&gt;&gt; </span>
+<span class="sd">    &gt;&gt;&gt; hyper_model.E_step(X, Y, Z, hyper_parameters)</span>
+<span class="sd">    &gt;&gt;&gt; hyper_model.LogPiExpectation(</span>
+<span class="sd">    ...     X, Y, hyper_parameters)  # Log of probability after E step</span>
+<span class="sd">    tensor([[-0.6294, -0.7612],</span>
+<span class="sd">            [-0.9327, -0.5000],</span>
+<span class="sd">            [-0.3273, -1.2760],</span>
+<span class="sd">            [-0.5775, -0.8239],</span>
+<span class="sd">            [-0.5357, -0.8801]])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_dim</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="n">hidden_dim</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">output_dim</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">device</span> <span class="o">=</span> <span class="s1">&#39;cpu&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">HyperExpertNN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_dim</span> <span class="o">=</span> <span class="n">input_dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_dim</span> <span class="o">=</span> <span class="n">output_dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">linear1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">input_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linear2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linear3</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        
+<div class="viewcode-block" id="HyperExpertNN.forward"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperExpertNN.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns model prediction for the given input data. </span>
+
+<span class="sd">        .. warning::</span>
+<span class="sd">            The number `num_answers` can be just `1`.</span>
+<span class="sd">        </span>
+<span class="sd">        :param input: The tensor of shape</span>
+<span class="sd">            `num_elements` :math:`\times` `num_feature`.</span>
+<span class="sd">        :type input: FloatTensor.</span>
+
+<span class="sd">        :return: The tensor of shape</span>
+<span class="sd">            `num_elements` :math:`\times` `num_models`.</span>
+<span class="sd">            Model prediction of probability for all local models for the </span>
+<span class="sd">            given input data.</span>
+<span class="sd">        :rtype: FloatTensor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="nb">input</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear1</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear2</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear3</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span></div>
+    
+<div class="viewcode-block" id="HyperExpertNN.E_step"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperExpertNN.E_step">[docs]</a>    <span class="k">def</span> <span class="nf">E_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;The method does nothing.</span>
+<span class="sd">        </span>
+<span class="sd">        :param X: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_feature`.</span>
+<span class="sd">        :type X: FloatTensor</span>
+<span class="sd">        :param Y: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_answers`.</span>
+<span class="sd">        :type Y: FloatTensor</span>
+<span class="sd">        :param Z: The tensor of shape `num_elements` :math:`\times` `num_models`.</span>
+<span class="sd">        :type Z: FloatTensor</span>
+<span class="sd">        :param HyperParameters: The dictionary of all hyper parametrs.</span>
+<span class="sd">            Where `key` is string and `value` is FloatTensor.</span>
+<span class="sd">        :type HyperParameters: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+    
+<div class="viewcode-block" id="HyperExpertNN.M_step"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperExpertNN.M_step">[docs]</a>    <span class="k">def</span> <span class="nf">M_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Doing M-step of EM-algorithm. Finds model parameters by using </span>
+<span class="sd">        gradient descent.</span>
+
+<span class="sd">        Parameters are optimized with respect to the loss function</span>
+<span class="sd">        :math:`loss = -\sum_{i=1}^{num\_elements}\sum_{k=1}^{num\_models}</span>
+<span class="sd">        \log\pi_k(x_i, V)`, where `V` is a neural network parameters. </span>
+<span class="sd">        </span>
+<span class="sd">        :param X: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_feature`.</span>
+<span class="sd">        :type X: FloatTensor</span>
+<span class="sd">        :param Y: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_answers`.</span>
+<span class="sd">        :type Y: FloatTensor</span>
+<span class="sd">        :param Z: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_models`.</span>
+<span class="sd">        :type Z: FloatTensor</span>
+<span class="sd">        :param HyperParameters: The dictionary of all hyper parametrs.</span>
+<span class="sd">            Where `key` is string and `value` is FloatTensor.</span>
+<span class="sd">        :type HyperParameters: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span> <span class="n">Z</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">))</span>
+        
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">epochs</span><span class="p">):</span>
+            <span class="n">train_generator</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">it</span><span class="p">,</span> <span class="p">(</span><span class="n">batch_of_x</span><span class="p">,</span> <span class="n">batch_of_z</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train_generator</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+                <span class="n">loss</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">batch_of_x</span><span class="p">),</span> <span class="n">dim</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">batch_of_z</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+                <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="HyperExpertNN.LogPiExpectation"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperExpertNN.LogPiExpectation">[docs]</a>    <span class="k">def</span> <span class="nf">LogPiExpectation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns the expected value of each models log of probability.</span>
+
+<span class="sd">        Takes log softmax from the forward method.</span>
+<span class="sd">        </span>
+<span class="sd">        :param X: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_feature`.</span>
+<span class="sd">        :type X: FloatTensor</span>
+<span class="sd">        :param Y: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_answers`.</span>
+<span class="sd">        :type Y: FloatTensor</span>
+<span class="sd">        :param HyperParameters: The dictionary of all hyper parametrs.</span>
+<span class="sd">            Where `key` is string and `value` is FloatTensor.</span>
+<span class="sd">        :type HyperParameters: dict</span>
+
+<span class="sd">        :return: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_models`. The espected value of </span>
+<span class="sd">            each models probability.</span>
+<span class="sd">        :rtype: FloatTensor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">dim</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="HyperExpertNN.PredictPi"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperExpertNN.PredictPi">[docs]</a>    <span class="k">def</span> <span class="nf">PredictPi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns the probability (weight) of each models.</span>
+
+<span class="sd">        Takes softmax from the forward method.</span>
+<span class="sd">        </span>
+<span class="sd">        :param X: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_feature`.</span>
+<span class="sd">        :type X: FloatTensor</span>
+<span class="sd">        :param HyperParameters: The dictionary of all hyper parametrs.</span>
+<span class="sd">            Where `key` is string and `value` is FloatTensor.</span>
+<span class="sd">        :type HyperParameters: dict</span>
+
+<span class="sd">        :return: The tensor of shape </span>
+<span class="sd">            `num_elements` :math:`\times` `num_models`. </span>
+<span class="sd">            The probability (weight) of each models.</span>
+<span class="sd">        :rtype: FloatTensor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">dim</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span></div></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Andrey Grabovoy
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
