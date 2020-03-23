@@ -38,4 +38,4 @@ Uninstall
 ---------
 .. code-block:: bash
 
-	python3.6 -m pip uninstall MixtureLib
+	python3.6 -m pip uninstall mixturelib
