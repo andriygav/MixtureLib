@@ -2,7 +2,7 @@
 Mixture Lib
 ###########
 
-|test| |docs| |pypi| |readthedocs|
+|test| |docs| |readthedocs| |pypi| 
 
 .. |test| image:: https://github.com/andriygav/MixtureLib/workflows/test/badge.svg
     :target: https://github.com/andriygav/MixtureLib/tree/master
