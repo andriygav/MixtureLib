@@ -25,7 +25,6 @@ jobs:
         
       - name: Install Dependencies
         run: |
-          pip install -U src/
           pip install -U sphinx
           pip install -U sphinx-rtd-theme
           
