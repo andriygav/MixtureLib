@@ -97,7 +97,7 @@ class HyperModelDirichlet(HyperModel):
     depend on object.
 
     In this hyper model, the probability of each local model is a vector 
-    from dirichlet distribution.
+    from dirichlet distribution with parameter :math:`\mu`.
 
     :param output_dim: The number of local models.
     :type output_dim: int
@@ -227,7 +227,9 @@ class HyperModelDirichlet(HyperModel):
     def PredictPi(self, X, HyperParameters):
         r"""Returns the probability (weight) of each models.
 
-        Return the same vector :math:`\pi` for all object. 
+        Return the same vector :math:`\pi` for all object.
+        Each :math:`\pi = \frac{\textbf{m}}{\sum \textbf{m}_k}`, where
+        :math:`\textbf{m}` is a parameter of Dirichlet pdf.
         
         :param X: The tensor of shape 
             `num_elements` :math:`\times` `num_feature`.
@@ -241,9 +243,12 @@ class HyperModelDirichlet(HyperModel):
             The probability (weight) of each models.
         :rtype: FloatTensor
         """
-        temp_1 = torch.ones([X.shape[0], self.output_dim])
-        temp_2 = (torch.digamma(self.m) - torch.digamma(self.output_dim*self.mu + self.N))
-        return temp_1*temp_2
+        denum = self.m.sum()
+        try:
+        	pi = torch.ones([X.shape[0], self.output_dim])*(self.m/denum)
+        except:
+        	pi = torch.zeros([X.shape[0], self.output_dim])
+        return pi
 
 
 class HyperExpertNN(nn.Module, HyperModel):
