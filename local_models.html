@@ -305,9 +305,9 @@ Model answers for the given input data</p>
 <dt id="mixturelib.local_models.EachModelLinear">
 <em class="property">class </em><code class="sig-prename descclassname">mixturelib.local_models.</code><code class="sig-name descname">EachModelLinear</code><span class="sig-paren">(</span><em class="sig-param">input_dim=20</em>, <em class="sig-param">device='cpu'</em>, <em class="sig-param">A=None</em>, <em class="sig-param">w=None</em>, <em class="sig-param">OptimizedHyper={'A'</em>, <em class="sig-param">'beta'</em>, <em class="sig-param">'w_0'}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/local_models.html#EachModelLinear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mixturelib.local_models.EachModelLinear" title="Permalink to this definition">¶</a></dt>
 <dd><p>A model for solving the linear regression problem
-<span class="math notranslate nohighlight">\(\textbf{y} = \textbf{x}^{\mathsf{T}}\textbf{w}\)</span>. The model uses an analytical
-solution for estimation <span class="math notranslate nohighlight">\(\textbf{w}\)</span>. Also model finds a distribution
-of model parameters <span class="math notranslate nohighlight">\(\textbf{w}\)</span>.</p>
+<span class="math notranslate nohighlight">\(\textbf{y} = \textbf{x}^{\mathsf{T}}\textbf{w}\)</span>.
+The model uses an analytical solution for estimation <span class="math notranslate nohighlight">\(\textbf{w}\)</span>.
+Also model finds a distribution of model parameters <span class="math notranslate nohighlight">\(\textbf{w}\)</span>.</p>
 <p>Distribution is 
 <span class="math notranslate nohighlight">\(\textbf{w} \sim \mathcal{N}\bigr(\hat{\textbf{w}}, \textbf{A}\bigr)\)</span></p>
 <div class="admonition warning">

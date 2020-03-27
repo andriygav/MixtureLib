@@ -266,7 +266,8 @@ the M-step.</p></li>
 <cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_feature</cite>.</p></li>
 <li><p><strong>Y</strong> (<em>FloatTensor</em>) – The tensor of shape 
 <cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_answers</cite>.</p></li>
-<li><p><strong>Z</strong> (<em>FloatTensor</em>) – The tensor of shape <cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_models</cite>.</p></li>
+<li><p><strong>Z</strong> (<em>FloatTensor</em>) – The tensor of shape 
+<cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_models</cite>.</p></li>
 <li><p><strong>HyperParameters</strong> (<em>dict</em>) – The dictionary of all hyper parametrs.
 Where <cite>key</cite> is string and <cite>value</cite> is FloatTensor.</p></li>
 </ul>
@@ -288,7 +289,8 @@ w_k^0A_k^{-1}\mathsf{E}w_k\right] + R(W^0) \to \infty\)</span>.</p>
 <cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_feature</cite>.</p></li>
 <li><p><strong>Y</strong> (<em>FloatTensor</em>) – The tensor of shape 
 <cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_answers</cite>.</p></li>
-<li><p><strong>Z</strong> (<em>FloatTensor</em>) – The tensor of shape <cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_models</cite>.</p></li>
+<li><p><strong>Z</strong> (<em>FloatTensor</em>) – The tensor of shape 
+<cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_models</cite>.</p></li>
 <li><p><strong>HyperParameters</strong> (<em>dict</em>) – The dictionary of all hyper parametrs.
 Where <cite>key</cite> is string and <cite>value</cite> is FloatTensor.</p></li>
 </ul>
@@ -376,7 +378,8 @@ Can be ‘cpu’ or ‘gpu’. Default ‘cpu’.</p></li>
 <cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_feature</cite>.</p></li>
 <li><p><strong>Y</strong> (<em>FloatTensor</em>) – The tensor of shape 
 <cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_answers</cite>.</p></li>
-<li><p><strong>Z</strong> (<em>FloatTensor</em>) – The tensor of shape <cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_models</cite>.</p></li>
+<li><p><strong>Z</strong> (<em>FloatTensor</em>) – The tensor of shape 
+<cite>num_elements</cite> <span class="math notranslate nohighlight">\(\times\)</span> <cite>num_models</cite>.</p></li>
 <li><p><strong>HyperParameters</strong> (<em>dict</em>) – The dictionary of all hyper parametrs.
 Where <cite>key</cite> is string and <cite>value</cite> is FloatTensor.</p></li>
 </ul>
@@ -388,8 +391,8 @@ Where <cite>key</cite> is string and <cite>value</cite> is FloatTensor.</p></li>
 <dt id="mixturelib.regularizers.RegularizeModel.M_step">
 <code class="sig-name descname">M_step</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em>, <em class="sig-param">Z</em>, <em class="sig-param">HyperParameters</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/regularizers.html#RegularizeModel.M_step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mixturelib.regularizers.RegularizeModel.M_step" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make some regularization on the M-step.</p>
-<p>For all local model from ListOfModels with prior, make next 
-regularization <span class="math notranslate nohighlight">\(w^0_k = \left[A_k^{-1} + (num\_models-1)\alpha\right]
+<p>For all local model from ListOfModels with prior, make regularization
+<span class="math notranslate nohighlight">\(w^0_k = \left[A_k^{-1} + (num\_models-1)\alpha\right]
 \left(A_k^{-1}\mathsf{E}w_k + \alpha\sum_{k'\not=k}w_k'\right)\)</span></p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
