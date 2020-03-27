@@ -25,7 +25,6 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/language_data.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -62,7 +61,7 @@
             
             
               <div class="version">
-                0.2.0
+                0.2.1
               </div>
             
           
@@ -232,7 +231,7 @@ red corresponds to another.</p>
 <p>Consider an example of a mixture of model. In this case the contribution of
 each model does not depend on the sample from dataset.</p>
 <p>Init local models. We consider linear model
-<a class="reference internal" href="local_models.html#mixturelib.local_models.EachModelLinear" title="mixturelib.local_models.EachModelLinear"><code class="xref py py-class docutils literal notranslate"><span class="pre">mixturelib.local_models.EachModelLinear</span></code></a> as local model.</p>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">mixturelib.local_models.EachModelLinear</span></code> as local model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
 <span class="n">first_model</span> <span class="o">=</span> <span class="n">EachModelLinear</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">secode_model</span> <span class="o">=</span> <span class="n">EachModelLinear</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -240,7 +239,7 @@ each model does not depend on the sample from dataset.</p>
 <span class="n">list_of_models</span> <span class="o">=</span> <span class="p">[</span><span class="n">first_model</span><span class="p">,</span> <span class="n">secode_model</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>Init hyper model — <a class="reference internal" href="hyper_models.html#mixturelib.hyper_models.HyperModelDirichlet" title="mixturelib.hyper_models.HyperModelDirichlet"><code class="xref py py-class docutils literal notranslate"><span class="pre">mixturelib.hyper_models.HyperModelDirichlet</span></code></a>.
+<p>Init hyper model — <code class="xref py py-class docutils literal notranslate"><span class="pre">mixturelib.hyper_models.HyperModelDirichlet</span></code>.
 In this case contribution of each model does not depend on sample from dataset.
 It is suggested that the contribution of each model has a
 Dirichlet distribution.
@@ -302,7 +301,7 @@ The surfaces without grid are predicted planes.</p>
 <p>Now consider an example of a mixture of experts on the same dataset. In this
 case contribution of each model is depend on sample from dataset.</p>
 <p>Init local models. We consider linear model
-<a class="reference internal" href="local_models.html#mixturelib.local_models.EachModelLinear" title="mixturelib.local_models.EachModelLinear"><code class="xref py py-class docutils literal notranslate"><span class="pre">mixturelib.local_models.EachModelLinear</span></code></a> as local model.</p>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">mixturelib.local_models.EachModelLinear</span></code> as local model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
 <span class="n">first_model</span> <span class="o">=</span> <span class="n">EachModelLinear</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">secode_model</span> <span class="o">=</span> <span class="n">EachModelLinear</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -311,7 +310,7 @@ case contribution of each model is depend on sample from dataset.</p>
 </pre></div>
 </div>
 <p>Init hyper model — gate function
-<a class="reference internal" href="hyper_models.html#mixturelib.hyper_models.HyperExpertNN" title="mixturelib.hyper_models.HyperExpertNN"><code class="xref py py-class docutils literal notranslate"><span class="pre">mixturelib.hyper_models.HyperExpertNN</span></code></a>. In this case contribution of
+<code class="xref py py-class docutils literal notranslate"><span class="pre">mixturelib.hyper_models.HyperExpertNN</span></code>. In this case contribution of
 each model is depend on sample from dataset. Gate function is a simple neural
 network with softmax on the last layer.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">HpMd</span> <span class="o">=</span> <span class="n">HyperExpertNN</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
