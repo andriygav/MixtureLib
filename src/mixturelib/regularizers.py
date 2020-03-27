@@ -357,7 +357,7 @@ class RegularizeFunc(Regularizers):
         :type HyperParameters: dict
         """
         
-        W0_ = torch.tensor(torch.cat([w0[1] for w0 in self.ListOfModelsW0], dim = -1), requires_grad=True)
+        W0_ = torch.cat([w0[1] for w0 in self.ListOfModelsW0], dim = -1).clone().detach().requires_grad_(True)
         W0 = W0_.transpose(0,1)
 
         optimizer = torch.optim.Adam([W0_])
