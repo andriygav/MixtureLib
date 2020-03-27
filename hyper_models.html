@@ -440,7 +440,7 @@ Where <cite>key</cite> is string and <cite>value</cite> is FloatTensor.</p></li>
 local model for each object, because model probability does not 
 depend on object.</p>
 <p>In this hyper model, the probability of each local model is a vector 
-from dirichlet distribution.</p>
+from dirichlet distribution with parameter <span class="math notranslate nohighlight">\(\mu\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -565,7 +565,9 @@ Where <cite>key</cite> is string and <cite>value</cite> is FloatTensor.</p></li>
 <dt id="mixturelib.hyper_models.HyperModelDirichlet.PredictPi">
 <code class="sig-name descname">PredictPi</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">HyperParameters</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/hyper_models.html#HyperModelDirichlet.PredictPi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mixturelib.hyper_models.HyperModelDirichlet.PredictPi" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the probability (weight) of each models.</p>
-<p>Return the same vector <span class="math notranslate nohighlight">\(\pi\)</span> for all object.</p>
+<p>Return the same vector <span class="math notranslate nohighlight">\(\pi\)</span> for all object.
+Each <span class="math notranslate nohighlight">\(\pi = \frac{\textbf{m}}{\sum \textbf{m}_k}\)</span>, where
+<span class="math notranslate nohighlight">\(\textbf{m}\)</span> is a parameter of Dirichlet pdf.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

@@ -261,7 +261,7 @@
 <span class="sd">    depend on object.</span>
 
 <span class="sd">    In this hyper model, the probability of each local model is a vector </span>
-<span class="sd">    from dirichlet distribution.</span>
+<span class="sd">    from dirichlet distribution with parameter :math:`\mu`.</span>
 
 <span class="sd">    :param output_dim: The number of local models.</span>
 <span class="sd">    :type output_dim: int</span>
@@ -391,7 +391,9 @@
 <div class="viewcode-block" id="HyperModelDirichlet.PredictPi"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelDirichlet.PredictPi">[docs]</a>    <span class="k">def</span> <span class="nf">PredictPi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns the probability (weight) of each models.</span>
 
-<span class="sd">        Return the same vector :math:`\pi` for all object. </span>
+<span class="sd">        Return the same vector :math:`\pi` for all object.</span>
+<span class="sd">        Each :math:`\pi = \frac{\textbf{m}}{\sum \textbf{m}_k}`, where</span>
+<span class="sd">        :math:`\textbf{m}` is a parameter of Dirichlet pdf.</span>
 <span class="sd">        </span>
 <span class="sd">        :param X: The tensor of shape </span>
 <span class="sd">            `num_elements` :math:`\times` `num_feature`.</span>
@@ -405,9 +407,12 @@
 <span class="sd">            The probability (weight) of each models.</span>
 <span class="sd">        :rtype: FloatTensor</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">temp_1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_dim</span><span class="p">])</span>
-        <span class="n">temp_2</span> <span class="o">=</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">digamma</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">)</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">digamma</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_dim</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">temp_1</span><span class="o">*</span><span class="n">temp_2</span></div></div>
+        <span class="n">denum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+        	<span class="n">pi</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_dim</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="o">/</span><span class="n">denum</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+        	<span class="n">pi</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_dim</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">pi</span></div></div>
 
 
 <div class="viewcode-block" id="HyperExpertNN"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperExpertNN">[docs]</a><span class="k">class</span> <span class="nc">HyperExpertNN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span> <span class="n">HyperModel</span><span class="p">):</span>
