@@ -26,7 +26,7 @@ jobs:
           
       - name: Testing
         run: |
-          PYTHONPATH=src/ pytest tests/*
+          PYTHONPATH=src/ pytest tests/ --cov=src/
 
   docs:
     name: docs
