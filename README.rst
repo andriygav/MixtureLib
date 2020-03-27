@@ -2,15 +2,19 @@
 Mixture Lib
 ###########
 
-|test| |docs| |pypi|
+|test| |docs| |readthedocs| |pypi| 
 
-.. |test| image:: 	https://github.com/andriygav/MixtureLib/workflows/test/badge.svg
+.. |test| image:: https://github.com/andriygav/MixtureLib/workflows/test/badge.svg
     :target: https://github.com/andriygav/MixtureLib/tree/master
     :alt: Build status
 
-.. |docs| image:: 	https://github.com/andriygav/MixtureLib/workflows/docs/badge.svg
+.. |docs| image:: https://github.com/andriygav/MixtureLib/workflows/docs/badge.svg
     :target: https://andriygav.github.io/MixtureLib/
     :alt: Build status
+    
+.. |readthedocs| image:: https://img.shields.io/readthedocs/mixturelib/stable?label=readthedocs
+    :target: https://mixturelib.readthedocs.io/en/stable/
+    :alt: readthedocs
     
 .. |pypi| image:: https://img.shields.io/pypi/v/MixtureLib
     :target: https://pypi.org/project/MixtureLib/
