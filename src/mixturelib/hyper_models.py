@@ -221,8 +221,10 @@ class HyperModelDirichlet(HyperModel):
         :rtype: FloatTensor
         """
         temp_1 = torch.ones([X.shape[0], self.output_dim])
-        temp_2 = (torch.digamma(self.m) - torch.digamma(self.output_dim*self.mu + self.N))
-        return temp_1*temp_2
+        temp_2 = (torch.digamma(self.m) 
+                 - torch.digamma(self.output_dim * self.mu + self.N))
+        
+        return temp_1 * temp_2
 
     def PredictPi(self, X, HyperParameters):
         r"""Returns the probability (weight) of each models.
@@ -245,9 +247,9 @@ class HyperModelDirichlet(HyperModel):
         """
         denum = self.m.sum()
         try:
-        	pi = torch.ones([X.shape[0], self.output_dim])*(self.m/denum)
+            pi = torch.ones([X.shape[0], self.output_dim]) * (self.m / denum)
         except:
-        	pi = torch.zeros([X.shape[0], self.output_dim])
+            pi = torch.zeros([X.shape[0], self.output_dim])
         return pi
 
 
@@ -303,7 +305,12 @@ class HyperExpertNN(nn.Module, HyperModel):
             [-0.5775, -0.8239],
             [-0.5357, -0.8801]])
     """
-    def __init__(self, input_dim = 20, hidden_dim = 10, output_dim = 10, epochs=100, device = 'cpu'):
+    def __init__(self, 
+                 input_dim=20, 
+                 hidden_dim=10, 
+                 output_dim=10, 
+                 epochs=100, 
+                 device='cpu'):
         """Constructor method
         """
         super(HyperExpertNN, self).__init__()
@@ -312,7 +319,7 @@ class HyperExpertNN(nn.Module, HyperModel):
         self.output_dim = output_dim
         self.device = device
         
-        self.epochs=epochs
+        self.epochs = epochs
         
         self.linear1 = nn.Linear(input_dim, hidden_dim)
         self.linear2 = nn.Linear(hidden_dim, hidden_dim)
@@ -355,7 +362,8 @@ class HyperExpertNN(nn.Module, HyperModel):
         :param Y: The tensor of shape 
             `num_elements` :math:`\times` `num_answers`.
         :type Y: FloatTensor
-        :param Z: The tensor of shape `num_elements` :math:`\times` `num_models`.
+        :param Z: The tensor of shape 
+            `num_elements` :math:`\times` `num_models`.
         :type Z: FloatTensor
         :param HyperParameters: The dictionary of all hyper parametrs.
             Where `key` is string and `value` is FloatTensor.
@@ -387,10 +395,14 @@ class HyperExpertNN(nn.Module, HyperModel):
         dataset = TensorDataset(X.to(self.device), Z.to(self.device))
         
         for _ in range(self.epochs):
-            train_generator = DataLoader(dataset = dataset, batch_size = 128, shuffle=True)
+            train_generator = DataLoader(dataset = dataset, 
+                                         batch_size = 128, shuffle=True)
             for it, (batch_of_x, batch_of_z) in enumerate(train_generator):
                 self.zero_grad()
-                loss = -(torch.nn.functional.log_softmax(self.forward(batch_of_x), dim = -1)*batch_of_z).mean()
+                
+                loss = -(F.log_softmax(self.forward(batch_of_x), dim = -1) 
+                         * batch_of_z).mean()
+
                 loss.backward()
                 self.optimizer.step()
         pass
@@ -415,7 +427,7 @@ class HyperExpertNN(nn.Module, HyperModel):
             each models probability.
         :rtype: FloatTensor
         """
-        return torch.nn.functional.log_softmax(self.forward(X), dim = -1)
+        return F.log_softmax(self.forward(X), dim = -1)
     
     def PredictPi(self, X, HyperParameters):
         r"""Returns the probability (weight) of each models.
@@ -434,5 +446,5 @@ class HyperExpertNN(nn.Module, HyperModel):
             The probability (weight) of each models.
         :rtype: FloatTensor
         """
-        return torch.nn.functional.softmax(self.forward(X), dim = -1)
+        return F.softmax(self.forward(X), dim = -1)
 

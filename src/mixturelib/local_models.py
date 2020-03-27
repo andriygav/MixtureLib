@@ -140,9 +140,9 @@ class EachModel:
 
 class EachModelLinear(EachModel):
     r"""A model for solving the linear regression problem
-    :math:`\textbf{y} = \textbf{x}^{\mathsf{T}}\textbf{w}`. The model uses an analytical
-    solution for estimation :math:`\textbf{w}`. Also model finds a distribution
-    of model parameters :math:`\textbf{w}`.
+    :math:`\textbf{y} = \textbf{x}^{\mathsf{T}}\textbf{w}`.
+    The model uses an analytical solution for estimation :math:`\textbf{w}`.
+    Also model finds a distribution of model parameters :math:`\textbf{w}`.
 
     Distribution is 
     :math:`\textbf{w} \sim \mathcal{N}\bigr(\hat{\textbf{w}}, \textbf{A}\bigr)`
@@ -190,7 +190,12 @@ class EachModelLinear(EachModel):
     >>> Y[8:].view(-1) # Real target for test part
     tensor([-0.2124, -0.1837])
     """
-    def __init__(self, input_dim = 20, device = 'cpu', A = None, w = None, OptimizedHyper=set(['w_0', 'A', 'beta'])):
+    def __init__(self,
+                 input_dim=20,
+                 device='cpu', 
+                 A=None, 
+                 w=None, 
+                 OptimizedHyper=set(['w_0', 'A', 'beta'])):
         """Constructor method
         """
         super(EachModelLinear, self).__init__()
@@ -205,7 +210,9 @@ class EachModelLinear(EachModel):
 
         if w is not None:
             self.w_0 = w.view([-1, 1]).clone()
-            self.W.data = self.w_0.data.clone() + (1e-5)*torch.randn(input_dim, 1, device = self.device)
+            self.W.data = self.w_0.data.clone() \
+                          + (1e-5)*torch.randn(input_dim, 1,
+                                               device = self.device)
         else:
             self.w_0 = w
         
@@ -276,13 +283,17 @@ class EachModelLinear(EachModel):
         if 'beta' in self.OptimizedHyper:
             if Parameter == 'beta':
                 temp1 = Y**2
-                temp2 = -2*Y*(X@self.W)
-                temp3 = torch.diagonal(X@(self.B+self.W@self.W.transpose(0,1))@X.transpose(0,1)).view([-1, 1])
-                new_beta = ((temp1 + temp2 + temp3)*Z).mean()
+                temp2 = -2 * Y * (X @ self.W)
+
+                temp3 = torch.diagonal(
+                    X @ (self.B + self.W @ self.W.transpose(0,1)) \
+                    @ X.transpose(0, 1)).view([-1, 1])
+
+                new_beta = ((temp1 + temp2 + temp3) * Z).mean()
                 if new_beta > 0:
                     return new_beta.detach()
                 else:
-                    return (0*new_beta).detach()
+                    return (0 * new_beta).detach()
         
     def LogLikeLihoodExpectation(self, X, Y, HyperParameters):
         r"""Returns expected log-likelihod of a given vector of answers for
@@ -311,8 +322,13 @@ class EachModelLinear(EachModel):
         beta = 1./(HyperParameters['beta'] + 0.000001)
         temp1 = Y**2
         temp2 = -2*Y*(X@self.W)
-        temp3 = torch.diagonal(X@(self.B+self.W@self.W.transpose(0,1))@X.transpose(0,1)).view([-1, 1])
-        return (-0.5*beta*(temp1 + temp2 + temp3) + 0.5*math.log(beta/(2*math.pi))).detach()
+
+        temp3 = torch.diagonal(
+            X @ (self.B + self.W @ self.W.transpose(0,1)) \
+            @ X.transpose(0, 1)).view([-1, 1])
+
+        return (-0.5 * beta * (temp1 + temp2 + temp3) \
+                + 0.5 * math.log(beta / (2 * math.pi))).detach()
         
 
     def E_step(self, X, Y, Z, HyperParameters):
@@ -346,9 +362,12 @@ class EachModelLinear(EachModel):
         temp = X.unsqueeze(2)
         
         if self.A is None:
-            self.B = torch.inverse(((temp*Z.unsqueeze(1))@temp.transpose(2, 1)).sum(dim = 0)).detach()
-            second = (X*Y*Z).sum(dim = 0).view([-1, 1])
-            self.W.data = (self.B@second).view_as(self.W).detach()
+            self.B = torch.inverse(
+                ((temp * Z.unsqueeze(1)) \
+                 @ temp.transpose(2, 1)).sum(dim = 0)).detach()
+
+            second = (X * Y * Z).sum(dim = 0).view([-1, 1])
+            self.W.data = (self.B @ second).view_as(self.W).detach()
         else:
             A = self.A
             if len(self.A.shape) == 1:
@@ -358,12 +377,18 @@ class EachModelLinear(EachModel):
             except:
                 A_inv = (2**32)*torch.eye(A.shape[0])
             
-            self.B = torch.inverse(A_inv + beta*((temp*Z.unsqueeze(1))@temp.transpose(2, 1)).sum(dim = 0)).detach()
+            self.B = torch.inverse(
+                A_inv + beta \
+                * ((temp*Z.unsqueeze(1)) \
+                   @ temp.transpose(2, 1)).sum(dim = 0)).detach()
+
             second = beta*(X*Y*Z).sum(dim = 0).view([-1, 1])       
             if self.w_0 is None:
                 self.W.data = ((self.B@second)).view_as(self.W).detach()
             else:
-                self.W.data = (self.B@(second + A_inv@self.w_0)).view_as(self.W).detach()
+                self.W.data = (self.B \
+                               @ (second \
+                                  + A_inv @ self.w_0)).view_as(self.W).detach()
         
         return
 
@@ -394,14 +419,24 @@ class EachModelLinear(EachModel):
             if self.A is not None:
                 if self.w_0 is not None:
                     if len(self.A.shape) == 1:
-                        self.A= torch.diagonal(self.B+self.W@self.W.transpose(0,1) - self.w_0@self.W.transpose(0,1) - self.W@self.w_0.transpose(0,1) + self.w_0@self.w_0.transpose(0,1)).detach()
+                        self.A = torch.diagonal(
+                            self.B + self.W @ self.W.transpose(0,1) \
+                            - self.w_0 @ self.W.transpose(0,1) \
+                            - self.W @ self.w_0.transpose(0,1) \
+                            + self.w_0 @ self.w_0.transpose(0,1)).detach()
                     else:
-                        self.A= (self.B+self.W@self.W.transpose(0,1) - self.w_0@self.W.transpose(0,1) - self.W@self.w_0.transpose(0,1) + self.w_0@self.w_0.transpose(0,1)).detach()
+                        self.A = (
+                            self.B + self.W @ self.W.transpose(0,1) \
+                            - self.w_0 @ self.W.transpose(0,1) \
+                            - self.W @ self.w_0.transpose(0,1) \
+                            + self.w_0 @ self.w_0.transpose(0,1)).detach()
                 else:
                     if len(self.A.shape) == 1:
-                        self.A = torch.diagonal(self.B+self.W@self.W.transpose(0,1)).detach()
+                        self.A = torch.diagonal(
+                            self.B + self.W @ self.W.transpose(0,1)).detach()
                     else:
-                        self.A = (self.B+self.W@self.W.transpose(0,1)).detach()
+                        self.A = (
+                            self.B + self.W @ self.W.transpose(0,1)).detach()
                 
         if 'w_0' in self.OptimizedHyper:
             if self.w_0 is not None:

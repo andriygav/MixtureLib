@@ -124,7 +124,7 @@ class RegularizeModel(Regularizers):
              [1.0000]]))
     """
 
-    def __init__(self, ListOfModels = None, device = 'cpu'):
+    def __init__(self, ListOfModels=None, device='cpu'):
         """Constructor method
         """
         super(RegularizeModel, self).__init__()
@@ -150,7 +150,8 @@ class RegularizeModel(Regularizers):
         :param Y: The tensor of shape 
             `num_elements` :math:`\times` `num_answers`.
         :type Y: FloatTensor
-        :param Z: The tensor of shape `num_elements` :math:`\times` `num_models`.
+        :param Z: The tensor of shape 
+            `num_elements` :math:`\times` `num_models`.
         :type Z: FloatTensor
         :param HyperParameters: The dictionary of all hyper parametrs.
             Where `key` is string and `value` is FloatTensor.
@@ -161,8 +162,8 @@ class RegularizeModel(Regularizers):
     def M_step(self, X, Y, Z, HyperParameters):
         r"""Make some regularization on the M-step.
 
-        For all local model from ListOfModels with prior, make next 
-        regularization :math:`w^0_k = \left[A_k^{-1} + (num\_models-1)\alpha\right]
+        For all local model from ListOfModels with prior, make regularization
+        :math:`w^0_k = \left[A_k^{-1} + (num\_models-1)\alpha\right]
         \left(A_k^{-1}\mathsf{E}w_k + \alpha\sum_{k'\not=k}w_k'\right)`
 
         .. warning::
@@ -206,8 +207,10 @@ class RegularizeModel(Regularizers):
                 alpha = torch.diag(alpha)
 
             temp1 = torch.inverse(A_inv + alpha*(K))
-            temp2 = A_inv@self.ListOfModels[k].W \
-                    + alpha@torch.cat([w_s_0 for t, w_s_0 in self.ListOfModelsW0 if t==t], dim = 1).sum(dim=1).view([-1,1]) 
+            temp2 = A_inv @ self.ListOfModels[k].W \
+                    + alpha @ torch.cat(
+                        [w_s_0 for t, w_s_0 in self.ListOfModelsW0 if t==t], 
+                        dim = 1).sum(dim=1).view([-1,1]) 
 
             ListOfNewW0.append((k, (temp1@temp2).detach()))
 
@@ -300,7 +303,11 @@ class RegularizeFunc(Regularizers):
              [1.0000]]))
     """
 
-    def __init__(self, ListOfModels = None, R = lambda x: x.sum(), epoch=100, device = 'cpu'):
+    def __init__(self, 
+                 ListOfModels=None, 
+                 R=lambda x: x.sum(), 
+                 epoch=100, 
+                 device='cpu'):
         """Constructor method
         """
         super(RegularizeFunc, self).__init__()
@@ -329,7 +336,8 @@ class RegularizeFunc(Regularizers):
         :param Y: The tensor of shape 
             `num_elements` :math:`\times` `num_answers`.
         :type Y: FloatTensor
-        :param Z: The tensor of shape `num_elements` :math:`\times` `num_models`.
+        :param Z: The tensor of shape 
+            `num_elements` :math:`\times` `num_models`.
         :type Z: FloatTensor
         :param HyperParameters: The dictionary of all hyper parametrs.
             Where `key` is string and `value` is FloatTensor.
@@ -350,15 +358,18 @@ class RegularizeFunc(Regularizers):
         :param Y: The tensor of shape 
             `num_elements` :math:`\times` `num_answers`.
         :type Y: FloatTensor
-        :param Z: The tensor of shape `num_elements` :math:`\times` `num_models`.
+        :param Z: The tensor of shape 
+            `num_elements` :math:`\times` `num_models`.
         :type Z: FloatTensor
         :param HyperParameters: The dictionary of all hyper parametrs.
             Where `key` is string and `value` is FloatTensor.
         :type HyperParameters: dict
         """
         
-        W0_ = torch.cat([w0[1] for w0 in self.ListOfModelsW0], dim = -1).clone().detach().requires_grad_(True)
-        W0 = W0_.transpose(0,1)
+        W0_ = torch.cat(
+            [w0[1] for w0 in self.ListOfModelsW0], 
+            dim = -1).clone().detach().requires_grad_(True)
+        W0 = W0_.transpose(0, 1)
 
         optimizer = torch.optim.Adam([W0_])
         
@@ -369,17 +380,20 @@ class RegularizeFunc(Regularizers):
                 if local_model.A is not None:
                     if len(local_model.A.shape) == 1:
                         try:
-                            A_inv = torch.diag(1./local_model.A)
+                            A_inv = torch.diag(1. / local_model.A)
                         except:
-                            A_inv = (2**32)*torch.ones(local_model.A.shape[0])
+                            A_inv = (2**32) \
+                                    * torch.ones(local_model.A.shape[0])
                     else:
                         try:
                             A_inv = torch.inverse(local_model.A)
                         except:
-                            A_inv = (2**32)*torch.eye(local_model.A.shape[0])
+                            A_inv = (2**32) \
+                                    * torch.eye(local_model.A.shape[0])
 
 
-                    loss += -0.5*(w0@A_inv@w0)+0.5*w0@A_inv@local_model.W
+                    loss += -0.5 * (w0 @ A_inv@w0) \
+                            + 0.5 * w0 @ A_inv @ local_model.W
 
             loss += self.R(W0)
 
@@ -392,7 +406,7 @@ class RegularizeFunc(Regularizers):
         ListOfNewW0 = []
         
         for k, w_0 in enumerate(W0):
-            ListOfNewW0.append((k, w_0.view([-1,1]).detach()))
+            ListOfNewW0.append((k, w_0.view([-1, 1]).detach()))
 
         for (k, w_0), (t, new_w_0) in zip(self.ListOfModelsW0, ListOfNewW0):
             w_0.data = new_w_0.data
