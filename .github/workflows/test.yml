@@ -22,6 +22,7 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install -U pytest
+          pip install -U pytest-cov
           pip install -U -r src/requirements.txt
           
       - name: Testing
