@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-The :mod:`mixturelib.regularizers` contains classes:
+The :mod:`mixturelib.mixture` contains classes:
 
 - :class:`mixturelib.mixture.Mixture`
 - :class:`mixturelib.mixture.MixtureEmSample`
@@ -127,7 +127,14 @@ class MixtureEmSample(Mixture):
     >>> Y[10:].view(-1)
     tensor([-0.2571, -0.4907])
     """
-    def __init__(self, input_dim = 10, K = 2, HyperParameters = {}, HyperModel = None, ListOfModels = None, ListOfRegularizeModel = None, device = 'cpu'):
+    def __init__(self, 
+                 input_dim=10, 
+                 K=2, 
+                 HyperParameters={}, 
+                 HyperModel=None, 
+                 ListOfModels=None, 
+                 ListOfRegularizeModel=None, 
+                 device='cpu'):
         r"""Constructor method
         """
         super(MixtureEmSample, self).__init__()
@@ -141,7 +148,6 @@ class MixtureEmSample(Mixture):
         
         if HyperModel is None:
             return None
-            # self.HyperModel = HyperExpertNN(input_dim = input_dim, hidden_dim = 10, output_dim = K, device = device)
         else:
             self.HyperModel = HyperModel
             
@@ -152,7 +158,6 @@ class MixtureEmSample(Mixture):
             
         if ListOfModels is None:
             return None
-            # self.ListOfModels = [EachModelLinear(input_dim = input_dim, device = device) for _ in range(K)]
         else:
             self.ListOfModels = ListOfModels
         
@@ -172,14 +177,19 @@ class MixtureEmSample(Mixture):
         :type Y: FloatTensor
         """
 # Optimize Z
-        self.temp1 = temp1 = self.HyperModel.LogPiExpectation(X, Y, self.HyperParameters)
-        self.temp2 = temp2 = torch.cat([self.ListOfModels[k].LogLikeLihoodExpectation(X, Y, self.HyperParameters) for k in range(self.K)], dim = 1)
-        self.pZ = torch.nn.functional.softmax(temp1 + temp2, dim=-1).detach()
+        temp1 = self.HyperModel.LogPiExpectation(X, Y, self.HyperParameters)
+        temp2 = torch.cat(
+            [self.ListOfModels[k].LogLikeLihoodExpectation(
+                X, Y, self.HyperParameters) for k in range(self.K)], dim = 1)
+
+        self.pZ = F.softmax(temp1 + temp2, dim=-1).detach()
     
-        self.temp2_proba = temp2_proba = torch.nn.functional.softmax(temp2, dim=-1).detach()
+        self.temp2_proba = temp2_proba = F.softmax(temp2, dim=-1).detach()
     
         self.indexes = torch.multinomial(self.pZ, num_samples=1).view(-1)
-        prior_index = torch.multinomial(torch.nn.functional.softmax(torch.ones_like(self.pZ), dim=-1), num_samples=1).view(-1)
+        prior_index = torch.multinomial(
+            F.softmax(torch.ones_like(self.pZ), dim=-1),
+            num_samples=1).view(-1)
         
         self.lerning_indexes = []
         for k in range(self.K):
@@ -193,14 +203,20 @@ class MixtureEmSample(Mixture):
     
 # Optimize each model
         for k in range(self.K):
-            self.ListOfModels[k].E_step(X[self.lerning_indexes[k]], Y[self.lerning_indexes[k]], torch.ones_like(self.pZ[self.lerning_indexes[k], k]).view([-1, 1]), self.HyperParameters)
+            local_indexes = self.lerning_indexes[k]
+            self.ListOfModels[k].E_step(
+                X[local_indexes], Y[local_indexes], 
+                torch.ones_like(self.pZ[local_indexes, k]).view([-1, 1]), 
+                self.HyperParameters)
 
 # Do reqularization
         for k in range(len(self.ListOfRegularizeModel)):
-            self.ListOfRegularizeModel[k].E_step(X, Y, self.pZ, self.HyperParameters)
+            self.ListOfRegularizeModel[k].E_step(
+                X, Y, self.pZ, self.HyperParameters)
 
 # Optimize HyperModel
-        self.HyperModel.E_step(X, Y, temp2_proba+0*self.pZ, self.HyperParameters)
+        self.HyperModel.E_step(
+            X, Y, temp2_proba + 0 * self.pZ, self.HyperParameters)
         return
         
     def M_step(self, X, Y):
@@ -216,13 +232,22 @@ class MixtureEmSample(Mixture):
         """
 # Optimize EachModel
         for k in range(self.K):
-            self.ListOfModels[k].M_step(X[self.lerning_indexes[k]], Y[self.lerning_indexes[k]], torch.ones_like(self.pZ[self.lerning_indexes[k], k]).view([-1, 1]), self.HyperParameters)
+            local_indexes = self.lerning_indexes[k]
+            self.ListOfModels[k].M_step(
+                X[local_indexes], Y[local_indexes], 
+                torch.ones_like(self.pZ[local_indexes, k]).view([-1, 1]), 
+                self.HyperParameters)
             
 # Optimize HyperParameters
         for Parameter in self.HyperParameters:
             temp = None
             for k in range(self.K):
-                ret = self.ListOfModels[k].OptimizeHyperParameters(X[self.lerning_indexes[k]], Y[self.lerning_indexes[k]], torch.ones_like(self.pZ[self.lerning_indexes[k], k]).view([-1, 1]), self.HyperParameters, Parameter)
+                local_indexes = self.lerning_indexes[k]
+                ret = self.ListOfModels[k].OptimizeHyperParameters(
+                    X[local_indexes], Y[local_indexes],
+                    torch.ones_like(self.pZ[local_indexes, k]).view([-1, 1]), 
+                    self.HyperParameters, Parameter)
+                
                 if ret is not None:
                     if temp is None:
                         temp = 0
@@ -230,16 +255,18 @@ class MixtureEmSample(Mixture):
             
             if temp is not None:
                 self.HyperParameters[Parameter] = temp.detach()
-# Do reqularization
+
+# Do regularization
         for k in range(len(self.ListOfRegularizeModel)):
-            self.ListOfRegularizeModel[k].M_step(X, Y, self.pZ, self.HyperParameters)
+            self.ListOfRegularizeModel[k].M_step(
+                X, Y, self.pZ, self.HyperParameters)
 
 # Optimize HyperModel
         self.HyperModel.M_step(X, Y, self.pZ, self.HyperParameters)
     
         return
                 
-    def fit(self, X = None, Y = None, epoch = 10, progress = None):
+    def fit(self, X=None, Y=None, epoch=10, progress=None):
         r"""A method that fit a hyper model and local models in one procedure.
 
         Call E-step and M-step in each epoch.
@@ -292,9 +319,11 @@ class MixtureEmSample(Mixture):
         :rtype: FloatTensor, FloatTensor
         """
         pi = self.HyperModel.PredictPi(X, self.HyperParameters).detach()
-        answ = torch.cat([self.ListOfModels[k](X) for k in range(self.K)], dim = 1).detach()
+        answ = torch.cat(
+            [self.ListOfModels[k](X) for k in range(self.K)], 
+            dim = 1).detach()
         
-        return (answ*pi).sum(dim = -1).view([-1, 1]), pi.data.numpy()
+        return (answ*pi).sum(dim=-1).view([-1, 1]), pi.data.numpy()
 
 class MixtureEM(Mixture):
     r"""The implementation of EM-algorithm for solving the 
@@ -367,7 +396,14 @@ class MixtureEM(Mixture):
     >>> Y[10:].view(-1)
     tensor([-0.2571, -0.4907])
     """
-    def __init__(self, input_dim = 10, K = 2, HyperParameters = {}, HyperModel = None, ListOfModels = None, ListOfRegularizeModel = None, device = 'cpu'):
+    def __init__(self,
+                 input_dim=10, 
+                 K=2, 
+                 HyperParameters={}, 
+                 HyperModel=None, 
+                 ListOfModels=None, 
+                 ListOfRegularizeModel=None, 
+                 device='cpu'):
         """
         It's necessary! The Hyper Parameter should be additive to models.
         """
@@ -382,7 +418,6 @@ class MixtureEM(Mixture):
         
         if HyperModel is None:
             return None
-            # self.HyperModel = HyperExpertNN(input_dim = input_dim, hidden_dim = 10, output_dim = K, device = device)
         else:
             self.HyperModel = HyperModel
             
@@ -393,7 +428,6 @@ class MixtureEM(Mixture):
             
         if ListOfModels is None:
             return None
-            # self.ListOfModels = [EachModelLinear(input_dim = input_dim, device = device) for _ in range(K)]
         else:
             self.ListOfModels = ListOfModels
         
@@ -414,16 +448,22 @@ class MixtureEM(Mixture):
         """
 # Optimize Z
         temp1 = self.HyperModel.LogPiExpectation(X, Y, self.HyperParameters)
-        temp2 = torch.cat([self.ListOfModels[k].LogLikeLihoodExpectation(X, Y, self.HyperParameters) for k in range(self.K)], dim = 1)
-        self.pZ = torch.nn.functional.softmax(temp1 + temp2, dim=-1).detach()
+        temp2 = torch.cat(
+            [self.ListOfModels[k].LogLikeLihoodExpectation(
+                X, Y, self.HyperParameters) for k in range(self.K)],
+            dim = 1)
+
+        self.pZ = F.softmax(temp1 + temp2, dim=-1).detach()
     
 # Optimize each model
         for k in range(self.K):
-            self.ListOfModels[k].E_step(X, Y, self.pZ[:,k].view([-1, 1]), self.HyperParameters)
+            self.ListOfModels[k].E_step(
+                X, Y, self.pZ[:,k].view([-1, 1]), self.HyperParameters)
 
 # Do reqularization
         for k in range(len(self.ListOfRegularizeModel)):
-            self.ListOfRegularizeModel[k].E_step(X, Y, self.pZ, self.HyperParameters)
+            self.ListOfRegularizeModel[k].E_step(
+                X, Y, self.pZ, self.HyperParameters)
 
 # Optimize HyperModel
         self.HyperModel.E_step(X, Y, self.pZ, self.HyperParameters)
@@ -442,13 +482,17 @@ class MixtureEM(Mixture):
         """
 # Optimize EachModel
         for k in range(self.K):
-            self.ListOfModels[k].M_step(X, Y, self.pZ[:, k].view([-1, 1]), self.HyperParameters)
+            self.ListOfModels[k].M_step(
+                X, Y, self.pZ[:, k].view([-1, 1]), self.HyperParameters)
             
 # Optimize HyperParameters
         for Parameter in self.HyperParameters:
             temp = None
             for k in range(self.K):
-                ret = self.ListOfModels[k].OptimizeHyperParameters(X, Y, self.pZ[:, k].view([-1, 1]), self.HyperParameters, Parameter)
+                ret = self.ListOfModels[k].OptimizeHyperParameters(
+                    X, Y, self.pZ[:, k].view([-1, 1]), 
+                    self.HyperParameters, Parameter)
+
                 if ret is not None:
                     if temp is None:
                         temp = 0
@@ -458,7 +502,8 @@ class MixtureEM(Mixture):
                 self.HyperParameters[Parameter] = temp.detach()
 # Do reqularization
         for k in range(len(self.ListOfRegularizeModel)):
-            self.ListOfRegularizeModel[k].M_step(X, Y, self.pZ, self.HyperParameters)
+            self.ListOfRegularizeModel[k].M_step(
+                X, Y, self.pZ, self.HyperParameters)
 
 # Optimize HyperModel
         self.HyperModel.M_step(X, Y, self.pZ, self.HyperParameters)
@@ -517,6 +562,8 @@ class MixtureEM(Mixture):
         :rtype: FloatTensor, FloatTensor
         """
         pi = self.HyperModel.PredictPi(X, self.HyperParameters).detach()
-        answ = torch.cat([self.ListOfModels[k](X) for k in range(self.K)], dim = 1).detach()
+        answ = torch.cat(
+            [self.ListOfModels[k](X) for k in range(self.K)], 
+            dim = 1).detach()
         
         return (answ*pi).sum(dim = -1).view([-1, 1]), pi.data.numpy()
