@@ -204,8 +204,8 @@ class EachModelLinear(EachModel):
         r"""Object :math:`\textbf{W}` is a model parameters"""
 
         if w is not None:
-            self.w_0 = w.clone()
-            self.W.data = w.data.clone() + (1e-5)*torch.randn(input_dim, 1, device = self.device)
+            self.w_0 = w.view([-1, 1]).clone()
+            self.W.data = self.w_0.data.clone() + (1e-5)*torch.randn(input_dim, 1, device = self.device)
         else:
             self.w_0 = w
         
