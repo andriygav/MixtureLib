@@ -13,9 +13,9 @@
 import os
 import sys
 
-from mixturelib import __version__
-
 sys.path.insert(0, os.path.abspath('../../src/'))
+
+from mixturelib import __version__
 
 
 # -- Project information -----------------------------------------------------
