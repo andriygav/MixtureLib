@@ -136,7 +136,7 @@ class HyperModelDirichlet(HyperModel):
             [-0.7118, -0.8310],
             [-0.7118, -0.8310]])
     """
-    def __init__(self, output_dim = 2, device = 'cpu'):
+    def __init__(self, output_dim=2, device='cpu'):
         """Constructor method
         """
         super(HyperModelDirichlet, self).__init__()
@@ -305,11 +305,11 @@ class HyperExpertNN(nn.Module, HyperModel):
             [-0.5775, -0.8239],
             [-0.5357, -0.8801]])
     """
-    def __init__(self, 
-                 input_dim=20, 
-                 hidden_dim=10, 
-                 output_dim=10, 
-                 epochs=100, 
+    def __init__(self,
+                 input_dim=20,
+                 hidden_dim=10,
+                 output_dim=10,
+                 epochs=100,
                  device='cpu'):
         """Constructor method
         """
