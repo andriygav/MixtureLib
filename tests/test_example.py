@@ -3,7 +3,7 @@
 import torch
 import numpy as np
 
-from mixturelib.mixture import MixtureEmSample
+from mixturelib.mixture import MixtureEM
 from mixturelib.local_models import EachModelLinear
 from mixturelib.hyper_models import HyperExpertNN, HyperModelDirichlet
 
@@ -36,9 +36,10 @@ def test_example_mixture_of_model():
 
     HpMd = HyperModelDirichlet(output_dim=2)
 
-    mixture = MixtureEmSample(HyperParameters={'beta': 1.},
-                              HyperModel=HpMd,
-                              ListOfModels=list_of_models)
+    mixture = MixtureEM(HyperParameters={'beta': 1.},
+                        HyperModel=HpMd,
+                        ListOfModels=list_of_models,
+                        model_type='sample')
 
     mixture.fit(X_tr, Y_tr)
 
@@ -58,9 +59,10 @@ def test_example_mixture_of_experts():
     HpMd = HyperExpertNN(input_dim=2, hidden_dim=5,
                      output_dim=2, epochs=10)
 
-    mixture = MixtureEmSample(HyperParameters={'beta': 1.},
-                              HyperModel=HpMd,
-                              ListOfModels=list_of_models)
+    mixture = MixtureEM(HyperParameters={'beta': 1.},
+                        HyperModel=HpMd,
+                        ListOfModels=list_of_models,
+                        model_type='sample')
 
     mixture.fit(X_tr, Y_tr)
 
