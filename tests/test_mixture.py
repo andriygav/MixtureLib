@@ -28,16 +28,13 @@ def test_MixtureEmSample_init():
 
     list_regulizer = [RegularizeFunc(ListOfModels=list_of_models)]
 
-    mixture = MixtureEmSample(input_dim=2, 
-                              K=2,
-                              HyperParameters=HyperParameters,
+    mixture = MixtureEmSample(HyperParameters=HyperParameters,
                               HyperModel=hyper_model, 
                               ListOfModels=list_of_models, 
                               ListOfRegularizeModel=list_regulizer, 
                               device='cpu')
 
     assert mixture.K == 2
-    assert mixture.n == 2
     assert mixture.device == 'cpu'
     assert mixture.HyperParameters['beta'] == torch.tensor(1.)
     assert mixture.HyperModel == hyper_model
@@ -68,9 +65,7 @@ def test_MixtureEmSample_E_step():
 
     list_regulizer = [RegularizeFunc(ListOfModels=list_of_models)]
 
-    mixture = MixtureEmSample(input_dim=2, 
-                              K=2,
-                              HyperParameters=HyperParameters,
+    mixture = MixtureEmSample(HyperParameters=HyperParameters,
                               HyperModel=hyper_model, 
                               ListOfModels=list_of_models,  
                               device='cpu')
@@ -113,9 +108,7 @@ def test_MixtureEmSample_E_step():
 
     list_regulizer = [RegularizeFunc(ListOfModels=list_of_models)]
 
-    mixture = MixtureEmSample(input_dim=2, 
-                              K=2,
-                              HyperParameters=HyperParameters,
+    mixture = MixtureEmSample(HyperParameters=HyperParameters,
                               HyperModel=hyper_model, 
                               ListOfModels=list_of_models, 
                               ListOfRegularizeModel=list_regulizer, 
@@ -152,9 +145,7 @@ def test_MixtureEmSample_fit_predict():
 
     list_regulizer = [RegularizeFunc(ListOfModels=list_of_models)]
 
-    mixture = MixtureEmSample(input_dim=2, 
-                              K=2,
-                              HyperParameters=HyperParameters,
+    mixture = MixtureEmSample(HyperParameters=HyperParameters,
                               HyperModel=hyper_model, 
                               ListOfModels=list_of_models, 
                               ListOfRegularizeModel=list_regulizer, 
@@ -186,16 +177,13 @@ def test_MixtureEM_init():
 
     list_regulizer = [RegularizeFunc(ListOfModels=list_of_models)]
 
-    mixture = MixtureEM(input_dim=2, 
-                        K=2,
-                        HyperParameters=HyperParameters,
+    mixture = MixtureEM(HyperParameters=HyperParameters,
                         HyperModel=hyper_model, 
                         ListOfModels=list_of_models, 
                         ListOfRegularizeModel=list_regulizer, 
                         device='cpu')
 
     assert mixture.K == 2
-    assert mixture.n == 2
     assert mixture.device == 'cpu'
     assert mixture.HyperParameters['beta'] == torch.tensor(1.)
     assert mixture.HyperModel == hyper_model
@@ -223,9 +211,7 @@ def test_MixtureEM_E_step():
 
     list_regulizer = [RegularizeFunc(ListOfModels=list_of_models)]
 
-    mixture = MixtureEM(input_dim=2, 
-                        K=2,
-                        HyperParameters=HyperParameters,
+    mixture = MixtureEM(HyperParameters=HyperParameters,
                         HyperModel=hyper_model, 
                         ListOfModels=list_of_models,  
                         device='cpu')
@@ -265,9 +251,7 @@ def test_MixtureEM_E_step():
 
     list_regulizer = [RegularizeFunc(ListOfModels=list_of_models)]
 
-    mixture = MixtureEM(input_dim=2, 
-                        K=2,
-                        HyperParameters=HyperParameters,
+    mixture = MixtureEM(HyperParameters=HyperParameters,
                         HyperModel=hyper_model, 
                         ListOfModels=list_of_models, 
                         ListOfRegularizeModel=list_regulizer, 
@@ -301,9 +285,7 @@ def test_MixtureEM_fit_predict():
 
     list_regulizer = [RegularizeFunc(ListOfModels=list_of_models)]
 
-    mixture = MixtureEM(input_dim=2, 
-                        K=2,
-                        HyperParameters=HyperParameters,
+    mixture = MixtureEM(HyperParameters=HyperParameters,
                         HyperModel=hyper_model, 
                         ListOfModels=list_of_models, 
                         ListOfRegularizeModel=list_regulizer, 

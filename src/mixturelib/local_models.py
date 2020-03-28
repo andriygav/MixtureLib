@@ -192,9 +192,9 @@ class EachModelLinear(EachModel):
     """
     def __init__(self,
                  input_dim=20,
-                 device='cpu', 
-                 A=None, 
-                 w=None, 
+                 device='cpu',
+                 A=None,
+                 w=None,
                  OptimizedHyper=set(['w_0', 'A', 'beta'])):
         """Constructor method
         """

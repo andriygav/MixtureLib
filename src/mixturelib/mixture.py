@@ -26,7 +26,7 @@ class Mixture:
         """
         pass
 
-    def fit(self, X = None, Y = None, epoch = 10, progress = None):
+    def fit(self, X=None, Y=None, epoch=10, progress=None):
         r"""A method that fit a hyper model and local models in one procedure.
 
         :param X: The tensor of shape 
@@ -66,13 +66,6 @@ class MixtureEmSample(Mixture):
         All Hyper Parameters should be additive to models, when you wanna 
         optimize them.
 
-    .. warning::
-        It's necessary! The parameter `input_dim` will be depricated.
-
-        It's necessary! The parameter `K` will be depricated.
-
-    :param input_dim: The number of features.
-    :type input_dim: int
     :param K: The number of local models.
     :type K: int
     :param HyperParameters: The dictionary of all hyper parametrs.
@@ -117,7 +110,7 @@ class MixtureEmSample(Mixture):
     >>> hyper_parameters = {'beta': 1.} # Withor hyper parameters
     >>>
     >>> mixture = MixtureEmSample(
-    ...     input_dim=2, K=2, HyperModel=hyper_model, 
+    ...     HyperModel=hyper_model, 
     ...     HyperParameters=hyper_parameters, 
     ...     ListOfModels=[first_model, second_model]) # Init hyper model
     >>> mixture.fit(X[:10], Y[:10]) # Optimise model parameter
@@ -127,19 +120,23 @@ class MixtureEmSample(Mixture):
     >>> Y[10:].view(-1)
     tensor([-0.2571, -0.4907])
     """
-    def __init__(self, 
-                 input_dim=10, 
-                 K=2, 
-                 HyperParameters={}, 
-                 HyperModel=None, 
-                 ListOfModels=None, 
-                 ListOfRegularizeModel=None, 
+    def __init__(self,
+                 HyperParameters={},
+                 HyperModel=None,
+                 ListOfModels=None,
+                 ListOfRegularizeModel=None,
                  device='cpu'):
         r"""Constructor method
         """
         super(MixtureEmSample, self).__init__()
-        self.K = K
-        self.n = input_dim
+
+        if ListOfModels is None:
+            return None
+        else:
+            self.ListOfModels = ListOfModels
+
+        self.K = len(self.ListOfModels)
+
         self.device = device
         
         self.HyperParameters = dict()
@@ -156,10 +153,7 @@ class MixtureEmSample(Mixture):
         else:
             self.ListOfRegularizeModel = ListOfRegularizeModel
             
-        if ListOfModels is None:
-            return None
-        else:
-            self.ListOfModels = ListOfModels
+
         
 
         self.pZ = None
@@ -335,15 +329,7 @@ class MixtureEM(Mixture):
         All Hyper Parameters should be additive to models, when you wanna 
         optimize them.
 
-    .. warning::
-        It's necessary! The parameter `input_dim` will be depricated.
 
-        It's necessary! The parameter `K` will be depricated.
-
-    :param input_dim: The number of features.
-    :type input_dim: int
-    :param K: The number of local models.
-    :type K: int
     :param HyperParameters: The dictionary of all hyper parametrs.
         Where `key` is string and `value` is float or FloatTensor.
     :param HyperModel: The hyper model which are weighted all local models.
@@ -386,7 +372,7 @@ class MixtureEM(Mixture):
     >>> hyper_parameters = {'beta': 1.} # Withor hyper parameters
     >>>
     >>> mixture = MixtureEmSample(
-    ...     input_dim=2, K=2, HyperModel=hyper_model, 
+    ...     HyperModel=hyper_model, 
     ...     HyperParameters=hyper_parameters, 
     ...     ListOfModels=[first_model, second_model]) # Init hyper model
     >>> mixture.fit(X[:10], Y[:10]) # Optimise model parameter
@@ -397,8 +383,6 @@ class MixtureEM(Mixture):
     tensor([-0.2571, -0.4907])
     """
     def __init__(self,
-                 input_dim=10, 
-                 K=2, 
                  HyperParameters={}, 
                  HyperModel=None, 
                  ListOfModels=None, 
@@ -408,8 +392,12 @@ class MixtureEM(Mixture):
         It's necessary! The Hyper Parameter should be additive to models.
         """
         super(MixtureEM, self).__init__()
-        self.K = K
-        self.n = input_dim
+        if ListOfModels is None:
+            return None
+        else:
+            self.ListOfModels = ListOfModels
+
+        self.K = len(self.ListOfModels)
         self.device = device
         
         self.HyperParameters = dict()
@@ -425,11 +413,7 @@ class MixtureEM(Mixture):
             self.ListOfRegularizeModel = []
         else:
             self.ListOfRegularizeModel = ListOfRegularizeModel
-            
-        if ListOfModels is None:
-            return None
-        else:
-            self.ListOfModels = ListOfModels
+
         
 
         self.pZ = None

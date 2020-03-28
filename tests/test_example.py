@@ -36,8 +36,7 @@ def test_example_mixture_of_model():
 
     HpMd = HyperModelDirichlet(output_dim=2)
 
-    mixture = MixtureEmSample(input_dim=2, K=2,
-                              HyperParameters={'beta': 1.},
+    mixture = MixtureEmSample(HyperParameters={'beta': 1.},
                               HyperModel=HpMd,
                               ListOfModels=list_of_models)
 
@@ -59,10 +58,9 @@ def test_example_mixture_of_experts():
     HpMd = HyperExpertNN(input_dim=2, hidden_dim=5,
                      output_dim=2, epochs=10)
 
-    mixture = MixtureEmSample(input_dim=2, K=2,
-                          HyperParameters={'beta': 1.},
-                          HyperModel=HpMd,
-                          ListOfModels=list_of_models)
+    mixture = MixtureEmSample(HyperParameters={'beta': 1.},
+                              HyperModel=HpMd,
+                              ListOfModels=list_of_models)
 
     mixture.fit(X_tr, Y_tr)
 
