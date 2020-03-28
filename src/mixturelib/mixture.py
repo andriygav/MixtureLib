@@ -178,17 +178,17 @@ class MixtureEmSample(Mixture):
 
         self.pZ = F.softmax(temp1 + temp2, dim=-1).detach()
     
-        self.temp2_proba = temp2_proba = F.softmax(temp2, dim=-1).detach()
+        temp2_proba = F.softmax(temp2, dim=-1).detach()
     
-        self.indexes = torch.multinomial(self.pZ, num_samples=1).view(-1)
+        posterior_indexes = torch.multinomial(self.pZ, num_samples=1).view(-1)
         prior_index = torch.multinomial(
             F.softmax(torch.ones_like(self.pZ), dim=-1),
             num_samples=1).view(-1)
         
         self.lerning_indexes = []
         for k in range(self.K):
-            ind_k = (self.indexes==k)
-            ind_k *= (prior_index==k)
+            ind_k = (posterior_indexes == k)
+            ind_k *= (prior_index == k)
             
             if torch.sum(ind_k) < 3:
                 ind_k = prior_index
@@ -339,6 +339,12 @@ class MixtureEM(Mixture):
     :param ListOfRegularizeModel: The list of regulizers with E_step and 
         M_step methods.
     :type ListOfRegularizeModel: list
+    :param model_type: Type os EM algorithm. Can be `default` or `sample`.
+        In `default` EM model all objects uses in each local models 
+        with weights.
+        In `sample` EM model all objects are sampled during to their weights 
+        and just sampled samples uses in local models.
+    :type model_type: string
     :param device: The device for pytorch. 
         Can be 'cpu' or 'gpu'. Default 'cpu'.
     :type device: string
@@ -383,10 +389,11 @@ class MixtureEM(Mixture):
     tensor([-0.2571, -0.4907])
     """
     def __init__(self,
-                 HyperParameters={}, 
-                 HyperModel=None, 
-                 ListOfModels=None, 
-                 ListOfRegularizeModel=None, 
+                 HyperParameters={},
+                 HyperModel=None,
+                 ListOfModels=None,
+                 ListOfRegularizeModel=None,
+                 model_type='default',
                  device='cpu'):
         """
         It's necessary! The Hyper Parameter should be additive to models.
@@ -414,7 +421,11 @@ class MixtureEM(Mixture):
         else:
             self.ListOfRegularizeModel = ListOfRegularizeModel
 
-        
+        if model_type not in {'default', 'sample'}:
+            raise ValueError("""The model_type should be `default` 
+                or `sample` but given {}.""".format(model_type))
+
+        self.model_type = model_type
 
         self.pZ = None
         return
@@ -438,11 +449,34 @@ class MixtureEM(Mixture):
             dim = 1)
 
         self.pZ = F.softmax(temp1 + temp2, dim=-1).detach()
-    
+
+# Set lerning obejects to each model
+        if self.model_type == 'sample':
+            posterior_indexes = torch.multinomial(self.pZ, num_samples=1).view(-1)
+            prior_index = torch.multinomial(
+                F.softmax(torch.ones_like(self.pZ), dim=-1),
+                num_samples=1).view(-1)
+            
+            self.lerning_indexes = []
+            for k in range(self.K):
+                ind_k = (posterior_indexes == k)
+                ind_k *= (prior_index == k)
+                
+                if torch.sum(ind_k) < 3:
+                    ind_k = prior_index
+
+                self.lerning_indexes.append(ind_k)
+        elif self.model_type == 'default':
+            self.lerning_indexes = torch.ones_like(self.pZ).bool()
+            self.lerning_indexes = self.lerning_indexes.transpose(0, 1)
+
 # Optimize each model
         for k in range(self.K):
+            local_indexes = self.lerning_indexes[k]
             self.ListOfModels[k].E_step(
-                X, Y, self.pZ[:,k].view([-1, 1]), self.HyperParameters)
+                X[local_indexes], Y[local_indexes], 
+                torch.ones_like(self.pZ[local_indexes, k]).view([-1, 1]), 
+                self.HyperParameters)
 
 # Do reqularization
         for k in range(len(self.ListOfRegularizeModel)):
@@ -466,17 +500,22 @@ class MixtureEM(Mixture):
         """
 # Optimize EachModel
         for k in range(self.K):
+            local_indexes = self.lerning_indexes[k]
             self.ListOfModels[k].M_step(
-                X, Y, self.pZ[:, k].view([-1, 1]), self.HyperParameters)
+                X[local_indexes], Y[local_indexes], 
+                torch.ones_like(self.pZ[local_indexes, k]).view([-1, 1]), 
+                self.HyperParameters)
             
 # Optimize HyperParameters
         for Parameter in self.HyperParameters:
             temp = None
             for k in range(self.K):
+                local_indexes = self.lerning_indexes[k]
                 ret = self.ListOfModels[k].OptimizeHyperParameters(
-                    X, Y, self.pZ[:, k].view([-1, 1]), 
+                    X[local_indexes], Y[local_indexes],
+                    torch.ones_like(self.pZ[local_indexes, k]).view([-1, 1]), 
                     self.HyperParameters, Parameter)
-
+                
                 if ret is not None:
                     if temp is None:
                         temp = 0
@@ -484,7 +523,8 @@ class MixtureEM(Mixture):
             
             if temp is not None:
                 self.HyperParameters[Parameter] = temp.detach()
-# Do reqularization
+
+# Do regularization
         for k in range(len(self.ListOfRegularizeModel)):
             self.ListOfRegularizeModel[k].M_step(
                 X, Y, self.pZ, self.HyperParameters)
@@ -494,7 +534,7 @@ class MixtureEM(Mixture):
     
         return
                 
-    def fit(self, X = None, Y = None, epoch = 10, progress = None):
+    def fit(self, X=None, Y=None, epoch=10, progress=None):
         r"""A method that fit a hyper model and local models in one procedure.
 
         Call E-step and M-step in each epoch.
