@@ -168,7 +168,6 @@
 <span class="sd">The :mod:`mixturelib.mixture` contains classes:</span>
 
 <span class="sd">- :class:`mixturelib.mixture.Mixture`</span>
-<span class="sd">- :class:`mixturelib.mixture.MixtureEmSample`</span>
 <span class="sd">- :class:`mixturelib.mixture.MixtureEM`</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
@@ -190,7 +189,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
-<div class="viewcode-block" id="Mixture.fit"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.Mixture.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">epoch</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">progress</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Mixture.fit"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.Mixture.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;A method that fit a hyper model and local models in one procedure.</span>
 
 <span class="sd">        :param X: The tensor of shape </span>
@@ -219,26 +218,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
 
-
-<div class="viewcode-block" id="MixtureEmSample"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEmSample">[docs]</a><span class="k">class</span> <span class="nc">MixtureEmSample</span><span class="p">(</span><span class="n">Mixture</span><span class="p">):</span>
+<div class="viewcode-block" id="MixtureEM"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEM">[docs]</a><span class="k">class</span> <span class="nc">MixtureEM</span><span class="p">(</span><span class="n">Mixture</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;The implementation of EM-algorithm for solving the </span>
-<span class="sd">    two stage optimisation problem. </span>
-<span class="sd">    Unlike :class:`mixturelib.mixture.MixtureEM`, this class samples data </span>
-<span class="sd">    when fit local models.</span>
+<span class="sd">    two stage optimisation problem.</span>
 
 <span class="sd">    .. warning::</span>
 <span class="sd">        All Hyper Parameters should be additive to models, when you wanna </span>
 <span class="sd">        optimize them.</span>
 
-<span class="sd">    .. warning::</span>
-<span class="sd">        It&#39;s necessary! The parameter `input_dim` will be depricated.</span>
-
-<span class="sd">        It&#39;s necessary! The parameter `K` will be depricated.</span>
-
-<span class="sd">    :param input_dim: The number of features.</span>
-<span class="sd">    :type input_dim: int</span>
-<span class="sd">    :param K: The number of local models.</span>
-<span class="sd">    :type K: int</span>
 <span class="sd">    :param HyperParameters: The dictionary of all hyper parametrs.</span>
 <span class="sd">        Where `key` is string and `value` is float or FloatTensor.</span>
 <span class="sd">    :param HyperModel: The hyper model which are weighted all local models.</span>
@@ -248,6 +235,12 @@
 <span class="sd">    :param ListOfRegularizeModel: The list of regulizers with E_step and </span>
 <span class="sd">        M_step methods.</span>
 <span class="sd">    :type ListOfRegularizeModel: list</span>
+<span class="sd">    :param model_type: Type os EM algorithm. Can be `default` or `sample`.</span>
+<span class="sd">        In `default` EM model all objects uses in each local models </span>
+<span class="sd">        with weights.</span>
+<span class="sd">        In `sample` EM model all objects are sampled during to their weights </span>
+<span class="sd">        and just sampled samples uses in local models.</span>
+<span class="sd">    :type model_type: string</span>
 <span class="sd">    :param device: The device for pytorch. </span>
 <span class="sd">        Can be &#39;cpu&#39; or &#39;gpu&#39;. Default &#39;cpu&#39;.</span>
 <span class="sd">    :type device: string</span>
@@ -256,21 +249,22 @@
 
 <span class="sd">    &gt;&gt;&gt; _ = torch.random.manual_seed(42) # Set random seed for repeatability</span>
 <span class="sd">    &gt;&gt;&gt;</span>
-<span class="sd">    &gt;&gt;&gt; w = torch.randn(2, 1) # Generate real parameter vector</span>
-<span class="sd">    &gt;&gt;&gt; X = torch.randn(12, 2) # Generate features data</span>
+<span class="sd">    &gt;&gt;&gt; first_w = torch.randn(2, 1) # Generate first real parameter vector</span>
+<span class="sd">    &gt;&gt;&gt; second_w = torch.randn(2, 1) # Generate second real parameter vector</span>
+<span class="sd">    &gt;&gt;&gt; X = torch.randn(102, 2) # Generate features data</span>
 <span class="sd">    &gt;&gt;&gt; Y = torch.cat(</span>
 <span class="sd">    ...         [</span>
-<span class="sd">    ...             X[:5]@first_w, </span>
-<span class="sd">    ...             X[5:10]@second_w, </span>
-<span class="sd">    ...             X[10:11]@first_w, </span>
-<span class="sd">    ...             X[11:]@second_w</span>
+<span class="sd">    ...             X[:50]@first_w, </span>
+<span class="sd">    ...             X[50:10]@second_w, </span>
+<span class="sd">    ...             X[100:101]@first_w, </span>
+<span class="sd">    ...             X[101:]@second_w</span>
 <span class="sd">    ...         ])</span>
-<span class="sd">    ...     + 0.1 * torch.randn(12, 1) # Generate target data with noise 0.1</span>
+<span class="sd">    ...     + 0.01 * torch.randn(102, 1) # Generate target data with noise 0.1</span>
 <span class="sd">    &gt;&gt;&gt;</span>
 <span class="sd">    &gt;&gt;&gt; first_model = EachModelLinear(</span>
 <span class="sd">    ...     input_dim=2, </span>
 <span class="sd">    ...     A=torch.tensor([1., 1.]),</span>
-<span class="sd">    ...     w=torch.tensor([[0.], [0.]])) # Init first local model</span>
+<span class="sd">    ...     w=torch.tensor([0., 0.])) # Init first local model</span>
 <span class="sd">    &gt;&gt;&gt; second_model = EachModelLinear(</span>
 <span class="sd">    ...     input_dim=2,</span>
 <span class="sd">    ...     A=torch.tensor([1., 1.]),</span>
@@ -280,30 +274,35 @@
 <span class="sd">    ...     output_dim=2) # Init hyper model with Diriclet weighting</span>
 <span class="sd">    &gt;&gt;&gt; hyper_parameters = {&#39;beta&#39;: 1.} # Withor hyper parameters</span>
 <span class="sd">    &gt;&gt;&gt;</span>
-<span class="sd">    &gt;&gt;&gt; mixture = MixtureEmSample(</span>
-<span class="sd">    ...     input_dim=2, K=2, HyperModel=hyper_model, </span>
+<span class="sd">    &gt;&gt;&gt; mixture = MixtureEM(</span>
+<span class="sd">    ...     HyperModel=hyper_model, </span>
 <span class="sd">    ...     HyperParameters=hyper_parameters, </span>
-<span class="sd">    ...     ListOfModels=[first_model, second_model]) # Init hyper model</span>
-<span class="sd">    &gt;&gt;&gt; mixture.fit(X[:10], Y[:10]) # Optimise model parameter</span>
+<span class="sd">    ...     ListOfModels=[first_model, second_model],</span>
+<span class="sd">    ...     model_type=&#39;sample&#39;) # Init hyper model</span>
+<span class="sd">    &gt;&gt;&gt; mixture.fit(X[:100], Y[:100]) # Optimise model parameter</span>
 <span class="sd">    &gt;&gt;&gt;</span>
-<span class="sd">    &gt;&gt;&gt; mixture.predict(X[10:])[0].view(-1)</span>
-<span class="sd">    tensor([-0.0129, -0.4518])</span>
-<span class="sd">    &gt;&gt;&gt; Y[10:].view(-1)</span>
-<span class="sd">    tensor([-0.2571, -0.4907])</span>
+<span class="sd">    &gt;&gt;&gt; mixture.predict(X[100:])[0].view(-1)</span>
+<span class="sd">    tensor([-0.1245, -0.4357])</span>
+<span class="sd">    &gt;&gt;&gt; Y[100:].view(-1)</span>
+<span class="sd">    tensor([-0.0936, -0.4177])</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
-                 <span class="n">input_dim</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> 
-                 <span class="n">K</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> 
-                 <span class="n">HyperParameters</span><span class="o">=</span><span class="p">{},</span> 
-                 <span class="n">HyperModel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
-                 <span class="n">ListOfModels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
-                 <span class="n">ListOfRegularizeModel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">HyperParameters</span><span class="o">=</span><span class="p">{},</span>
+                 <span class="n">HyperModel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">ListOfModels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">ListOfRegularizeModel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">model_type</span><span class="o">=</span><span class="s1">&#39;default&#39;</span><span class="p">,</span>
                  <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Constructor method</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        It&#39;s necessary! The Hyper Parameter should be additive to models.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">MixtureEmSample</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">K</span> <span class="o">=</span> <span class="n">K</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">input_dim</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MixtureEM</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">ListOfModels</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ListOfModels</span> <span class="o">=</span> <span class="n">ListOfModels</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">K</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ListOfModels</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">HyperParameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
@@ -319,17 +318,17 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">ListOfRegularizeModel</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ListOfRegularizeModel</span> <span class="o">=</span> <span class="n">ListOfRegularizeModel</span>
-            
-        <span class="k">if</span> <span class="n">ListOfModels</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ListOfModels</span> <span class="o">=</span> <span class="n">ListOfModels</span>
-        
+
+        <span class="k">if</span> <span class="n">model_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="s1">&#39;sample&#39;</span><span class="p">}:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;The model_type should be `default` </span>
+<span class="s2">                or `sample` but given </span><span class="si">{}</span><span class="s2">.&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model_type</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span> <span class="o">=</span> <span class="n">model_type</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">pZ</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">return</span>
         
-<div class="viewcode-block" id="MixtureEmSample.E_step"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEmSample.E_step">[docs]</a>    <span class="k">def</span> <span class="nf">E_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+<div class="viewcode-block" id="MixtureEM.E_step"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEM.E_step">[docs]</a>    <span class="k">def</span> <span class="nf">E_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Doing E-step of EM-algorigthm. This method call E_step for all </span>
 <span class="sd">        local models, for hyper model and for all regularizations step by step.</span>
 
@@ -344,27 +343,31 @@
         <span class="n">temp1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">HyperModel</span><span class="o">.</span><span class="n">LogPiExpectation</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">HyperParameters</span><span class="p">)</span>
         <span class="n">temp2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span>
             <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ListOfModels</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">LogLikeLihoodExpectation</span><span class="p">(</span>
-                <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">HyperParameters</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">)],</span> <span class="n">dim</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">HyperParameters</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">)],</span>
+            <span class="n">dim</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">pZ</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">temp1</span> <span class="o">+</span> <span class="n">temp2</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
-    
-        <span class="bp">self</span><span class="o">.</span><span class="n">temp2_proba</span> <span class="o">=</span> <span class="n">temp2_proba</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">temp2</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
-    
-        <span class="bp">self</span><span class="o">.</span><span class="n">indexes</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">multinomial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pZ</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">prior_index</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">multinomial</span><span class="p">(</span>
-            <span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pZ</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span>
-            <span class="n">num_samples</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-        
-        <span class="bp">self</span><span class="o">.</span><span class="n">lerning_indexes</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">):</span>
-            <span class="n">ind_k</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indexes</span><span class="o">==</span><span class="n">k</span><span class="p">)</span>
-            <span class="n">ind_k</span> <span class="o">*=</span> <span class="p">(</span><span class="n">prior_index</span><span class="o">==</span><span class="n">k</span><span class="p">)</span>
-            
-            <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">ind_k</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
-                <span class="n">ind_k</span> <span class="o">=</span> <span class="n">prior_index</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">lerning_indexes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ind_k</span><span class="p">)</span>
-    
+<span class="c1"># Set lerning obejects to each model</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span> <span class="o">==</span> <span class="s1">&#39;sample&#39;</span><span class="p">:</span>
+            <span class="n">posterior_indexes</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">multinomial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pZ</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">prior_index</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">multinomial</span><span class="p">(</span>
+                <span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pZ</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span>
+                <span class="n">num_samples</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">lerning_indexes</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">):</span>
+                <span class="n">ind_k</span> <span class="o">=</span> <span class="p">(</span><span class="n">posterior_indexes</span> <span class="o">==</span> <span class="n">k</span><span class="p">)</span>
+                <span class="n">ind_k</span> <span class="o">*=</span> <span class="p">(</span><span class="n">prior_index</span> <span class="o">==</span> <span class="n">k</span><span class="p">)</span>
+                
+                <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">ind_k</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="n">ind_k</span> <span class="o">=</span> <span class="n">prior_index</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">lerning_indexes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ind_k</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span> <span class="o">==</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lerning_indexes</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pZ</span><span class="p">)</span><span class="o">.</span><span class="n">bool</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lerning_indexes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lerning_indexes</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
 <span class="c1"># Optimize each model</span>
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">):</span>
             <span class="n">local_indexes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lerning_indexes</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
@@ -379,11 +382,10 @@
                 <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pZ</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">HyperParameters</span><span class="p">)</span>
 
 <span class="c1"># Optimize HyperModel</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">HyperModel</span><span class="o">.</span><span class="n">E_step</span><span class="p">(</span>
-            <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">temp2_proba</span> <span class="o">+</span> <span class="mi">0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">pZ</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">HyperParameters</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">HyperModel</span><span class="o">.</span><span class="n">E_step</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pZ</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">HyperParameters</span><span class="p">)</span>
         <span class="k">return</span></div>
         
-<div class="viewcode-block" id="MixtureEmSample.M_step"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEmSample.M_step">[docs]</a>    <span class="k">def</span> <span class="nf">M_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+<div class="viewcode-block" id="MixtureEM.M_step"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEM.M_step">[docs]</a>    <span class="k">def</span> <span class="nf">M_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Doing M-step of EM-algorigthm. This method call M_step for all </span>
 <span class="sd">        local models, for hyper model and for all regularizations step by step.</span>
 
@@ -430,251 +432,7 @@
     
         <span class="k">return</span></div>
                 
-<div class="viewcode-block" id="MixtureEmSample.fit"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEmSample.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;A method that fit a hyper model and local models in one procedure.</span>
-
-<span class="sd">        Call E-step and M-step in each epoch.</span>
-
-<span class="sd">        :param X: The tensor of shape </span>
-<span class="sd">            `num_elements` :math:`\times` `num_feature`.</span>
-<span class="sd">        :type X: FloatTensor</span>
-<span class="sd">        :param Y: The tensor of shape </span>
-<span class="sd">            `num_elements` :math:`\times` `num_answers`.</span>
-<span class="sd">        :param epoch: The number of epoch of training.</span>
-<span class="sd">        :type epoch: int</span>
-<span class="sd">        :param progress: The yield function for printing progress, like a tqdm.</span>
-<span class="sd">            The function must take an iterator at the input and return </span>
-<span class="sd">            the same data.</span>
-<span class="sd">        :type epoch: function</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">X</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="n">Y</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
-        
-        <span class="n">iterations</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span>
-        
-        <span class="k">if</span> <span class="n">progress</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">iterations</span> <span class="o">=</span> <span class="n">progress</span><span class="p">(</span><span class="n">iterations</span><span class="p">)</span>
-        
-        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">iterations</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">E_step</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">M_step</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
-            
-        <span class="k">return</span></div>
-    
-<div class="viewcode-block" id="MixtureEmSample.predict"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEmSample.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;A method that predict value and probability for each local models </span>
-<span class="sd">        for given input data.</span>
-
-<span class="sd">        For each x from X predicts</span>
-<span class="sd">        :math:`answer = \sum_{k=1}^{K}\pi_k\bigr(x\bigr)g_k\bigr(x\bigr)`, </span>
-<span class="sd">        where :math:`g_k` is a local model.</span>
-
-<span class="sd">        :param X: The tensor of shape </span>
-<span class="sd">            `num_elements` :math:`\times` `num_feature`.</span>
-<span class="sd">        :type X: FloatTensor</span>
-<span class="sd">        :return:</span>
-<span class="sd">            The prediction of shape </span>
-<span class="sd">            `num_elements` :math:`\times` `num_answers`.</span>
-<span class="sd">            </span>
-<span class="sd">            The probability of shape</span>
-<span class="sd">            `num_elements` :math:`\times` `num_models`.</span>
-<span class="sd">        :rtype: FloatTensor, FloatTensor</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">pi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">HyperModel</span><span class="o">.</span><span class="n">PredictPi</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">HyperParameters</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
-        <span class="n">answ</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span>
-            <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ListOfModels</span><span class="p">[</span><span class="n">k</span><span class="p">](</span><span class="n">X</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">)],</span> 
-            <span class="n">dim</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
-        
-        <span class="k">return</span> <span class="p">(</span><span class="n">answ</span><span class="o">*</span><span class="n">pi</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">pi</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span></div></div>
-
-<div class="viewcode-block" id="MixtureEM"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEM">[docs]</a><span class="k">class</span> <span class="nc">MixtureEM</span><span class="p">(</span><span class="n">Mixture</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;The implementation of EM-algorithm for solving the </span>
-<span class="sd">    two stage optimisation problem. </span>
-<span class="sd">    Unlike :class:`mixturelib.mixture.MixtureEM`, this class uses analytical </span>
-<span class="sd">    solution when fit local models.</span>
-
-<span class="sd">    .. warning::</span>
-<span class="sd">        All Hyper Parameters should be additive to models, when you wanna </span>
-<span class="sd">        optimize them.</span>
-
-<span class="sd">    .. warning::</span>
-<span class="sd">        It&#39;s necessary! The parameter `input_dim` will be depricated.</span>
-
-<span class="sd">        It&#39;s necessary! The parameter `K` will be depricated.</span>
-
-<span class="sd">    :param input_dim: The number of features.</span>
-<span class="sd">    :type input_dim: int</span>
-<span class="sd">    :param K: The number of local models.</span>
-<span class="sd">    :type K: int</span>
-<span class="sd">    :param HyperParameters: The dictionary of all hyper parametrs.</span>
-<span class="sd">        Where `key` is string and `value` is float or FloatTensor.</span>
-<span class="sd">    :param HyperModel: The hyper model which are weighted all local models.</span>
-<span class="sd">    :type HyperModel: :class:`mixturelib.hyper_models.HyperModel`</span>
-<span class="sd">    :param ListOfModels: The list of models with E_step and M_step methods.</span>
-<span class="sd">    :type ListOfModels: list</span>
-<span class="sd">    :param ListOfRegularizeModel: The list of regulizers with E_step and </span>
-<span class="sd">        M_step methods.</span>
-<span class="sd">    :type ListOfRegularizeModel: list</span>
-<span class="sd">    :param device: The device for pytorch. </span>
-<span class="sd">        Can be &#39;cpu&#39; or &#39;gpu&#39;. Default &#39;cpu&#39;.</span>
-<span class="sd">    :type device: string</span>
-
-<span class="sd">    Example:</span>
-
-<span class="sd">    &gt;&gt;&gt; _ = torch.random.manual_seed(42) # Set random seed for repeatability</span>
-<span class="sd">    &gt;&gt;&gt;</span>
-<span class="sd">    &gt;&gt;&gt; w = torch.randn(2, 1) # Generate real parameter vector</span>
-<span class="sd">    &gt;&gt;&gt; X = torch.randn(12, 2) # Generate features data</span>
-<span class="sd">    &gt;&gt;&gt; Y = torch.cat(</span>
-<span class="sd">    ...         [</span>
-<span class="sd">    ...             X[:5]@first_w, </span>
-<span class="sd">    ...             X[5:10]@second_w, </span>
-<span class="sd">    ...             X[10:11]@first_w, </span>
-<span class="sd">    ...             X[11:]@second_w</span>
-<span class="sd">    ...         ])</span>
-<span class="sd">    ...     + 0.1 * torch.randn(12, 1) # Generate target data with noise 0.1</span>
-<span class="sd">    &gt;&gt;&gt;</span>
-<span class="sd">    &gt;&gt;&gt; first_model = EachModelLinear(</span>
-<span class="sd">    ...     input_dim=2, </span>
-<span class="sd">    ...     A=torch.tensor([1., 1.]),</span>
-<span class="sd">    ...     w=torch.tensor([[0.], [0.]])) # Init first local model</span>
-<span class="sd">    &gt;&gt;&gt; second_model = EachModelLinear(</span>
-<span class="sd">    ...     input_dim=2,</span>
-<span class="sd">    ...     A=torch.tensor([1., 1.]),</span>
-<span class="sd">    ...     w=torch.tensor([[1.], [1.]])) # Init second local model</span>
-<span class="sd">    &gt;&gt;&gt; hyper_model = HyperExpertNN(</span>
-<span class="sd">    ...     input_dim=2, </span>
-<span class="sd">    ...     output_dim=2) # Init hyper model with Diriclet weighting</span>
-<span class="sd">    &gt;&gt;&gt; hyper_parameters = {&#39;beta&#39;: 1.} # Withor hyper parameters</span>
-<span class="sd">    &gt;&gt;&gt;</span>
-<span class="sd">    &gt;&gt;&gt; mixture = MixtureEmSample(</span>
-<span class="sd">    ...     input_dim=2, K=2, HyperModel=hyper_model, </span>
-<span class="sd">    ...     HyperParameters=hyper_parameters, </span>
-<span class="sd">    ...     ListOfModels=[first_model, second_model]) # Init hyper model</span>
-<span class="sd">    &gt;&gt;&gt; mixture.fit(X[:10], Y[:10]) # Optimise model parameter</span>
-<span class="sd">    &gt;&gt;&gt;</span>
-<span class="sd">    &gt;&gt;&gt; mixture.predict(X[10:])[0].view(-1)</span>
-<span class="sd">    tensor([ 0.0878, -0.4212])</span>
-<span class="sd">    &gt;&gt;&gt; Y[10:].view(-1)</span>
-<span class="sd">    tensor([-0.2571, -0.4907])</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                 <span class="n">input_dim</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> 
-                 <span class="n">K</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> 
-                 <span class="n">HyperParameters</span><span class="o">=</span><span class="p">{},</span> 
-                 <span class="n">HyperModel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
-                 <span class="n">ListOfModels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
-                 <span class="n">ListOfRegularizeModel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
-                 <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        It&#39;s necessary! The Hyper Parameter should be additive to models.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">MixtureEM</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">K</span> <span class="o">=</span> <span class="n">K</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">input_dim</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
-        
-        <span class="bp">self</span><span class="o">.</span><span class="n">HyperParameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">HyperParameters</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">HyperParameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">HyperParameters</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
-        
-        <span class="k">if</span> <span class="n">HyperModel</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">HyperModel</span> <span class="o">=</span> <span class="n">HyperModel</span>
-            
-        <span class="k">if</span> <span class="n">ListOfRegularizeModel</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ListOfRegularizeModel</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ListOfRegularizeModel</span> <span class="o">=</span> <span class="n">ListOfRegularizeModel</span>
-            
-        <span class="k">if</span> <span class="n">ListOfModels</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ListOfModels</span> <span class="o">=</span> <span class="n">ListOfModels</span>
-        
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">pZ</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">return</span>
-        
-<div class="viewcode-block" id="MixtureEM.E_step"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEM.E_step">[docs]</a>    <span class="k">def</span> <span class="nf">E_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Doing E-step of EM-algorigthm. This method call E_step for all </span>
-<span class="sd">        local models, for hyper model and for all regularizations step by step.</span>
-
-<span class="sd">        :param X: The tensor of shape </span>
-<span class="sd">            `num_elements` :math:`\times` `num_feature`.</span>
-<span class="sd">        :type X: FloatTensor</span>
-<span class="sd">        :param Y: The tensor of shape </span>
-<span class="sd">            `num_elements` :math:`\times` `num_answers`.</span>
-<span class="sd">        :type Y: FloatTensor</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-<span class="c1"># Optimize Z</span>
-        <span class="n">temp1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">HyperModel</span><span class="o">.</span><span class="n">LogPiExpectation</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">HyperParameters</span><span class="p">)</span>
-        <span class="n">temp2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span>
-            <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ListOfModels</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">LogLikeLihoodExpectation</span><span class="p">(</span>
-                <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">HyperParameters</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">)],</span>
-            <span class="n">dim</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">pZ</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">temp1</span> <span class="o">+</span> <span class="n">temp2</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
-    
-<span class="c1"># Optimize each model</span>
-        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ListOfModels</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">E_step</span><span class="p">(</span>
-                <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pZ</span><span class="p">[:,</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">view</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">HyperParameters</span><span class="p">)</span>
-
-<span class="c1"># Do reqularization</span>
-        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ListOfRegularizeModel</span><span class="p">)):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ListOfRegularizeModel</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">E_step</span><span class="p">(</span>
-                <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pZ</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">HyperParameters</span><span class="p">)</span>
-
-<span class="c1"># Optimize HyperModel</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">HyperModel</span><span class="o">.</span><span class="n">E_step</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pZ</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">HyperParameters</span><span class="p">)</span>
-        <span class="k">return</span></div>
-        
-<div class="viewcode-block" id="MixtureEM.M_step"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEM.M_step">[docs]</a>    <span class="k">def</span> <span class="nf">M_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Doing M-step of EM-algorigthm. This method call M_step for all </span>
-<span class="sd">        local models, for hyper model and for all regularizations step by step.</span>
-
-<span class="sd">        :param X: The tensor of shape </span>
-<span class="sd">            `num_elements` :math:`\times` `num_feature`.</span>
-<span class="sd">        :type X: FloatTensor</span>
-<span class="sd">        :param Y: The tensor of shape </span>
-<span class="sd">            `num_elements` :math:`\times` `num_answers`.</span>
-<span class="sd">        :type Y: FloatTensor</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-<span class="c1"># Optimize EachModel</span>
-        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ListOfModels</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">M_step</span><span class="p">(</span>
-                <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pZ</span><span class="p">[:,</span> <span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">view</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">HyperParameters</span><span class="p">)</span>
-            
-<span class="c1"># Optimize HyperParameters</span>
-        <span class="k">for</span> <span class="n">Parameter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">HyperParameters</span><span class="p">:</span>
-            <span class="n">temp</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">):</span>
-                <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ListOfModels</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">OptimizeHyperParameters</span><span class="p">(</span>
-                    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pZ</span><span class="p">[:,</span> <span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">view</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> 
-                    <span class="bp">self</span><span class="o">.</span><span class="n">HyperParameters</span><span class="p">,</span> <span class="n">Parameter</span><span class="p">)</span>
-
-                <span class="k">if</span> <span class="n">ret</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">temp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                        <span class="n">temp</span> <span class="o">=</span> <span class="mi">0</span>
-                    <span class="n">temp</span> <span class="o">+=</span> <span class="n">ret</span>
-            
-            <span class="k">if</span> <span class="n">temp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">HyperParameters</span><span class="p">[</span><span class="n">Parameter</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
-<span class="c1"># Do reqularization</span>
-        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ListOfRegularizeModel</span><span class="p">)):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ListOfRegularizeModel</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">M_step</span><span class="p">(</span>
-                <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pZ</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">HyperParameters</span><span class="p">)</span>
-
-<span class="c1"># Optimize HyperModel</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">HyperModel</span><span class="o">.</span><span class="n">M_step</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pZ</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">HyperParameters</span><span class="p">)</span>
-    
-        <span class="k">return</span></div>
-                
-<div class="viewcode-block" id="MixtureEM.fit"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEM.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">epoch</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">progress</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="MixtureEM.fit"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEM.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;A method that fit a hyper model and local models in one procedure.</span>
 
 <span class="sd">        Call E-step and M-step in each epoch.</span>
