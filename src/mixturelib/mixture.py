@@ -4,7 +4,6 @@
 The :mod:`mixturelib.mixture` contains classes:
 
 - :class:`mixturelib.mixture.Mixture`
-- :class:`mixturelib.mixture.MixtureEmSample`
 - :class:`mixturelib.mixture.MixtureEM`
 """
 from __future__ import print_function
@@ -57,14 +56,11 @@ class Mixture:
 
 class MixtureEM(Mixture):
     r"""The implementation of EM-algorithm for solving the 
-    two stage optimisation problem. 
-    Unlike :class:`mixturelib.mixture.MixtureEM`, this class uses analytical 
-    solution when fit local models.
+    two stage optimisation problem.
 
     .. warning::
         All Hyper Parameters should be additive to models, when you wanna 
         optimize them.
-
 
     :param HyperParameters: The dictionary of all hyper parametrs.
         Where `key` is string and `value` is float or FloatTensor.
@@ -89,21 +85,22 @@ class MixtureEM(Mixture):
 
     >>> _ = torch.random.manual_seed(42) # Set random seed for repeatability
     >>>
-    >>> w = torch.randn(2, 1) # Generate real parameter vector
-    >>> X = torch.randn(12, 2) # Generate features data
+    >>> first_w = torch.randn(2, 1) # Generate first real parameter vector
+    >>> second_w = torch.randn(2, 1) # Generate second real parameter vector
+    >>> X = torch.randn(102, 2) # Generate features data
     >>> Y = torch.cat(
     ...         [
-    ...             X[:5]@first_w, 
-    ...             X[5:10]@second_w, 
-    ...             X[10:11]@first_w, 
-    ...             X[11:]@second_w
+    ...             X[:50]@first_w, 
+    ...             X[50:10]@second_w, 
+    ...             X[100:101]@first_w, 
+    ...             X[101:]@second_w
     ...         ])
-    ...     + 0.1 * torch.randn(12, 1) # Generate target data with noise 0.1
+    ...     + 0.01 * torch.randn(102, 1) # Generate target data with noise 0.1
     >>>
     >>> first_model = EachModelLinear(
     ...     input_dim=2, 
     ...     A=torch.tensor([1., 1.]),
-    ...     w=torch.tensor([[0.], [0.]])) # Init first local model
+    ...     w=torch.tensor([0., 0.])) # Init first local model
     >>> second_model = EachModelLinear(
     ...     input_dim=2,
     ...     A=torch.tensor([1., 1.]),
@@ -113,16 +110,17 @@ class MixtureEM(Mixture):
     ...     output_dim=2) # Init hyper model with Diriclet weighting
     >>> hyper_parameters = {'beta': 1.} # Withor hyper parameters
     >>>
-    >>> mixture = MixtureEmSample(
+    >>> mixture = MixtureEM(
     ...     HyperModel=hyper_model, 
     ...     HyperParameters=hyper_parameters, 
-    ...     ListOfModels=[first_model, second_model]) # Init hyper model
-    >>> mixture.fit(X[:10], Y[:10]) # Optimise model parameter
+    ...     ListOfModels=[first_model, second_model],
+    ...     model_type='sample') # Init hyper model
+    >>> mixture.fit(X[:100], Y[:100]) # Optimise model parameter
     >>>
-    >>> mixture.predict(X[10:])[0].view(-1)
-    tensor([ 0.0878, -0.4212])
-    >>> Y[10:].view(-1)
-    tensor([-0.2571, -0.4907])
+    >>> mixture.predict(X[100:])[0].view(-1)
+    tensor([-0.1245, -0.4357])
+    >>> Y[100:].view(-1)
+    tensor([-0.0936, -0.4177])
     """
     def __init__(self,
                  HyperParameters={},
