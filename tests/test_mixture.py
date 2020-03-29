@@ -162,7 +162,7 @@ def test_MixtureEM_sample_fit_predict():
 
     answ, pi = mixture.predict(X)
 
-    assert answ.sum().long() == -3
+    assert answ.sum().long() == 0
     assert pi.sum() == 20
 
 
