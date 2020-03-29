@@ -361,7 +361,7 @@
                 <span class="n">ind_k</span> <span class="o">*=</span> <span class="p">(</span><span class="n">prior_index</span> <span class="o">==</span> <span class="n">k</span><span class="p">)</span>
                 
                 <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">ind_k</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
-                    <span class="n">ind_k</span> <span class="o">=</span> <span class="n">prior_index</span>
+                    <span class="n">ind_k</span> <span class="o">=</span> <span class="p">(</span><span class="n">prior_index</span> <span class="o">==</span> <span class="n">k</span><span class="p">)</span>
 
                 <span class="bp">self</span><span class="o">.</span><span class="n">lerning_indexes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ind_k</span><span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span> <span class="o">==</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span>
