@@ -197,7 +197,7 @@ class MixtureEM(Mixture):
                 ind_k *= (prior_index == k)
                 
                 if torch.sum(ind_k) < 3:
-                    ind_k = prior_index
+                    ind_k = (prior_index == k)
 
                 self.lerning_indexes.append(ind_k)
         elif self.model_type == 'default':
