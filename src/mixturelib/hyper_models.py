@@ -448,3 +448,165 @@ class HyperExpertNN(nn.Module, HyperModel):
         """
         return F.softmax(self.forward(X), dim = -1)
 
+
+class HyperModelGateSparsed(HyperModel):
+    r"""A hyper model for mixture of model. Each :math:`i`-th object from 
+    train dataset has own probability to each model :math:`\pi^i`.
+
+    In this hyper model, the probability of each local model is a vector 
+    from dirichlet distribution with parameter :math:`\mu`, and :math:`l`.
+    
+
+    :param output_dim: The number of local models.
+    :type output_dim: int
+    :param device: The device for pytorch. 
+        Can be 'cpu' or 'gpu'. Default 'cpu'.
+
+    Example:
+
+    >>> _ = torch.random.manual_seed(42) # Set random seed for repeatability
+    >>>
+    >>> w = torch.randn(2, 1) # Generate real parameter vector
+    >>> X = torch.randn(5, 2) # Generate features data
+    >>> Z = torch.distributions.dirichlet.Dirichlet(
+    ...     torch.tensor([0.5, 0.5])).sample(
+    ...         (5,)) # Set corresponding between data and local models.
+    >>> Y = X@w + 0.1*torch.randn(5, 1) # Generate target data with noise 0.1
+    >>>
+    >>> hyper_model = HyperModelGateSparsed(
+    ...     output_dim=2) # Model with Diriclet weighting for each sample
+    >>> hyper_parameters = {} # Withor hyper parameters
+    >>>
+    >>> hyper_model.LogPiExpectation(
+    ...     X, Y, hyper_parameters) # Log of probability before E step
+    tensor([[-1.3863, -1.3863],
+	        [-1.3863, -1.3863],
+	        [-1.3863, -1.3863],
+	        [-1.3863, -1.3863],
+	        [-1.3863, -1.3863]])
+    >>> 
+    >>> hyper_model.E_step(X, Y, Z, hyper_parameters)
+    >>> hyper_model.LogPiExpectation(
+    ...     X, Y, hyper_parameters)  # Log of probability after E step
+    tensor([[-1.9677, -0.4830],
+	        [-1.7785, -0.5417],
+	        [-0.5509, -1.7521],
+	        [-0.7250, -1.3642],
+	        [-0.4839, -1.9644]])
+    """
+    def __init__(self, output_dim=2, gamma=1., mu=torch.ones(2), device='cpu'):
+        """Constructor method
+        """
+        super(HyperModelGateSparsed, self).__init__()
+        self.output_dim = output_dim
+        self.device = device
+        
+        self.mu = torch.ones(self.output_dim)
+        self.mu = self.mu/self.mu.sum()
+        self.gamma = gamma
+        self.mu_posterior = self.mu.clone()
+        self.gamma_posterior = torch.tensor(self.gamma)
+    
+    def E_step(self, X, Y, Z, HyperParameters):
+        r"""Doing E-step of EM-algorithm. Finds variational probability `q` 
+        of model parameters.
+
+        Calculate analytical solution for estimate `q` in the class of 
+        normal distributions :math:`q = Dir(m)`, where
+        :math:`m = \mu + \gamma`, where 
+        :math:`\gamma_k = \sum_{i=1}^{num\_elements}Z_{ik}`, and 
+        :math:`\mu` is prior.
+
+        .. warning::
+            Now :math:`\mu_k` is `1` for all `k`, and can not be changed.
+
+        :param X: The tensor of shape 
+            `num_elements` :math:`\times` `num_feature`.
+        :type X: FloatTensor
+        :param Y: The tensor of shape 
+            `num_elements` :math:`\times` `num_answers`.
+        :type Y: FloatTensor
+        :param Z: The tensor of shape 
+            `num_elements` :math:`\times` `num_models`.
+        :type Z: FloatTensor
+        :param HyperParameters: The dictionary of all hyper parametrs.
+            Where `key` is string and `value` is FloatTensor.
+        :type HyperParameters: dict
+        """
+        gamma = Z
+        self.mu_posterior = (self.gamma*self.mu + gamma).detach()
+        self.gamma_posterior = self.mu_posterior.sum(dim=-1).view([-1, 1])
+        self.mu_posterior = self.mu_posterior/self.gamma_posterior
+        pass
+    
+    def M_step(self, X, Y, Z, HyperParameters):
+        r"""The method does nothing.
+        
+        :param X: The tensor of shape 
+            `num_elements` :math:`\times` `num_feature`.
+        :type X: FloatTensor
+        :param Y: The tensor of shape 
+            `num_elements` :math:`\times` `num_answers`.
+        :type Y: FloatTensor
+        :param Z: The tensor of shape 
+            `num_elements` :math:`\times` `num_models`.
+        :type Z: FloatTensor
+        :param HyperParameters: The dictionary of all hyper parametrs.
+            Where `key` is string and `value` is FloatTensor.
+        :type HyperParameters: dict
+        """
+        pass
+
+    def LogPiExpectation(self, X, Y, HyperParameters):
+        r"""Returns the expected value of each models log of probability.
+
+        Returns the expectation of :math:`\log \pi` value where 
+        :math:`\pi` is a random value from Dirichlet distribution.
+
+        This function calculates by using :math:`\digamma` function
+        
+        :param X: The tensor of shape 
+            `num_elements` :math:`\times` `num_feature`.
+        :type X: FloatTensor
+        :param Y: The tensor of shape 
+            `num_elements` :math:`\times` `num_answers`.
+        :type Y: FloatTensor
+        :param HyperParameters: The dictionary of all hyper parametrs.
+            Where `key` is string and `value` is FloatTensor.
+        :type HyperParameters: dict
+
+        :return: The tensor of shape 
+            `num_elements` :math:`\times` `num_models`. The espected value of 
+            each models probability.
+        :rtype: FloatTensor
+        """
+        temp_1 = torch.ones([X.shape[0], self.output_dim])
+        temp_2 = (torch.digamma(self.gamma_posterior*self.mu_posterior)
+                  - torch.digamma(self.gamma_posterior))
+        
+        return temp_1 * temp_2
+
+    def PredictPi(self, X, HyperParameters):
+        r"""Returns the probability (weight) of each models.
+
+        Return the same vector :math:`\pi` for all object.
+        Each :math:`\pi = \frac{\textbf{m}}{\sum \textbf{m}_k}`, where
+        :math:`\textbf{m}` is a parameter of Dirichlet pdf.
+        
+        :param X: The tensor of shape 
+            `num_elements` :math:`\times` `num_feature`.
+        :type X: FloatTensor
+        :param HyperParameters: The dictionary of all hyper parametrs.
+            Where `key` is string and `value` is FloatTensor.
+        :type HyperParameters: dict
+
+        :return: The tensor of shape 
+            `num_elements` :math:`\times` `num_models`. 
+            The probability (weight) of each models.
+        :rtype: FloatTensor
+        """
+        try:
+            pi = torch.ones([X.shape[0], self.output_dim]) * self.mu_posterior
+        except:
+            pi = torch.ones([X.shape[0], self.output_dim]) * self.mu
+        return pi
