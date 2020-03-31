@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.2.2
+                0.3.0
               </div>
             
           
@@ -298,7 +298,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">MixtureEM</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">ListOfModels</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;The ListOfModels should be list with </span>
+<span class="s2">                positive length, but given: </span><span class="si">{}</span><span class="s2">.&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ListOfModels</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ListOfModels</span> <span class="o">=</span> <span class="n">ListOfModels</span>
 
@@ -310,7 +311,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">HyperParameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">HyperParameters</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
         
         <span class="k">if</span> <span class="n">HyperModel</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;The HyperModel should be hyper model object </span>
+<span class="s2">                positive length, but given: </span><span class="si">{}</span><span class="s2">.&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">HyperModel</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">HyperModel</span> <span class="o">=</span> <span class="n">HyperModel</span>
             
@@ -326,7 +328,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span> <span class="o">=</span> <span class="n">model_type</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">pZ</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">return</span>
         
 <div class="viewcode-block" id="MixtureEM.E_step"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEM.E_step">[docs]</a>    <span class="k">def</span> <span class="nf">E_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Doing E-step of EM-algorigthm. This method call E_step for all </span>
