@@ -1,17 +1,26 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import pytest
 import torch
 
 from mixturelib.regularizers import Regularizers
 from mixturelib.regularizers import RegularizeModel
 from mixturelib.regularizers import RegularizeFunc
-
 from mixturelib.local_models import EachModelLinear
 
 def test_Regularizers():
     model = Regularizers()
 
+    with pytest.raises(NotImplementedError):
+        model.E_step(None, None, None, None)
+
+    with pytest.raises(NotImplementedError):
+        model.M_step(None, None, None, None)
+
 def test_RegularizeModel_init():
+    model = RegularizeModel()
+    assert model.ListOfModels == []
+
     list_of_models = []
     for _ in range(2):
         list_of_models.append(
@@ -108,7 +117,7 @@ def test_RegularizeModel_M_step_diag_w_mat_A():
     for _ in range(2):
         list_of_models.append(
             EachModelLinear(input_dim = 2, device = 'cpu', 
-                            A = torch.eye(2),
+                            A = torch.zeros(2),
                             w = torch.tensor([[0.], [0.]]), 
                             OptimizedHyper = set(['w_0', 'A', 'beta'])))
 
@@ -129,8 +138,10 @@ def test_RegularizeModel_M_step_diag_w_mat_A():
     assert (model.ListOfModelsW0[1][1] == list_of_models[1].w_0).all()
 
 
-
 def test_RegularizeFunc_init():
+    model = RegularizeFunc()
+    assert model.ListOfModels == []
+    
     list_of_models = []
     for _ in range(2):
         list_of_models.append(
@@ -196,7 +207,7 @@ def test_RegularizeFunc_M_step_diag_w_mat_A():
     for _ in range(2):
         list_of_models.append(
             EachModelLinear(input_dim = 2, device = 'cpu', 
-                            A = torch.eye(2),
+                            A = torch.zeros(2),
                             w = torch.tensor([0., 0.]), 
                             OptimizedHyper = set(['w_0', 'A', 'beta'])))
 

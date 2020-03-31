@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import pytest
 import torch
 
-from mixturelib.local_models import EachModelLinear
-
+from mixturelib.local_models import EachModelLinear, EachModel
 
 def test_EachModelLinear_init():
     model = EachModelLinear(input_dim = 20, device = 'cpu', 
@@ -18,6 +18,26 @@ def test_EachModelLinear_init():
     assert model.OptimizedHyper == set(['w_0', 'A', 'beta'])
 
     assert model.B.shape == (20, 20)
+
+def test_EachModel():
+    model = EachModel()
+
+    with pytest.raises(NotImplementedError):
+        model.forward(None)
+
+    with pytest.raises(NotImplementedError):
+        model.OptimizeHyperParameters(None, None, None, None, None)
+
+    with pytest.raises(NotImplementedError):
+        model.LogLikeLihoodExpectation(None, None, None)
+
+    with pytest.raises(NotImplementedError):
+        model.E_step(None, None, None, None)
+
+    with pytest.raises(NotImplementedError):
+        model.M_step(None, None, None, None)
+
+
 
 def test_EachModelLinear_forward():
     torch.manual_seed(42)
@@ -52,8 +72,11 @@ def test_EachModelLinear_OptimizeHyperParameters():
     HyperParameters = {'beta': torch.tensor(1.)}
 
     answer = model.OptimizeHyperParameters(X, Y, Z, HyperParameters, 'beta')
-    assert answer.item() == 1.3780806064605713
+    assert round(answer.item(), 2) == 1.38
 
+    Z = torch.zeros(2, 1)
+    answer = model.OptimizeHyperParameters(X, Y, Z, HyperParameters, 'beta')
+    assert answer.item() == 0.
 
 def test_EachModelLinear_LogLikeLihoodExpectation():
     torch.manual_seed(42)
@@ -95,6 +118,11 @@ def test_EachModelLinear_E_step_non_w_non_A():
     assert answer[1][0].long().item() == 0
 
     assert model.B.shape == (2, 2)
+
+    model = EachModelLinear(input_dim = 2, device = 'cpu', 
+                            A = torch.zeros(2,2), w = None, 
+                            OptimizedHyper = set(['w_0', 'A', 'beta']))
+    model.E_step(X, Y, Z, HyperParameters)
 
 def test_EachModelLinear_E_step_non_w_vec_A():
     torch.manual_seed(42)
