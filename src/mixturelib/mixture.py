@@ -134,7 +134,8 @@ class MixtureEM(Mixture):
         """
         super(MixtureEM, self).__init__()
         if ListOfModels is None:
-            return None
+            raise ValueError("""The ListOfModels should be list with 
+                positive length, but given: {}.""".format(ListOfModels))
         else:
             self.ListOfModels = ListOfModels
 
@@ -146,7 +147,8 @@ class MixtureEM(Mixture):
             self.HyperParameters[key] = torch.tensor(HyperParameters[key])
         
         if HyperModel is None:
-            return None
+            raise ValueError("""The HyperModel should be hyper model object 
+                positive length, but given: {}.""".format(HyperModel))
         else:
             self.HyperModel = HyperModel
             
@@ -162,7 +164,6 @@ class MixtureEM(Mixture):
         self.model_type = model_type
 
         self.pZ = None
-        return
         
     def E_step(self, X, Y):
         r"""Doing E-step of EM-algorigthm. This method call E_step for all 
