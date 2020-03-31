@@ -188,17 +188,14 @@ class RegularizeModel(Regularizers):
         ListOfNewW0 = []
         
         for k, w_0 in self.ListOfModelsW0:
-            if len(self.ListOfModels[k].A.shape) == 1:
-                try:
-                    A_inv = torch.diag(1./self.ListOfModels[k].A)
-                except:
-                    A_inv = (2**32)*torch.ones(self.ListOfModels[k].A.shape[0])
-            else:
-                try:
-                    A_inv = torch.inverse(self.ListOfModels[k].A)
-                except:
-                    A_inv = (2**32)*torch.eye(self.ListOfModels[k].A.shape[0])
-            
+            A = self.ListOfModels[k].A
+            if len(A.shape) == 1:
+                A = torch.diag(A)
+            try:
+                A_inv = torch.inverse(A)
+            except:
+                A_inv = (2**32)*torch.eye(A.shape[0])
+
             B = self.ListOfModels[k].B
 
             if len(alpha.shape) == 0:
@@ -378,18 +375,13 @@ class RegularizeFunc(Regularizers):
             loss = 0
             for local_model, w0  in zip(self.ListOfModels, W0):
                 if local_model.A is not None:
-                    if len(local_model.A.shape) == 1:
-                        try:
-                            A_inv = torch.diag(1. / local_model.A)
-                        except:
-                            A_inv = (2**32) \
-                                    * torch.ones(local_model.A.shape[0])
-                    else:
-                        try:
-                            A_inv = torch.inverse(local_model.A)
-                        except:
-                            A_inv = (2**32) \
-                                    * torch.eye(local_model.A.shape[0])
+                    A = local_model.A
+                    if len(A.shape) == 1:
+                        A = torch.diag(A)
+                    try:
+                        A_inv = torch.inverse(A)
+                    except:
+                        A_inv = (2**32)*torch.eye(A.shape[0])
 
 
                     loss += -0.5 * (w0 @ A_inv@w0) \
