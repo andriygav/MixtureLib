@@ -246,9 +246,9 @@ class HyperModelDirichlet(HyperModel):
         :rtype: FloatTensor
         """
         denum = self.m.sum()
-        try:
+        if denum != 0.:
             pi = torch.ones([X.shape[0], self.output_dim]) * (self.m / denum)
-        except:
+        else:
             pi = torch.zeros([X.shape[0], self.output_dim])
         return pi
 
@@ -501,7 +501,7 @@ class HyperModelGateSparsed(HyperModel):
         self.output_dim = output_dim
         self.device = device
         
-        self.mu = torch.ones(self.output_dim)
+        self.mu = mu
         self.mu = self.mu/self.mu.sum()
         self.gamma = gamma
         self.mu_posterior = self.mu.clone()
@@ -605,8 +605,5 @@ class HyperModelGateSparsed(HyperModel):
             The probability (weight) of each models.
         :rtype: FloatTensor
         """
-        try:
-            pi = torch.ones([X.shape[0], self.output_dim]) * self.mu_posterior
-        except:
-            pi = torch.ones([X.shape[0], self.output_dim]) * self.mu
+        pi = torch.ones([X.shape[0], self.output_dim]) * self.mu_posterior
         return pi

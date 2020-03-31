@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import pytest
 import torch
 
 from mixturelib.mixture import Mixture
@@ -9,8 +10,22 @@ from mixturelib.hyper_models import HyperModelDirichlet
 from mixturelib.hyper_models import HyperExpertNN
 from mixturelib.regularizers import RegularizeFunc
 
+def test_Mixture():
+    model = Mixture()
+
+    with pytest.raises(NotImplementedError):
+        model.fit(None, None)
+
+    with pytest.raises(NotImplementedError):
+        model.predict(None)
 
 def test_MixtureEM_sample_init():
+    with pytest.raises(ValueError):
+        mixture = MixtureEM()
+
+    with pytest.raises(ValueError):
+        mixture = MixtureEM(ListOfModels=[])
+
     torch.random.manual_seed(42)
     HyperParameters = {'beta': 1.}
 
@@ -26,6 +41,14 @@ def test_MixtureEM_sample_init():
     list_of_models = [first_model, secode_model]
 
     list_regulizer = [RegularizeFunc(ListOfModels=list_of_models)]
+
+    with pytest.raises(ValueError):
+        mixture = MixtureEM(HyperParameters=HyperParameters,
+                            HyperModel=hyper_model, 
+                            ListOfModels=list_of_models, 
+                            ListOfRegularizeModel=list_regulizer,
+                            model_type='test', 
+                            device='cpu')
 
     mixture = MixtureEM(HyperParameters=HyperParameters,
                         HyperModel=hyper_model, 
@@ -158,12 +181,16 @@ def test_MixtureEM_sample_fit_predict():
     Y = torch.randn(20, 1)
 
 
-    mixture.fit(X, Y)
+    mixture.fit(X, Y, progress=enumerate)
 
     answ, pi = mixture.predict(X)
 
     assert answ.sum().long() == 0
     assert pi.sum() == 20
+
+    assert mixture.fit(None, Y) is None
+    assert mixture.fit(X, None) is None
+
 
 
 def test_MixtureEM_init():
