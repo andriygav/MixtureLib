@@ -1,9 +1,7 @@
 
 
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -13,12 +11,19 @@
   
 
   
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -26,16 +31,11 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/language_data.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" /> 
 </head>
@@ -51,7 +51,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> MixtureLib
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> MixtureLib
           
 
           
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.3.0
+                0.4.0
               </div>
             
           
@@ -78,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -105,6 +106,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -143,7 +145,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>Index</li>
     
@@ -193,11 +195,9 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="hyper_models.html#mixturelib.hyper_models.HyperExpertNN.E_step">E_step() (mixturelib.hyper_models.HyperExpertNN method)</a>
+      <li><a href="hyper_models.html#mixturelib.hyper_models.HyperModel.E_step">E_step() (mixturelib.hyper_models.HyperModel method)</a>
 
       <ul>
-        <li><a href="hyper_models.html#mixturelib.hyper_models.HyperModel.E_step">(mixturelib.hyper_models.HyperModel method)</a>
-</li>
         <li><a href="hyper_models.html#mixturelib.hyper_models.HyperModelDirichlet.E_step">(mixturelib.hyper_models.HyperModelDirichlet method)</a>
 </li>
         <li><a href="hyper_models.html#mixturelib.hyper_models.HyperModelGateSparsed.E_step">(mixturelib.hyper_models.HyperModelGateSparsed method)</a>
@@ -235,11 +235,9 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="hyper_models.html#mixturelib.hyper_models.HyperExpertNN.forward">forward() (mixturelib.hyper_models.HyperExpertNN method)</a>
+      <li><a href="local_models.html#mixturelib.local_models.EachModel.forward">forward() (mixturelib.local_models.EachModel method)</a>
 
       <ul>
-        <li><a href="local_models.html#mixturelib.local_models.EachModel.forward">(mixturelib.local_models.EachModel method)</a>
-</li>
         <li><a href="local_models.html#mixturelib.local_models.EachModelLinear.forward">(mixturelib.local_models.EachModelLinear method)</a>
 </li>
       </ul></li>
@@ -249,8 +247,6 @@
 <h2 id="H">H</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="hyper_models.html#mixturelib.hyper_models.HyperExpertNN">HyperExpertNN (class in mixturelib.hyper_models)</a>
-</li>
       <li><a href="hyper_models.html#mixturelib.hyper_models.HyperModel">HyperModel (class in mixturelib.hyper_models)</a>
 </li>
   </ul></td>
@@ -271,11 +267,11 @@
         <li><a href="local_models.html#mixturelib.local_models.EachModelLinear.LogLikeLihoodExpectation">(mixturelib.local_models.EachModelLinear method)</a>
 </li>
       </ul></li>
-      <li><a href="hyper_models.html#mixturelib.hyper_models.HyperExpertNN.LogPiExpectation">LogPiExpectation() (mixturelib.hyper_models.HyperExpertNN method)</a>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="hyper_models.html#mixturelib.hyper_models.HyperModel.LogPiExpectation">LogPiExpectation() (mixturelib.hyper_models.HyperModel method)</a>
 
       <ul>
-        <li><a href="hyper_models.html#mixturelib.hyper_models.HyperModel.LogPiExpectation">(mixturelib.hyper_models.HyperModel method)</a>
-</li>
         <li><a href="hyper_models.html#mixturelib.hyper_models.HyperModelDirichlet.LogPiExpectation">(mixturelib.hyper_models.HyperModelDirichlet method)</a>
 </li>
         <li><a href="hyper_models.html#mixturelib.hyper_models.HyperModelGateSparsed.LogPiExpectation">(mixturelib.hyper_models.HyperModelGateSparsed method)</a>
@@ -287,11 +283,9 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="hyper_models.html#mixturelib.hyper_models.HyperExpertNN.M_step">M_step() (mixturelib.hyper_models.HyperExpertNN method)</a>
+      <li><a href="hyper_models.html#mixturelib.hyper_models.HyperModel.M_step">M_step() (mixturelib.hyper_models.HyperModel method)</a>
 
       <ul>
-        <li><a href="hyper_models.html#mixturelib.hyper_models.HyperModel.M_step">(mixturelib.hyper_models.HyperModel method)</a>
-</li>
         <li><a href="hyper_models.html#mixturelib.hyper_models.HyperModelDirichlet.M_step">(mixturelib.hyper_models.HyperModelDirichlet method)</a>
 </li>
         <li><a href="hyper_models.html#mixturelib.hyper_models.HyperModelGateSparsed.M_step">(mixturelib.hyper_models.HyperModelGateSparsed method)</a>
@@ -309,20 +303,53 @@
         <li><a href="regularizers.html#mixturelib.regularizers.Regularizers.M_step">(mixturelib.regularizers.Regularizers method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="mixture.html#mixturelib.mixture.Mixture">Mixture (class in mixturelib.mixture)</a>
 </li>
       <li><a href="mixture.html#mixturelib.mixture.MixtureEM">MixtureEM (class in mixturelib.mixture)</a>
 </li>
-      <li><a href="hyper_models.html#module-mixturelib.hyper_models">mixturelib.hyper_models (module)</a>
+      <li>
+    mixturelib.hyper_models
+
+      <ul>
+        <li><a href="hyper_models.html#module-mixturelib.hyper_models">module</a>
 </li>
-      <li><a href="local_models.html#module-mixturelib.local_models">mixturelib.local_models (module)</a>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    mixturelib.local_models
+
+      <ul>
+        <li><a href="local_models.html#module-mixturelib.local_models">module</a>
 </li>
-      <li><a href="mixture.html#module-mixturelib.mixture">mixturelib.mixture (module)</a>
+      </ul></li>
+      <li>
+    mixturelib.mixture
+
+      <ul>
+        <li><a href="mixture.html#module-mixturelib.mixture">module</a>
 </li>
-      <li><a href="regularizers.html#module-mixturelib.regularizers">mixturelib.regularizers (module)</a>
+      </ul></li>
+      <li>
+    mixturelib.regularizers
+
+      <ul>
+        <li><a href="regularizers.html#module-mixturelib.regularizers">module</a>
 </li>
+      </ul></li>
+      <li>
+    module
+
+      <ul>
+        <li><a href="hyper_models.html#module-mixturelib.hyper_models">mixturelib.hyper_models</a>
+</li>
+        <li><a href="local_models.html#module-mixturelib.local_models">mixturelib.local_models</a>
+</li>
+        <li><a href="mixture.html#module-mixturelib.mixture">mixturelib.mixture</a>
+</li>
+        <li><a href="regularizers.html#module-mixturelib.regularizers">mixturelib.regularizers</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -347,11 +374,11 @@
         <li><a href="mixture.html#mixturelib.mixture.MixtureEM.predict">(mixturelib.mixture.MixtureEM method)</a>
 </li>
       </ul></li>
-      <li><a href="hyper_models.html#mixturelib.hyper_models.HyperExpertNN.PredictPi">PredictPi() (mixturelib.hyper_models.HyperExpertNN method)</a>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="hyper_models.html#mixturelib.hyper_models.HyperModel.PredictPi">PredictPi() (mixturelib.hyper_models.HyperModel method)</a>
 
       <ul>
-        <li><a href="hyper_models.html#mixturelib.hyper_models.HyperModel.PredictPi">(mixturelib.hyper_models.HyperModel method)</a>
-</li>
         <li><a href="hyper_models.html#mixturelib.hyper_models.HyperModelDirichlet.PredictPi">(mixturelib.hyper_models.HyperModelDirichlet method)</a>
 </li>
         <li><a href="hyper_models.html#mixturelib.hyper_models.HyperModelGateSparsed.PredictPi">(mixturelib.hyper_models.HyperModelGateSparsed method)</a>
@@ -394,11 +421,19 @@
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2020, Andrey Grabovoy
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -409,7 +444,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {
