@@ -2,7 +2,7 @@
 Mixture Lib
 ###########
 
-|test| |codecov| |docs| |readthedocs| |pypi| 
+|codecov| |readthedocs| |pypi| 
     
 .. |codecov| image:: https://img.shields.io/codecov/c/github/andriygav/mixturelib/master
     :target: https://github.com/andriygav/MixtureLib/tree/master
