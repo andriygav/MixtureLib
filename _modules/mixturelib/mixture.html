@@ -1,24 +1,21 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>mixturelib.mixture &mdash; MixtureLib  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
-      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -35,9 +32,6 @@
           <a href="../../index.html" class="icon icon-home">
             MixtureLib
           </a>
-              <div class="version">
-                0.4.0
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -108,14 +102,18 @@
 
 <span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">TensorDataset</span><span class="p">,</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">Dataset</span>
 
-<div class="viewcode-block" id="Mixture"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.Mixture">[docs]</a><span class="k">class</span> <span class="nc">Mixture</span><span class="p">:</span>
+<div class="viewcode-block" id="Mixture">
+<a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.Mixture">[docs]</a>
+<span class="k">class</span> <span class="nc">Mixture</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Base class for all mixtures.&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Constructor method</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
-<div class="viewcode-block" id="Mixture.fit"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.Mixture.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Mixture.fit">
+<a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.Mixture.fit">[docs]</a>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;A method that fit a hyper model and local models in one procedure.</span>
 
 <span class="sd">        :param X: The tensor of shape </span>
@@ -132,7 +130,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
-<div class="viewcode-block" id="Mixture.predict"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.Mixture.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Mixture.predict">
+<a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.Mixture.predict">[docs]</a>
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;A method that predict value for given input data.</span>
 
 <span class="sd">        :param X: The tensor of shape </span>
@@ -142,9 +143,13 @@
 <span class="sd">            `num_elements` :math:`\times` `num_answers`.</span>
 <span class="sd">        :rtype: FloatTensor</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+</div>
 
-<div class="viewcode-block" id="MixtureEM"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEM">[docs]</a><span class="k">class</span> <span class="nc">MixtureEM</span><span class="p">(</span><span class="n">Mixture</span><span class="p">):</span>
+
+<div class="viewcode-block" id="MixtureEM">
+<a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEM">[docs]</a>
+<span class="k">class</span> <span class="nc">MixtureEM</span><span class="p">(</span><span class="n">Mixture</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The implementation of EM-algorithm for solving the </span>
 <span class="sd">    two stage optimisation problem.</span>
 
@@ -255,7 +260,9 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">pZ</span> <span class="o">=</span> <span class="kc">None</span>
         
-<div class="viewcode-block" id="MixtureEM.E_step"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEM.E_step">[docs]</a>    <span class="k">def</span> <span class="nf">E_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+<div class="viewcode-block" id="MixtureEM.E_step">
+<a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEM.E_step">[docs]</a>
+    <span class="k">def</span> <span class="nf">E_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Doing E-step of EM-algorigthm. This method call E_step for all </span>
 <span class="sd">        local models, for hyper model and for all regularizations step by step.</span>
 
@@ -311,8 +318,11 @@
 <span class="c1"># Optimize HyperModel</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">HyperModel</span><span class="o">.</span><span class="n">E_step</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pZ</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">HyperParameters</span><span class="p">)</span>
         <span class="k">return</span></div>
+
         
-<div class="viewcode-block" id="MixtureEM.M_step"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEM.M_step">[docs]</a>    <span class="k">def</span> <span class="nf">M_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+<div class="viewcode-block" id="MixtureEM.M_step">
+<a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEM.M_step">[docs]</a>
+    <span class="k">def</span> <span class="nf">M_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Doing M-step of EM-algorigthm. This method call M_step for all </span>
 <span class="sd">        local models, for hyper model and for all regularizations step by step.</span>
 
@@ -358,8 +368,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">HyperModel</span><span class="o">.</span><span class="n">M_step</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pZ</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">HyperParameters</span><span class="p">)</span>
     
         <span class="k">return</span></div>
+
                 
-<div class="viewcode-block" id="MixtureEM.fit"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEM.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="MixtureEM.fit">
+<a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEM.fit">[docs]</a>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;A method that fit a hyper model and local models in one procedure.</span>
 
 <span class="sd">        Call E-step and M-step in each epoch.</span>
@@ -391,8 +404,11 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">M_step</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
             
         <span class="k">return</span></div>
+
     
-<div class="viewcode-block" id="MixtureEM.predict"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEM.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<div class="viewcode-block" id="MixtureEM.predict">
+<a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEM.predict">[docs]</a>
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;A method that predict value for given input data.</span>
 
 <span class="sd">        For each x from X predicts</span>
@@ -415,7 +431,9 @@
             <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ListOfModels</span><span class="p">[</span><span class="n">k</span><span class="p">](</span><span class="n">X</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">)],</span> 
             <span class="n">dim</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
         
-        <span class="k">return</span> <span class="p">(</span><span class="n">answ</span><span class="o">*</span><span class="n">pi</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">pi</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span></div></div>
+        <span class="k">return</span> <span class="p">(</span><span class="n">answ</span><span class="o">*</span><span class="n">pi</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">pi</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span></div>
+</div>
+
 </pre></div>
 
            </div>

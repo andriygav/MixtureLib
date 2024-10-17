@@ -1,24 +1,21 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>mixturelib.hyper_models &mdash; MixtureLib  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
-      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -35,9 +32,6 @@
           <a href="../../index.html" class="icon icon-home">
             MixtureLib
           </a>
-              <div class="version">
-                0.4.0
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -106,14 +100,18 @@
 <span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
 
 <span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">TensorDataset</span><span class="p">,</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">Dataset</span>
-<div class="viewcode-block" id="HyperModel"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModel">[docs]</a><span class="k">class</span> <span class="nc">HyperModel</span><span class="p">:</span>
+<div class="viewcode-block" id="HyperModel">
+<a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModel">[docs]</a>
+<span class="k">class</span> <span class="nc">HyperModel</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Base class for all hyper models.&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor method</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
-<div class="viewcode-block" id="HyperModel.E_step"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModel.E_step">[docs]</a>    <span class="k">def</span> <span class="nf">E_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+<div class="viewcode-block" id="HyperModel.E_step">
+<a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModel.E_step">[docs]</a>
+    <span class="k">def</span> <span class="nf">E_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Doing E-step of EM-algorithm. Finds variational probability `q` </span>
 <span class="sd">        of model parameters.</span>
 
@@ -132,7 +130,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
-<div class="viewcode-block" id="HyperModel.M_step"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModel.M_step">[docs]</a>    <span class="k">def</span> <span class="nf">M_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+
+<div class="viewcode-block" id="HyperModel.M_step">
+<a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModel.M_step">[docs]</a>
+    <span class="k">def</span> <span class="nf">M_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Doing M-step of EM-algorithm. Finds model hyper parameters.</span>
 
 <span class="sd">        :param X: The tensor of shape </span>
@@ -150,7 +151,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
-<div class="viewcode-block" id="HyperModel.LogPiExpectation"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModel.LogPiExpectation">[docs]</a>    <span class="k">def</span> <span class="nf">LogPiExpectation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+
+<div class="viewcode-block" id="HyperModel.LogPiExpectation">
+<a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModel.LogPiExpectation">[docs]</a>
+    <span class="k">def</span> <span class="nf">LogPiExpectation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns the expected value of each models probability.</span>
 <span class="sd">        </span>
 <span class="sd">        :param X: The tensor of shape </span>
@@ -165,7 +169,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
-<div class="viewcode-block" id="HyperModel.PredictPi"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModel.PredictPi">[docs]</a>    <span class="k">def</span> <span class="nf">PredictPi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+
+<div class="viewcode-block" id="HyperModel.PredictPi">
+<a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModel.PredictPi">[docs]</a>
+    <span class="k">def</span> <span class="nf">PredictPi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns the probability of each models.</span>
 <span class="sd">        </span>
 <span class="sd">        :param X: The tensor of shape </span>
@@ -178,10 +185,14 @@
 <span class="sd">            Where `key` is string and `value` is FloatTensor.</span>
 <span class="sd">        :type HyperParameters: dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span>   </div></div>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>   </div>
+</div>
 
 
-<div class="viewcode-block" id="HyperModelDirichlet"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelDirichlet">[docs]</a><span class="k">class</span> <span class="nc">HyperModelDirichlet</span><span class="p">(</span><span class="n">HyperModel</span><span class="p">):</span>
+
+<div class="viewcode-block" id="HyperModelDirichlet">
+<a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelDirichlet">[docs]</a>
+<span class="k">class</span> <span class="nc">HyperModelDirichlet</span><span class="p">(</span><span class="n">HyperModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;A hyper model for mixture of model. The hyper model cannot predict </span>
 <span class="sd">    local model for each object, because model probability does not </span>
 <span class="sd">    depend on object.</span>
@@ -238,7 +249,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="mi">0</span>
     
-<div class="viewcode-block" id="HyperModelDirichlet.E_step"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelDirichlet.E_step">[docs]</a>    <span class="k">def</span> <span class="nf">E_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+<div class="viewcode-block" id="HyperModelDirichlet.E_step">
+<a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelDirichlet.E_step">[docs]</a>
+    <span class="k">def</span> <span class="nf">E_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Doing E-step of EM-algorithm. Finds variational probability `q` </span>
 <span class="sd">        of model parameters.</span>
 
@@ -268,8 +281,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">+</span> <span class="n">gamma</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="n">Z</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">pass</span></div>
+
     
-<div class="viewcode-block" id="HyperModelDirichlet.M_step"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelDirichlet.M_step">[docs]</a>    <span class="k">def</span> <span class="nf">M_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+<div class="viewcode-block" id="HyperModelDirichlet.M_step">
+<a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelDirichlet.M_step">[docs]</a>
+    <span class="k">def</span> <span class="nf">M_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The method does nothing.</span>
 <span class="sd">        </span>
 <span class="sd">        :param X: The tensor of shape </span>
@@ -287,7 +303,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="HyperModelDirichlet.LogPiExpectation"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelDirichlet.LogPiExpectation">[docs]</a>    <span class="k">def</span> <span class="nf">LogPiExpectation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+
+<div class="viewcode-block" id="HyperModelDirichlet.LogPiExpectation">
+<a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelDirichlet.LogPiExpectation">[docs]</a>
+    <span class="k">def</span> <span class="nf">LogPiExpectation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns the expected value of each models log of probability.</span>
 
 <span class="sd">        Returns the expectation of :math:`\log \pi` value where </span>
@@ -316,7 +335,10 @@
         
         <span class="k">return</span> <span class="n">temp_1</span> <span class="o">*</span> <span class="n">temp_2</span></div>
 
-<div class="viewcode-block" id="HyperModelDirichlet.PredictPi"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelDirichlet.PredictPi">[docs]</a>    <span class="k">def</span> <span class="nf">PredictPi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+
+<div class="viewcode-block" id="HyperModelDirichlet.PredictPi">
+<a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelDirichlet.PredictPi">[docs]</a>
+    <span class="k">def</span> <span class="nf">PredictPi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns the probability (weight) of each models.</span>
 
 <span class="sd">        Return the same vector :math:`\pi` for all object.</span>
@@ -340,10 +362,14 @@
             <span class="n">pi</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_dim</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">/</span> <span class="n">denum</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">pi</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_dim</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">pi</span></div></div>
+        <span class="k">return</span> <span class="n">pi</span></div>
+</div>
 
 
-<div class="viewcode-block" id="HyperExpertNN"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperExpertNN">[docs]</a><span class="k">class</span> <span class="nc">HyperExpertNN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span> <span class="n">HyperModel</span><span class="p">):</span>
+
+<div class="viewcode-block" id="HyperExpertNN">
+<a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperExpertNN">[docs]</a>
+<span class="k">class</span> <span class="nc">HyperExpertNN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span> <span class="n">HyperModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;A hyper model for mixture of experts. The hyper model prediction on </span>
 <span class="sd">    local models probability are depend on the object.</span>
 
@@ -419,7 +445,9 @@
         
         <span class="bp">self</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
         
-<div class="viewcode-block" id="HyperExpertNN.forward"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperExpertNN.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
+<div class="viewcode-block" id="HyperExpertNN.forward">
+<a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperExpertNN.forward">[docs]</a>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns model prediction for the given input data. </span>
 
 <span class="sd">        .. warning::</span>
@@ -442,8 +470,11 @@
         <span class="n">out</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
         <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear3</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">out</span></div>
+
     
-<div class="viewcode-block" id="HyperExpertNN.E_step"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperExpertNN.E_step">[docs]</a>    <span class="k">def</span> <span class="nf">E_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+<div class="viewcode-block" id="HyperExpertNN.E_step">
+<a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperExpertNN.E_step">[docs]</a>
+    <span class="k">def</span> <span class="nf">E_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The method does nothing.</span>
 <span class="sd">        </span>
 <span class="sd">        :param X: The tensor of shape </span>
@@ -460,8 +491,11 @@
 <span class="sd">        :type HyperParameters: dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
+
     
-<div class="viewcode-block" id="HyperExpertNN.M_step"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperExpertNN.M_step">[docs]</a>    <span class="k">def</span> <span class="nf">M_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+<div class="viewcode-block" id="HyperExpertNN.M_step">
+<a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperExpertNN.M_step">[docs]</a>
+    <span class="k">def</span> <span class="nf">M_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Doing M-step of EM-algorithm. Finds model parameters by using </span>
 <span class="sd">        gradient descent.</span>
 
@@ -497,7 +531,10 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="HyperExpertNN.LogPiExpectation"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperExpertNN.LogPiExpectation">[docs]</a>    <span class="k">def</span> <span class="nf">LogPiExpectation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+
+<div class="viewcode-block" id="HyperExpertNN.LogPiExpectation">
+<a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperExpertNN.LogPiExpectation">[docs]</a>
+    <span class="k">def</span> <span class="nf">LogPiExpectation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns the expected value of each models log of probability.</span>
 
 <span class="sd">        Takes log softmax from the forward method.</span>
@@ -518,8 +555,11 @@
 <span class="sd">        :rtype: FloatTensor</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">dim</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span></div>
+
     
-<div class="viewcode-block" id="HyperExpertNN.PredictPi"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperExpertNN.PredictPi">[docs]</a>    <span class="k">def</span> <span class="nf">PredictPi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+<div class="viewcode-block" id="HyperExpertNN.PredictPi">
+<a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperExpertNN.PredictPi">[docs]</a>
+    <span class="k">def</span> <span class="nf">PredictPi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns the probability (weight) of each models.</span>
 
 <span class="sd">        Takes softmax from the forward method.</span>
@@ -536,10 +576,14 @@
 <span class="sd">            The probability (weight) of each models.</span>
 <span class="sd">        :rtype: FloatTensor</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">dim</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">dim</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="HyperModelGateSparsed"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelGateSparsed">[docs]</a><span class="k">class</span> <span class="nc">HyperModelGateSparsed</span><span class="p">(</span><span class="n">HyperModel</span><span class="p">):</span>
+
+<div class="viewcode-block" id="HyperModelGateSparsed">
+<a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelGateSparsed">[docs]</a>
+<span class="k">class</span> <span class="nc">HyperModelGateSparsed</span><span class="p">(</span><span class="n">HyperModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;A hyper model for mixture of model. Each :math:`i`-th object from </span>
 <span class="sd">    train dataset has own probability to each model :math:`\pi^i`.</span>
 
@@ -597,7 +641,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">mu_posterior</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">gamma_posterior</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gamma</span><span class="p">)</span>
     
-<div class="viewcode-block" id="HyperModelGateSparsed.E_step"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelGateSparsed.E_step">[docs]</a>    <span class="k">def</span> <span class="nf">E_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+<div class="viewcode-block" id="HyperModelGateSparsed.E_step">
+<a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelGateSparsed.E_step">[docs]</a>
+    <span class="k">def</span> <span class="nf">E_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Doing E-step of EM-algorithm. Finds variational probability `q` </span>
 <span class="sd">        of model parameters.</span>
 
@@ -628,8 +674,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">gamma_posterior</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu_posterior</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mu_posterior</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu_posterior</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">gamma_posterior</span>
         <span class="k">pass</span></div>
+
     
-<div class="viewcode-block" id="HyperModelGateSparsed.M_step"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelGateSparsed.M_step">[docs]</a>    <span class="k">def</span> <span class="nf">M_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+<div class="viewcode-block" id="HyperModelGateSparsed.M_step">
+<a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelGateSparsed.M_step">[docs]</a>
+    <span class="k">def</span> <span class="nf">M_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The method does nothing.</span>
 <span class="sd">        </span>
 <span class="sd">        :param X: The tensor of shape </span>
@@ -647,7 +696,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="HyperModelGateSparsed.LogPiExpectation"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelGateSparsed.LogPiExpectation">[docs]</a>    <span class="k">def</span> <span class="nf">LogPiExpectation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+
+<div class="viewcode-block" id="HyperModelGateSparsed.LogPiExpectation">
+<a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelGateSparsed.LogPiExpectation">[docs]</a>
+    <span class="k">def</span> <span class="nf">LogPiExpectation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns the expected value of each models log of probability.</span>
 
 <span class="sd">        Returns the expectation of :math:`\log \pi` value where </span>
@@ -676,7 +728,10 @@
         
         <span class="k">return</span> <span class="n">temp_1</span> <span class="o">*</span> <span class="n">temp_2</span></div>
 
-<div class="viewcode-block" id="HyperModelGateSparsed.PredictPi"><a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelGateSparsed.PredictPi">[docs]</a>    <span class="k">def</span> <span class="nf">PredictPi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
+
+<div class="viewcode-block" id="HyperModelGateSparsed.PredictPi">
+<a class="viewcode-back" href="../../hyper_models.html#mixturelib.hyper_models.HyperModelGateSparsed.PredictPi">[docs]</a>
+    <span class="k">def</span> <span class="nf">PredictPi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">HyperParameters</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns the probability (weight) of each models.</span>
 
 <span class="sd">        Return the same vector :math:`\pi` for all object.</span>
@@ -696,7 +751,9 @@
 <span class="sd">        :rtype: FloatTensor</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">pi</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_dim</span><span class="p">])</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu_posterior</span>
-        <span class="k">return</span> <span class="n">pi</span></div></div>
+        <span class="k">return</span> <span class="n">pi</span></div>
+</div>
+
 </pre></div>
 
            </div>

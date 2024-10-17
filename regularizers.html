@@ -1,26 +1,23 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Regularizers &mdash; MixtureLib  documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
-      <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -39,9 +36,6 @@
           <a href="index.html" class="icon icon-home">
             MixtureLib
           </a>
-              <div class="version">
-                0.4.0
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -109,7 +103,7 @@
            <div itemprop="articleBody">
              
   <section id="module-mixturelib.regularizers">
-<span id="regularizers"></span><h1>Regularizers<a class="headerlink" href="#module-mixturelib.regularizers" title="Permalink to this heading"></a></h1>
+<span id="regularizers"></span><h1>Regularizers<a class="headerlink" href="#module-mixturelib.regularizers" title="Link to this heading"></a></h1>
 <p>The <a class="reference internal" href="#module-mixturelib.regularizers" title="mixturelib.regularizers"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mixturelib.regularizers</span></code></a> contains classes:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#mixturelib.regularizers.Regularizers" title="mixturelib.regularizers.Regularizers"><code class="xref py py-class docutils literal notranslate"><span class="pre">mixturelib.regularizers.Regularizers</span></code></a></p></li>
@@ -118,7 +112,7 @@
 </ul>
 <dl class="py class">
 <dt class="sig sig-object py" id="mixturelib.regularizers.RegularizeFunc">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mixturelib.regularizers.</span></span><span class="sig-name descname"><span class="pre">RegularizeFunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ListOfModels=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R=&lt;function</span> <span class="pre">RegularizeFunc.&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch=100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device='cpu'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/regularizers.html#RegularizeFunc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mixturelib.regularizers.RegularizeFunc" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mixturelib.regularizers.</span></span><span class="sig-name descname"><span class="pre">RegularizeFunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ListOfModels=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R=&lt;function</span> <span class="pre">RegularizeFunc.&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch=100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device='cpu'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/regularizers.html#RegularizeFunc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mixturelib.regularizers.RegularizeFunc" title="Link to this definition"></a></dt>
 <dd><p>The class of regularization to create any relationship between
 prior means. The relationship between the parameters is set by using 
 the link function.</p>
@@ -198,7 +192,7 @@ the M-step.</p></li>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="mixturelib.regularizers.RegularizeFunc.E_step">
-<span class="sig-name descname"><span class="pre">E_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">HyperParameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/regularizers.html#RegularizeFunc.E_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mixturelib.regularizers.RegularizeFunc.E_step" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">E_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">HyperParameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/regularizers.html#RegularizeFunc.E_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mixturelib.regularizers.RegularizeFunc.E_step" title="Link to this definition"></a></dt>
 <dd><p>The method does nothing.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -218,7 +212,7 @@ Where <cite>key</cite> is string and <cite>value</cite> is FloatTensor.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mixturelib.regularizers.RegularizeFunc.M_step">
-<span class="sig-name descname"><span class="pre">M_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">HyperParameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/regularizers.html#RegularizeFunc.M_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mixturelib.regularizers.RegularizeFunc.M_step" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">M_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">HyperParameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/regularizers.html#RegularizeFunc.M_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mixturelib.regularizers.RegularizeFunc.M_step" title="Link to this definition"></a></dt>
 <dd><p>Make some regularization on the M-step.</p>
 <p>Solves next optimisation problem
 <span class="math notranslate nohighlight">\(\sum_{k=1}^{num\_models}\left[-\frac{1}{2}w_k^0A_k^{-1}w_k^0+
@@ -243,7 +237,7 @@ Where <cite>key</cite> is string and <cite>value</cite> is FloatTensor.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="mixturelib.regularizers.RegularizeModel">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mixturelib.regularizers.</span></span><span class="sig-name descname"><span class="pre">RegularizeModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ListOfModels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cpu'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/regularizers.html#RegularizeModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mixturelib.regularizers.RegularizeModel" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mixturelib.regularizers.</span></span><span class="sig-name descname"><span class="pre">RegularizeModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ListOfModels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cpu'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/regularizers.html#RegularizeModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mixturelib.regularizers.RegularizeModel" title="Link to this definition"></a></dt>
 <dd><p>The class of regularization to create a relationship between
 prior means. The relationship between the parameters in this case, is that 
 the mean distributions should be equal.</p>
@@ -310,7 +304,7 @@ Can be ‘cpu’ or ‘gpu’. Default ‘cpu’.</p></li>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="mixturelib.regularizers.RegularizeModel.E_step">
-<span class="sig-name descname"><span class="pre">E_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">HyperParameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/regularizers.html#RegularizeModel.E_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mixturelib.regularizers.RegularizeModel.E_step" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">E_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">HyperParameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/regularizers.html#RegularizeModel.E_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mixturelib.regularizers.RegularizeModel.E_step" title="Link to this definition"></a></dt>
 <dd><p>The method does nothing.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -330,7 +324,7 @@ Where <cite>key</cite> is string and <cite>value</cite> is FloatTensor.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mixturelib.regularizers.RegularizeModel.M_step">
-<span class="sig-name descname"><span class="pre">M_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">HyperParameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/regularizers.html#RegularizeModel.M_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mixturelib.regularizers.RegularizeModel.M_step" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">M_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">HyperParameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/regularizers.html#RegularizeModel.M_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mixturelib.regularizers.RegularizeModel.M_step" title="Link to this definition"></a></dt>
 <dd><p>Make some regularization on the M-step.</p>
 <p>For all local model from ListOfModels with prior, make regularization
 <span class="math notranslate nohighlight">\(w^0_k = \left[A_k^{-1} + (num\_models-1)\alpha\right]
@@ -358,11 +352,11 @@ Where <cite>key</cite> is string and <cite>value</cite> is FloatTensor.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="mixturelib.regularizers.Regularizers">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mixturelib.regularizers.</span></span><span class="sig-name descname"><span class="pre">Regularizers</span></span><a class="reference internal" href="_modules/mixturelib/regularizers.html#Regularizers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mixturelib.regularizers.Regularizers" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mixturelib.regularizers.</span></span><span class="sig-name descname"><span class="pre">Regularizers</span></span><a class="reference internal" href="_modules/mixturelib/regularizers.html#Regularizers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mixturelib.regularizers.Regularizers" title="Link to this definition"></a></dt>
 <dd><p>Base class for all regulizers.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mixturelib.regularizers.Regularizers.E_step">
-<span class="sig-name descname"><span class="pre">E_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">HyperParameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/regularizers.html#Regularizers.E_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mixturelib.regularizers.Regularizers.E_step" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">E_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">HyperParameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/regularizers.html#Regularizers.E_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mixturelib.regularizers.Regularizers.E_step" title="Link to this definition"></a></dt>
 <dd><p>Make some regularization on the E-step.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -381,7 +375,7 @@ Where <cite>key</cite> is string and <cite>value</cite> is FloatTensor.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mixturelib.regularizers.Regularizers.M_step">
-<span class="sig-name descname"><span class="pre">M_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">HyperParameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/regularizers.html#Regularizers.M_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mixturelib.regularizers.Regularizers.M_step" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">M_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">HyperParameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mixturelib/regularizers.html#Regularizers.M_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mixturelib.regularizers.Regularizers.M_step" title="Link to this definition"></a></dt>
 <dd><p>Make some regularization on the M-step.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
