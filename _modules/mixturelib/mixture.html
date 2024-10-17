@@ -1,101 +1,61 @@
-
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>mixturelib.mixture &mdash; MixtureLib  documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
-
-  
-  
-  
-  
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
 
   
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> MixtureLib
           
-
-          
+          <a href="../../index.html" class="icon icon-home">
+            MixtureLib
           </a>
-
-          
-            
-            
               <div class="version">
                 0.4.0
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">Main Info:</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Main Info:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../info.html">Mixture Lib</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Get Started:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Get Started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../example.html">Example</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Packages:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Packages:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../local_models.html">Local Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../regularizers.html">Regularizers</a></li>
@@ -103,67 +63,30 @@
 <li class="toctree-l1"><a class="reference internal" href="../../mixture.html">Mixture</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">MixtureLib</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-        
-      <li>mixturelib.mixture</li>
-    
-    
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mixturelib.mixture</li>
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Source code for mixturelib.mixture</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
@@ -186,14 +109,14 @@
 <span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">TensorDataset</span><span class="p">,</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">Dataset</span>
 
 <div class="viewcode-block" id="Mixture"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.Mixture">[docs]</a><span class="k">class</span> <span class="nc">Mixture</span><span class="p">:</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Base class for all mixtures.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Base class for all mixtures.&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Constructor method</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Constructor method</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
 <div class="viewcode-block" id="Mixture.fit"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.Mixture.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;A method that fit a hyper model and local models in one procedure.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;A method that fit a hyper model and local models in one procedure.</span>
 
 <span class="sd">        :param X: The tensor of shape </span>
 <span class="sd">            `num_elements` :math:`\times` `num_feature`.</span>
@@ -210,7 +133,7 @@
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
 <div class="viewcode-block" id="Mixture.predict"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.Mixture.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;A method that predict value for given input data.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;A method that predict value for given input data.</span>
 
 <span class="sd">        :param X: The tensor of shape </span>
 <span class="sd">            `num_elements` :math:`\times` `num_feature`.</span>
@@ -222,7 +145,7 @@
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
 
 <div class="viewcode-block" id="MixtureEM"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEM">[docs]</a><span class="k">class</span> <span class="nc">MixtureEM</span><span class="p">(</span><span class="n">Mixture</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;The implementation of EM-algorithm for solving the </span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The implementation of EM-algorithm for solving the </span>
 <span class="sd">    two stage optimisation problem.</span>
 
 <span class="sd">    .. warning::</span>
@@ -296,7 +219,7 @@
                  <span class="n">ListOfRegularizeModel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">model_type</span><span class="o">=</span><span class="s1">&#39;default&#39;</span><span class="p">,</span>
                  <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        It&#39;s necessary! The Hyper Parameter should be additive to models.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">MixtureEM</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
@@ -333,7 +256,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">pZ</span> <span class="o">=</span> <span class="kc">None</span>
         
 <div class="viewcode-block" id="MixtureEM.E_step"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEM.E_step">[docs]</a>    <span class="k">def</span> <span class="nf">E_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Doing E-step of EM-algorigthm. This method call E_step for all </span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Doing E-step of EM-algorigthm. This method call E_step for all </span>
 <span class="sd">        local models, for hyper model and for all regularizations step by step.</span>
 
 <span class="sd">        :param X: The tensor of shape </span>
@@ -390,7 +313,7 @@
         <span class="k">return</span></div>
         
 <div class="viewcode-block" id="MixtureEM.M_step"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEM.M_step">[docs]</a>    <span class="k">def</span> <span class="nf">M_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Doing M-step of EM-algorigthm. This method call M_step for all </span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Doing M-step of EM-algorigthm. This method call M_step for all </span>
 <span class="sd">        local models, for hyper model and for all regularizations step by step.</span>
 
 <span class="sd">        :param X: The tensor of shape </span>
@@ -437,7 +360,7 @@
         <span class="k">return</span></div>
                 
 <div class="viewcode-block" id="MixtureEM.fit"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEM.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;A method that fit a hyper model and local models in one procedure.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;A method that fit a hyper model and local models in one procedure.</span>
 
 <span class="sd">        Call E-step and M-step in each epoch.</span>
 
@@ -470,7 +393,7 @@
         <span class="k">return</span></div>
     
 <div class="viewcode-block" id="MixtureEM.predict"><a class="viewcode-back" href="../../mixture.html#mixturelib.mixture.MixtureEM.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;A method that predict value for given input data.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;A method that predict value for given input data.</span>
 
 <span class="sd">        For each x from X predicts</span>
 <span class="sd">        :math:`answer = \sum_{k=1}^{K}\pi_k\bigr(x\bigr)g_k\bigr(x\bigr)`, </span>
@@ -496,49 +419,30 @@
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        
-        &copy; Copyright 2020, Andrey Grabovoy
-
-    </p>
+    <p>&#169; Copyright 2020, Andrey Grabovoy.</p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
