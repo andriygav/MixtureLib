@@ -57,7 +57,7 @@ def test_example_mixture_of_experts():
     list_of_models = [first_model, secode_model]
 
     HpMd = HyperExpertNN(input_dim=2, hidden_dim=5,
-                     output_dim=2, epochs=10)
+                     output_dim=2, epochs=20)
 
     mixture = MixtureEM(HyperParameters={'beta': 1.},
                         HyperModel=HpMd,
