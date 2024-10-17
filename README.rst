@@ -2,19 +2,11 @@
 Mixture Lib
 ###########
 
-|test| |codecov| |docs| |readthedocs| |pypi| 
-
-.. |test| image:: https://github.com/andriygav/MixtureLib/workflows/test/badge.svg
-    :target: https://github.com/andriygav/MixtureLib/tree/master
-    :alt: Test status
+|codecov| |readthedocs| |pypi| 
     
 .. |codecov| image:: https://img.shields.io/codecov/c/github/andriygav/mixturelib/master
     :target: https://github.com/andriygav/MixtureLib/tree/master
     :alt: Test coverage
-
-.. |docs| image:: https://github.com/andriygav/MixtureLib/workflows/docs/badge.svg
-    :target: https://andriygav.github.io/MixtureLib/
-    :alt: Build status
     
 .. |readthedocs| image:: https://img.shields.io/readthedocs/mixturelib/stable?label=readthedocs
     :target: https://mixturelib.readthedocs.io/en/stable/
